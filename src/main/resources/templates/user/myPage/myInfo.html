@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myInfo</title>
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/myPage/CSS/myInfo.css" type="text/css">
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+
+</head>
+<body>
+     <div th:replace="common/header/userHeader.html"></div>
+     <script type="text/javascript" src="/user/login/js/event.js"></script> 
+     
+    <div class="wrapper">
+      <div class="aside">
+        
+        <ul>
+            <li><a class="menu-link" href="#myInfo">내 정보</a></li>
+            <br>
+            <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+            <br>
+            <li><a class="menu-link" href="#" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|">좋아요한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#" th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|">후원한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#" onclick="location.href='/user/myProject'">나의 프로젝트</a></li>
+            <br>
+            <br>
+            <li><a class="menu-link" href="#" id="logout">로그아웃</a></li>
+            <br>
+            <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+        </ul>
+    </div>
+    
+    <br><br><br><br><br><br><br><br><br><br><br>
+
+
+    
+                    
+   <div class="info">            
+    <h1 align="center">프로필 사진</h1>
+	
+ 
+    <div class="profile">
+
+        <form id="thumbnailRegistForm" action="/user/thumbnail/regist" method="post" enctype="multipart/form-data">
+            <div id="profile-area">
+            
+                    <div id="preview-area">
+                    <th:block sec:authorize="isAnonymous()">
+                        <img src="'/user/myPage/images/정보.png'" id="preview-image">
+                     </th:block>
+                     <th:block sec:authorize="isAuthenticated()">
+                      <img th:src="${ #authentication.principal.profileNm == null? '/user/myPage/images/정보.png' : #authentication.principal.profileNm}" id="preview-image">
+                       </th:block>
+                    </div>
+                </div>
+                
+                <label for="attach-profile" class="plus"><img id="plus-image" src="/user/project/images/plus.png"></label>
+                        <input type="file" id="attach-profile" name="profileImage" accept="image/gif, image/jpeg, image/png">
+						<input class="btn-myProject" type="submit" value="제출">
+                        </form>
+
+                        <form action="/user/thumbnail/delete" method="post">
+                        <br><br><br><br><br><br>
+                        <input class="btn-delete" type="submit" value="삭제">
+        				</form>
+    </div>
+    <br>
+    
+
+    <form action="/user/myInfo" method="post">
+        <table align="center">
+            <tr>
+                <td style="width: 80px">아이디 </td>
+                <td><input class="userId" name="email" th:value="${ #authentication.principal.email }"></td>
+                
+            </tr>
+            <tr>
+                <td>이름 </td>
+                <td><input class="userName" name="userNm" th:value="${ #authentication.principal.userNm }"></td>
+            </tr>
+
+            <tr>
+                <td>비밀번호 </td>
+                <td><input class="updatePwd" type="button" value="비밀번호변경" id="updatePwd" name="pwd"
+                onclick="location.href='/user/myInfo.pwd'"></td>
+            </tr>
+ 
+            <tr>
+                <td>연락처 </td>
+                <td><input class="phone" type="tel" name="phone" th:value="${ #authentication.principal.phone }"></td>
+            </tr>
+            <tr>
+                <td>주소</td>
+                <td><input class="address1" type="text" name="address1" id="address1" 
+                           th:value="${ #lists.size(address) > 1 ? address[1] : '' }" 
+                           readonly>
+                <td><input class="searchZipCode" type="button" value="검색" id="searchZipCode"></td>
+                    </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>상세주소</td>
+                <td><input class="address2" type="text" name="address2" id="address2" placeholder="상세주소" 
+                           th:value="${ #lists.size(address) > 2 ? address[2] : '' }"></td>
+                <td></td>
+            </tr>
+        </table>
+
+    
+    <br>
+    
+    <div class="my-Info">
+        <button class="btn-myInfo" type="submit" onclick="return joinform_check()">저장하기</button>
+    </div>
+    </form>
+    </div>
+</div>
+<script type="text/javascript" src="/user/myPage/js/myInfo.js"></script>
+<div th:replace="common/footer/userFooter.html"></div>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	
+	    const $searchZipCode = document.getElementById("searchZipCode");
+	
+	    $searchZipCode.onclick = function() {
+	
+	        new daum.Postcode({
+	            oncomplete: function(data){
+	                document.getElementById("address1").value = data.address;
+	                document.getElementById("address2").focus();
+	            }
+	        }).open();
+	    }
+
+    </script>
+</body>
+</html>

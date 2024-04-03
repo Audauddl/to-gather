@@ -1,0 +1,229 @@
+/* 사용자의 header, footer 및 to-top 버튼 */
+
+@charset "UTF-8";
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353;
+}
+
+body {
+    margin: 0; /* header를 화면에 여백없이 설정하기 위해 */
+    overflow-x: hidden; /* 가로 스크롤바 숨기기 */
+    overflow-y: auto;
+}
+
+#Header {
+    display: flex;
+    position: fixed; 
+    width: 100vw;
+    height: 100vh;
+    height: 90px;
+    background-color: rgb(255, 255, 255);
+    box-shadow:3px 3px 2px 1px rgb(222, 222, 222);
+    z-index: 1;
+}
+
+/* logo */
+#Logo {
+    margin: 10px 40px;
+    margin-left: 30px;
+    top: 10%;
+    height: 70px;
+    cursor: pointer;
+}
+
+/* category */
+.For {
+    position: relative;
+    background-color: #ffffff;
+    font-size: 25px;
+    margin: 25px 40px;
+    cursor: pointer;
+    }
+
+.Items {
+    position: absolute;
+    top: 65px;
+    left: -90px;
+    width: 300px;
+    background-color: #ffffff;
+    transition: all 0.4s ease-out; /* 슬라이드 효과 추가 */
+    transform: translateY(-5px); /* 초기 위치 설정 */
+    opacity: 0; /* 요소를 숨기기 위해 opacity 속성 추가 */
+    border: none;
+}
+
+.Item {
+    display: flex; /* icon과 item 수평 정렬 */
+    padding: 16px;
+}
+
+.For:hover .Items {
+    opacity: 1; /* 요소를 보이게 함 */
+    transform: translateY(0); /* 슬라이드 효과 추가 */
+    border-top: 5px solid #81AE64;
+}
+
+.For:hover .Category {
+    color: #81AE64;
+}
+
+.Button { 
+    background:rgb(255, 255, 255); 
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353; 
+    font-size: 23px;
+    border: none; 
+    cursor: pointer; 
+}
+
+.Button:hover {
+    color: #81AE64;
+}
+
+.Icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+}
+
+#Manager {
+    width: 15px;
+    padding-right: 10px;
+}
+
+#Container { /* 오른쪽 정렬을 위한 컨테이너 */
+    display: flex;
+    position: absolute;
+    right: 1%;
+    margin: 15px;
+    align-items: center;
+}
+
+/* search bar */
+.Search {
+    position: relative;
+    width: 300px;
+    padding-right: 0px;
+}
+
+#Search-bar {
+    width: 300px;
+    border: none;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 15px 1px 15px 20px;
+    font-size: 17px;
+}
+
+#Search-bar:focus {
+    outline: 2px solid #C7E78B;
+}
+  
+#Find {
+    position : absolute;
+    width: 30px;
+    height: 30px;
+    top: 18%;
+    right: 1%;
+    cursor: pointer;
+}
+
+/* user login & logout & mypage */
+.UserStatus {
+    font-size: 25px;
+    border: none;
+    background-color: #ffffff;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353;
+    cursor: pointer;
+    margin: 0px 30px 5px 50px;
+}
+
+.UserStatus:hover {
+    color: #81AE64;
+}
+
+/* start project */
+#Start-project {
+    border-radius: 15px;
+    border: none;
+    color: #ffffff;
+    background-color: #81AE64;
+    font-size: 25px;
+    padding: 13px 30px;
+    font-family: 'Do Hyeon', sans-serif;
+    cursor: pointer;
+}
+
+#Start-project:hover {
+    background-color: #C7E78B;
+}
+
+/* to-top button */
+#To-top {
+    position: fixed;
+    width: 60px;
+    bottom: 2%;
+    right: 1%;
+    cursor: pointer;
+}
+
+/* chat button */
+#chat {
+	position: fixed;
+    width: 60px;
+    bottom: 10%;
+    right: 1%;
+    cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------- */
+
+/* footer */
+#Footer {
+    background-color: rgb(255, 255, 255);
+    width: 100vw;
+    border-top: 1px solid #DEDCDC;
+    padding-bottom: 60px;
+    margin-top: 100px;
+}
+
+#Wrapper {
+    margin-left: 70px;
+    height: 65px;
+    width: 1300px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #DEDCDC;
+}
+
+#Guides {
+    display: flex;
+    list-style: none;
+    padding-left: 0px;
+}
+
+.Guide {
+    margin: 10px 30px;
+    font-size: 160%;
+}
+
+.Guide:hover {
+    color: #81AE64;
+    cursor: pointer;
+}
+
+#Footer-logo {
+    margin: 20px 40px;
+    margin-left: 70px;
+    height: 80px;
+}
+
+#Texts {
+    margin-top: 0px;
+    margin-left: 70px;
+    line-height: 35px;
+    font-size: 120%;
+}

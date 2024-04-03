@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>searchPwd_result</title>
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/login/CSS/searchPwdResult.css" type="text/css">
+</head>
+<body>
+
+	<div th:replace="common/header/userHeader.html"></div>
+    <div class="wrapper">
+    <h1 align="center">비밀번호 재설정</h1>
+    <p align="center">
+        이전과 다른 새로운 비밀번호를 입력해주세요.
+    </p>
+
+	<form action="/user/searchPwdResult" method="post">
+    <div class="searchPwd_result">
+        <label for="updatePwd"></label>
+        <input class="pwd" type="number" id="userPwd" name="userPwd" placeholder="변경할 비밀번호" required>
+        <br><br>
+        <label for="updatePwd"></label>
+        <input class="pwd" type="number" id="userPwd" name="userPwd" placeholder="변경할 비밀번호 재확인" required>
+    </div>
+
+    <br>
+    <div class="btn-searchPwd_result">
+        <button class="btn-searchPwd-result" id="searchPwd_result" type="submit">비밀번호 변경</button>
+    </div>
+    </form>
+</div>
+
+<div th:replace="common/footer/userFooter.html"></div>
+</body>
+</html>

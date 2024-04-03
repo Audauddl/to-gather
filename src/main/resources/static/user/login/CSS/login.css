@@ -1,0 +1,114 @@
+/* 로그인 페이지 */
+
+.wrapper { 
+    padding-top: 120px; 
+    max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+
+}
+
+
+h1 {
+    font-size: 40px;
+}
+
+body {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+    font-size: 100%;
+}
+
+
+.btn-email {
+    width:150px;
+    height: 40px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    box-shadow: 5px 5px 5px #eee;
+    
+    
+}
+
+.login-email {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-email:hover {
+    background-color: #C7E78B;
+}
+
+.btn-login:hover {
+    background-color: #C7E78B;
+}
+
+.email,
+.pwd{
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 10px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    
+}
+
+
+.email:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.pwd:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.email-login {
+
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.btn-email {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.login-select {
+    border: none;
+    background-color: white;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 15px;
+    color: #535353;
+}
+
+.login-select:hover {
+    background-color: #C7E78B;
+}
+
+.select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}

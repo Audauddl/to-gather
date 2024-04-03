@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/myPage/CSS/likedProject.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>likedProject</title>
+</head>
+<body>
+    <div th:replace="common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/login/js/event.js"></script>
+    <div class="wrapper">
+
+        <div class="aside">
+            <ul>
+                <li><a class="menu-link" href="#myInfo" onclick="location.href='/user/myInfo'">내 정보</a></li>
+                <br>
+                <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+                <br>
+                <li><a class="menu-link" href="#likedProject">좋아요한 프로젝트</a></li>
+                <br>
+                <li><a class="menu-link" href="#" th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|">후원한 프로젝트</a></li>
+                <br>
+                <li><a class="menu-link" href="#" onclick="location.href='/user/myProject'">나의 프로젝트</a></li>
+                <br>
+                <br>
+                <li><a class="menu-link" href="#" id="logout">로그아웃</a></li>
+                <br>
+                <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+            </ul>
+        </div>
+        <h1>좋아요한 프로젝트</h1>
+        
+        
+          <div class="content">
+			<table>
+			  <thead>
+			    <tr>
+			      <th class="table-header">프로젝트 번호</th>
+			      <th class="table-header">프로젝트 이름</th>
+			      <th class="table-header">프로젝트 설명</th>
+			    </tr>
+			  </thead>
+			  <tbody class="table-content">
+			   	  <tr th:each="like : ${ likedProjectList }">
+				  <td th:text="${like.projNo}"></td>
+			      <td th:text="${like.projName}"></td>
+			      <td th:text="${like.projSummary}"></td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+
+    
+    <!-- 페이징 바 -->
+	<div class="paging" id="paging" align="center" style="margin-top: 20px;">
+		<th:block
+			th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+			<!-- 맨 앞으로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">&lt;&lt;</button>
+
+			<!-- 이전 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+				th:disabled="${ paging.page <= 1 }">&lt;</button>
+
+			<!-- 숫자 버튼 -->
+			<th:block
+				th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+					th:onclick="'location.href=\'/user/likedProject?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					th:text="${ page }" th:disabled="${ paging.page eq page }">
+				</button>
+			</th:block>
+
+			<!-- 다음 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+				th:disabled="${ paging.page >= paging.maxPage }">></button>
+
+			<!-- 맨 끝으로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''">>></button>
+
+		</th:block>
+
+		<th:block
+			th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+			<!-- 맨 앞으로 이동 -->
+			<button th:onclick="'location.href=\'/user/likedProject?page=1\''">&lt;&lt;</button>
+
+			<!-- 이전 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page - 1}} + '\''"
+				th:disabled="${ paging.page <= 1 }">&lt;</button>
+
+			<!-- 숫자 버튼 -->
+			<th:block
+				th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+					th:onclick="'location.href=\'/user/likedProject?page=' + @{${page}} + '\''"
+					th:text="${ page }" th:disabled="${ paging.page eq page }">
+				</button>
+			</th:block>
+
+			<!-- 다음 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page + 1}} + '\''"
+				th:disabled="${ paging.page >= paging.maxPage }">></button>
+
+			<!-- 맨 끝으로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.maxPage}} + '\''">>></button>
+		</th:block>
+	</div>
+      </div>
+		
+		 <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+<div th:replace="common/footer/userFooter.html"></div>
+</body>
+</html>

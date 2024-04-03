@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.user.model.dao.AdminUserMapper">
+
+	<resultMap type="com.greedy.togather.admin.user.model.dto.AdminUserDTO" id="userResultMap">
+		<id property="userNo" column="USER_NO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="profileNm" column="PROFILE_NM"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="quitYn" column="QUIT_YN"/>
+		<result property="userToken" column="USER_TOKEN"/>
+		
+		<collection property="fundingList" resultMap="fundingResultMap"/>
+		<collection property="projList" resultMap="projectResultMap"/>
+
+	</resultMap>
+	
+	
+	<resultMap type="com.greedy.togather.admin.user.model.dto.AdminFundingDTO" id="fundingResultMap">	
+		<id property="orderNo" column="ORDER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		
+		<association property="pay" resultMap="paymentResultMap"/>
+		<association property="proj" resultMap="projectResultMap"/>
+		<association property="reward" resultMap="rewardResultMap"/>
+	</resultMap>
+	
+	
+	<resultMap type="com.greedy.togather.admin.order.model.dto.AdminOrderDTO" id="orderResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+		
+		<association property="pay" resultMap="paymentResultMap"/>
+		
+	</resultMap>
+		
+	<resultMap type="com.greedy.togather.admin.order.model.dto.AdminPaymentDTO" id="paymentResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+		
+		<association property="refund" resultMap="refundResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.admin.order.model.dto.AdminRefundDTO" id="refundResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="refundDate" column="REFUND_DATE"/>
+		<result property="refundPrice" column="REFUND_PRICE"/>
+		<result property="refundReason" column="REFUND_REASON"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.admin.project.dto.AdminProjectDTO" id="projectResultMap">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="projNm" column="PROJ_NM"/>		
+	</resultMap>
+
+    <resultMap type="com.greedy.togather.admin.order.model.dto.AdminRewardDTO" id="rewardResultMap">    
+		<id property="rewardNo" column="REWARD_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="rewardNm" column="reward_NM"/>
+	</resultMap>
+	
+<!-- 	<resultMap type="com.greedy.togather.admin.user.model.dto.AdminTotalFundingDTO" id="totalFundingResultMap">
+		<id property="userNo" column="USER_NO"/>
+	    <result property="payCount" column="PAY_COUNT"/>
+	    <result property="totalPay" column="TOTAL_PAY"/>
+	    <result property="totalRefund" column="TOTAL_REFUND"/>
+	    <result property="totalFunding" column="TOTAL_FUNDING"/>
+	    
+	    <collection property="FundingList" resultMap="fundingResultMap"/>    
+	</resultMap> -->
+
+	<!-- userlist 페이지 시작 -->
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+          FROM TBL_USER
+          		<where>
+	            <if test="searchCondition == 'userNo'">
+                 	USER_NO LIKE '%' || #{ searchValue } || '%'
+            	</if>
+	            <if test="searchCondition == 'email'">
+	                EMAIL LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            <if test="searchCondition == 'userNm'">
+	                USER_NM LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            <if test="searchCondition == 'quitYn'">
+	                QUIT_YN LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            </where>
+    </select>
+    
+	<select id="selectUserList" resultMap="userResultMap">
+		SELECT   
+			   A.USER_NO
+			 , A.EMAIL
+			 , A.USER_NM
+			 , A.JOIN_DATE
+			 , A.QUIT_DATE
+			 , A.QUIT_YN
+	     FROM (SELECT
+			     	   ROWNUM RNUM
+			     	 , B.USER_NO
+					 , B.EMAIL
+					 , B.USER_NM
+					 , B.JOIN_DATE
+					 , B.QUIT_DATE
+					 , B.QUIT_YN
+		  		FROM (SELECT
+				      	       C.USER_NO
+							 , C.EMAIL
+							 , C.USER_NM
+							 , C.JOIN_DATE
+							 , C.QUIT_DATE
+							 , C.QUIT_YN 
+		          		FROM TBL_USER C 
+		          		<where>
+			            <if test="searchCondition == 'userNo'">
+		                 	C.USER_NO LIKE '%' || #{ searchValue } || '%'
+		            	</if>
+			            <if test="searchCondition == 'email'">
+			                C.EMAIL LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            <if test="searchCondition == 'userNm'">
+			                C.USER_NM LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            <if test="searchCondition == 'quitYn'">
+			                C.QUIT_YN LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            </where>
+			            ORDER BY C.USER_NO DESC
+			            ) B
+                 <![CDATA[ WHERE ROWNUM <= #{ endRow } ]]>
+              )A 
+        WHERE RNUM >= #{ startRow }  
+	</select>
+
+	<delete id="deleteUserChecked" parameterType="string">
+		DELETE
+ 		  FROM TBL_USER
+  	     WHERE USER_NO = #{ userNo }     
+	</delete>
+	
+	<!-- userDetail 페이지 시작 -->
+	<select id="selectUserDetail" resultMap="userResultMap">
+		SELECT
+		       US.USER_NO
+			 , US.EMAIL
+			 , US.USER_NM
+			 , US.PHONE
+			 , US.ADDRESS
+			 , US.JOIN_DATE
+			 , US.QUIT_DATE  
+		  FROM TBL_USER US
+  	     WHERE US.USER_NO = #{ userNo }     
+	</select>
+
+    <select id="selectFundingDetail" resultMap="fundingResultMap">	
+		SELECT
+		   US.USER_NO
+	     , PY.PAY_NO
+	     , PJ.PROJ_NM
+	     , RW.REWARD_NM
+	     , PY.PAY_DATE
+	     , PY.PAY_PRICE
+	     , RF.REFUND_DATE
+	     , RF.REFUND_PRICE
+	     , RF.REFUND_REASON
+	  FROM TBL_USER US
+	  JOIN TBL_ORDER O ON(US.USER_NO = O.USER_NO)
+	  JOIN TBL_PAYMENT PY ON(O.ORDER_NO = PY.ORDER_NO)
+	  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+	  LEFT JOIN TBL_REWARD RW ON (O.REWARD_NO = RW.REWARD_NO)
+	  LEFT JOIN TBL_PROJECT PJ ON (RW.PROJ_NO = PJ.PROJ_NO)
+	  WHERE US.USER_NO = #{ userNO }
+	  ORDER BY PY.PAY_NO DESC
+	</select>
+
+<!--     <select id="selectTotalFundingDetail" resultMap="totalFundingResultMap">
+	     SELECT
+		       COUNT(PY.PAY_NO) PAY_COUNT       
+		     , SUM(PY.PAY_PRICE) TOTAL_PAY
+		     , SUM(RF.REFUND_PRICE) TOTAL_REFUND
+		     , SUM(PY.PAY_PRICE - RF.REFUND_PRICE) TOTAL_FUNDING
+		  FROM TBL_USER US
+		 WHERE US.USER_NO = #{ userNo }
+		  LEFT JOIN TBL_ORDER O ON (US.USER_NO = O.USER_NO)
+		  LEFT JOIN TBL_PAYMENT PY ON (O.ORDER_NO = PY.ORDER_NO)
+		  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+		  GROUP BY US.USER_NO
+    </select>
+ -->
+ 
+ 	<update id="modifyUserInfo">
+ 	UPDATE
+ 	       TBL_USER US
+ 	   SET US.USER_PHONE = #{ phone }
+ 	       US.USER_ADDRESS = #{ address }
+ 	 WHERE US.USER_NO = #{ userNo }
+ 	</update>
+
+
+
+</mapper>

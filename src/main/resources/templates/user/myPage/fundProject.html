@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fundProject</title>
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/myPage/CSS/fundProject.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/myPage/CSS/fundProject.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/user/pay/js/refund.js"></script>
+</head>
+<body>
+<th:block sec:authorize="isAuthenticated()">
+    <div th:replace="/common/header/userHeader.html"></div>
+    <div class="wrapper">
+        <p hidden id="userNo"></p>
+        <div class="aside">
+            <ul>
+                <li><a class="menu-link" href="#myInfo" onclick="location.href='/user/myInfo'">내 정보</a></li>
+                <br>
+                <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+                <br>
+                <li><a class="menu-link" href="#likedProject" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|" >좋아요한 프로젝트</a></li>
+                <br>
+                <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
+                <br>
+                <li><a class="menu-link" href="#" onclick="location.href='/user/myProject'">나의 프로젝트</a></li>
+                <br>
+                <br>
+                <li><a class="menu-link" href="#" id="logout">로그아웃</a></li>
+                <br>
+                <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+            </ul>
+        </div>
+        <div class="project-list">
+            <caption><strong>후원 한 프로젝트</strong></caption>
+            <table class="fund">
+            <th:block th:each="fund : ${ fundList }">
+                <tr class="table-header">
+                    <th hidden id="payNo"></th>
+                    <th>프로젝트</th>
+                    <th>상품 정보</th>
+                    <th>주문 일자</th>
+                    <th>주문 번호</th>
+                    <th>주문 금액</th>
+                    <th>수량</th>
+                    <th>배송 상태</th>
+                    <th>주문 상태</th>
+                </tr>
+                <tr class="table-body">
+                    <td><a href=""></a><img src="/user/myPage/images/기부.jpg" width="100px" height="100px"></td>
+                    <td th:text="${ fund.reward.rewardName }"></td>
+                    <td th:text="${ fund.orderDate }"></td>
+                    <td class="order" th:text="${ fund.orderNo }"></td>
+                    <td id="payPrice" th:text="${ fund.payPrice }"></td>
+                    <td th:text="${ fund.rewardQuantity }"></td>
+                    <td>배송중</td>
+                    <td><button class="btn">배송 조회</button><button class="btn" th:onclick="|location.href='@{/pay/cancel?(userNo=${#authentication.principal.userNo},orderNo=${fund.orderNo})}'|" >환불 신청</button></td>
+                </tr>
+                <tr class="table-foot">
+                    <td th:text="${ fund.project.projName }"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </th:block>
+            <script>
+                const $orderNo = document.getElementById('orderNo').innerText;
+           </script>
+            </table>
+            <!-- <table class="fund1">
+                <caption><strong>후원 성공 프로젝트</strong></caption>
+                <th:block th:each="refund1 : ${ refundList }">
+                    <tr class="table-header">
+                        <th></th>
+                        <th>프로젝트</th>
+                        <th>상품 정보</th>
+                        <th>주문 일자</th>
+                        <th>주문 번호</th>
+                        <th>주문 금액</th>
+                        <th>수량</th>
+                        <th>배송 상태</th>
+                        <th>주문 상태</th>
+                    </tr>
+                    <tr class="table-body">
+                        <td><a href=""></a><img src="/user/myPage/images/기부.jpg" width="100px" height="100px"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>배송중</td>
+                        <td><button class="btn">배송 조회</button><button class="btn" th:onclick="|location.href='@{/pay/cancel?(userNo=${#authentication.principal.userNo},orderNo=${fund.orderNo})}'|" >환불 신청</button></td>
+                    </tr>
+                    <tr class="table-foot">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </th:block>                
+            </table> -->
+            <table class="fund">
+                <caption><strong>환불 한 프로젝트</strong></caption>
+                <th:block th:each="refund : ${ refundList }">
+                <tr class="table-header">
+                    <th>프로젝트</th>
+                    <th>상품 정보</th>
+                    <th>환불 일자</th>
+                    <th>주문 번호</th>
+                    <th>환불 금액</th>
+                    <th>환불 사유</th>
+                </tr>
+                <tr class="table-body">
+                    <td><a href=""></a><img src="/user/myPage/images/기부.jpg" width="100px" height="100px"></td>
+                    <td>리워드 상품</td>
+                    <td th:text="${ refund.refundDate }"></td>
+                    <td th:text="${ refund.orderNo.orderNo }"></td>
+                    <td th:text="${ refund.refundPrice }"></td>
+                    <td th:text="${ refund.refundReason }"></td>
+                </tr>
+                <tr class="table-foot">
+                    <td th:text="${ refund.projNo.projName }"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </th:block>              
+            </table>
+				<div class="content4" id="paging">
+					<!-- 페이징 바 -->
+					<!--  검색어가 없을 때 -->
+					<th:block
+						th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+						<!-- 맨 앞으로 이동 -->
+						<button 
+						th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo},page=1)}'|"
+							>&lt;&lt;
+							<!-- th:onclick="'location.href=\'/pay/payFund?page=1\''" -->
+							</button>
+
+						<!-- 이전 페이지로 이동 -->
+						<button 
+							th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo},page=${ paging.page - 1 })}'|"
+							th:disabled="${ paging.page <= 1 }">&lt;</button>
+
+						<!-- 숫자 버튼 -->
+						<th:block
+							th:each="page : ${ #numbers.sequence(paging.fundStartPage, paging.fundEndPage)}">
+							<button class="paging numbers"
+								th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo},page=${ page })}'|"
+								th:text="${ page }" th:disabled="${ paging.page eq page }">
+							</button>
+						</th:block>
+
+						<!-- 다음 페이지로 이동 -->
+						<button 
+							th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo},page=${ paging.page + 1 })}'|"
+							th:disabled="${ paging.page >= paging.fundMaxPage }">&gt;</button>
+
+						<!-- 맨 끝으로 이동 -->
+						<button 
+							th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo},page=${ paging.fundMaxPage })}'|"
+							th:disabled="${ paging.page >= paging.fundMaxPage }">&gt;&gt;</button>
+					</th:block>
+				</div>
+			</div>
+    </div>
+    <div th:replace="/common/footer/userFooter.html"></div>
+</th:block>    
+</body>
+</html>

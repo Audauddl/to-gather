@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/admin/settle/CSS/settleDetail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>settleDetail</title>
+</head>
+<body>
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+    
+    <div class="content">
+
+        <div class="content1">
+            <div class="menu-title">정산관리 > 조회</div>
+        </div>
+
+        <div class="content2">
+            <p>메이커 정보 조회</p>
+            <table>
+                <tr>
+                    <th class="table-header">프로젝트번호</th>
+                    <td class="table-body" id="projectNo" th:text="${ projInfo.proj.projNo }"></td>
+                    <th class="table-header">프로젝트명</th>
+                    <td colspan="3" class="table-body" th:text="${ projInfo.proj.projNm }"></td>
+                </tr>
+                <tr>
+                    <th class="table-header">Maker</th>
+                    <td class="table-body" th:text="${ projInfo.proj.maker.makerNm }"></td>
+                    <th class="table-header">프로젝트 종료일</th>
+                    <td class="table-body" th:text="${ #dates.format(projInfo.proj.fundingEndDate, 'yyyy-MM-dd') }"></td>
+                    <th class="table-header">정산일</th>
+                    <td class="table-body" th:text="${ #dates.format(projInfo.settleDate, 'yyyy-MM-dd HH:mm:ss') }"></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="content3">
+            <p>펀딩 내역 조회</p>
+            <table>
+                <tr class="table-header">
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>결제날짜</th>
+                    <th>결제금액</th>
+                    <th>환불날짜</th>
+                    <th>환불금액</th>
+                </tr>
+                <tr th:each="funding : ${ fundingInfo }">
+                    <td th:text="${ funding.pay.payNo }"></td>
+                    <td th:text="${ funding.user.email }"></td>
+                    <td th:text="${ funding.user.userNm }"></td>
+                    <td th:text="${ #dates.format(funding.pay.payDate, 'yyyy-MM-dd') }"></td>
+                    <td>
+                    <span th:if="${funding.pay.payPrice != 0 }" th:text="${ #numbers.formatInteger(funding.pay.payPrice, 0, 'COMMA') }"></span>
+                    </td> 
+                    <td th:text="${ #dates.format(funding.pay.refund.refundDate, 'yyyy-MM-dd') }"></td>
+                    <td> 
+                    <span th:if="${funding.pay.refund.refundPrice != 0 }" th:text="${ #numbers.formatInteger(funding.pay.refund.refundPrice, 0, 'COMMA') }"></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th class="table-header">총 펀딩금액</th>
+                    <td class="table-body">
+                    	<span th:if="${totalFunding != 0 }" th:text="${ #numbers.formatInteger(totalFunding, 0, 'COMMA') }"></span>
+                    </td>
+                    <th class="table-header">총 결제금액</th>
+                    <td class="table-body">
+                    	<span th:if="${totalPay != 0 }" th:text="${ #numbers.formatInteger(totalPay, 0, 'COMMA') }"></span>
+                    </td>
+                    <th class="table-header">총 환불금액</th>
+                    <td class="table-body">
+                    	<span th:if="${totalRefund != 0 }" th:text="${ #numbers.formatInteger(totalRefund, 0, 'COMMA') }"></span>
+                    </td>
+                    <td class="table-body"></td>         
+                </tr>
+            </table>
+        </div>
+
+        <div class="content4">
+            <p>수수료 조회</p>
+            <table>
+                <tr>
+                    <th class="table-header">운영수수료(7%)</th>
+                    <th class="table-header">결제수수료(3%)</th>
+                    <th class="table-header">총 수수료</th>
+                </tr>
+                <tr>
+                    <td class="table-body">
+                    	<span th:if="${mnCharge != 0 }" th:text="${ #numbers.formatInteger(mnCharge, 0, 'COMMA') }"></span>
+                    </td>
+                    <td class="table-body">
+                    	<span th:if="${payCharge != 0 }" th:text="${ #numbers.formatInteger(payCharge, 0, 'COMMA') }"></span>
+                    </td>
+                    <td class="table-body">
+                    	<span th:if="${mnCharge + payCharge != 0 }" th:text="${ #numbers.formatInteger(mnCharge + payCharge, 0, 'COMMA') }"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content5">
+            <p>정산 금액 조회</p>
+            <table>
+                <tr>
+                    <th class="table-header">총 펀딩금액</th>
+                    <th class="table-header">총 수수료</th>
+                    <th class="table-header">부가세</th>
+                    <th class="table-header">정산금액</th>
+                </tr>
+                <tr>
+                    <td class="table-body">
+                    	<span th:if="${totalFunding != 0 }" th:text="${ #numbers.formatInteger(totalFunding, 0, 'COMMA') }"></span>
+                    </td>
+                    <td class="table-body">
+                    	<span th:if="${mnCharge + payCharge != 0 }" th:text="${ #numbers.formatInteger(mnCharge + payCharge, 0, 'COMMA') }"></span>
+                    </td>
+                    <td class="table-body">
+                    	<span th:if="${totalFunding * 0.01 != 0 }" th:text="${ #numbers.formatInteger(totalFunding * 0.01, 0, 'COMMA') }"></span>
+                    </td>
+                    <td class="table-body">
+                    	<span th:if="${totalFunding * 0.89 != 0 }" th:text="${ #numbers.formatInteger(totalFunding * 0.89, 0, 'COMMA') }"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content6">
+            <button type="button" id="exitSettle" >취소</button>
+            <button type="button" id="doSettle">정산</button>
+        </div>
+        
+        
+        
+        
+	</div>
+	
+	<script>
+	/* 취소 버튼 */ 
+    if(document.getElementById("exitSettle")) {
+        const $exitSettle = document.getElementById("exitSettle");
+        $exitSettle.onclick = function() {
+            location.href = "/admin/settle/list";
+        }
+    }
+   
+    /* 정산 버튼 */     
+    $("#doSettle").click(function(){
+	    const confirmMessage = confirm("정산하시겠습니까?");
+	    
+	    if(confirmMessage) {    
+	    		   
+	    const projNo = '[[${ projInfo.proj.projNo }]]';
+	    
+	    console.log(projNo);
+	    
+	     $.ajax({
+	      url : "/admin/settle/update",
+	      type : 'post',
+		  data : {projNo : projNo},			  
+	      success : function(data){
+	    	  if(data === 'success')
+	       location.href = "/admin/settle/list";
+	      }     
+	     });		     
+	    }  		    
+	   });
+	</script>
+	
+</body>
+
+</html>

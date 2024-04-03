@@ -1,0 +1,257 @@
+@charset "UTF-8"; 
+
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* * {
+    font-family: 'BMDOHYEON';
+} */
+
+.content {
+    position: relative;
+    max-width: 1100px;
+    margin-top: 100px;
+    margin-left: 238px;
+    
+}
+
+/* content1 (제목, 검색바) */
+.content1 {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.menu-title {
+    color: #355d3b;
+    font-size: 24px;
+    padding: 10px;
+    font-family: Do Hyeon;
+}
+
+.sort { 
+    border-radius: 5px;
+    width: 80px;
+    height: 33px;
+    font-size: 14px;
+    color: #424242;
+    font-family: Do Hyeon;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 320px;
+    height: 100px;
+    
+    
+}
+
+.searchContent {
+    width: 220px;
+    height: 30px;
+    border: 1px solid #424242;
+    border-radius: 8px;
+}
+
+.search-button {
+    position: absolute;
+    left: 278px;
+    top: 33.5px;
+    width: 33px;
+    height: 33px;
+    background-color: #ffffff;
+    border: 1px solid #424242;
+    border-radius: 8px;
+    background-color: #424242;
+}
+
+.bi {
+   position: absolute;
+   font-size: 18px;
+   top: 7px;
+   left: 7px;
+   color:#ffffff;
+}
+
+ 
+/* content2 (테이블) */
+.content2 {
+    display: inline-block;
+    align-items: center;
+    height: 700px; /* 나중에 조정*/
+    color:#424242;
+
+}
+
+table {
+    width: 1100px;
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 2.5;
+    height: 100px;
+    padding: 0 10px;
+    box-shadow: 0px 2px 1px 0px #C9C9C9;
+}
+
+
+
+.table-header {
+    background-color: #f8f8f8;
+    height: 55px;
+
+    border-top: 2px solid #c9c9c9;
+    border-bottom: 2px solid #c9c9c9;
+    font-family: 'BMDOHYEON';
+
+}
+
+.table-content {
+    height: 50px;
+    border-bottom: 2px solid #c9c9c9;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+
+
+/* content4 (페이지네이션)*/
+.pagination {
+    text-align: center;
+    width:100%;
+    padding-left: 0px;
+    text-decoration: none;
+    list-style: none;
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 3px 5px;
+}
+
+.status-wrapper{
+
+    display: flex;
+    font-weight: bold;
+
+
+}
+
+.status-box{
+   text-align: center;
+   border-radius: 5px;
+   border: 1px solid #b1b1b1;
+   width: 50px;
+   height: 26px;
+   color:#404040;
+   font-size: 0.7rem;
+   margin-right: 10px;  
+
+}
+
+
+.status-button {
+    display: flex;
+	justify-content: center;
+	margin-left: 7px;
+}
+
+.button1{
+    height: 25px;
+    width: 50px;
+    color: #535353;
+    font-size: smaller;
+    padding-bottom: 8px;
+    margin-right: 10px;
+    border: 1px solid #535353;
+    
+}
+
+
+
+.table-text1{
+    width: 130px;
+    text-align: center;
+}
+
+.table-text2{
+    width: 570px;
+    text-align: center;
+
+}
+
+.table-text3{
+    width: 170px;
+    text-align: center;
+}
+
+.table-img{
+    text-align: right;
+}
+
+
+.button-wrapper{
+    display: flex;
+    justify-content: right;
+    
+}
+
+.button-box{
+    display: grid;
+    background-color: #535353;
+    border-radius: 5px;
+    color:aliceblue;
+    
+}
+
+.button-confirm{
+
+    width: 70px;
+    height: 30px;
+    background-color: #C7E78B;
+    border-radius: 5px;
+    color: #535353;
+    text-align: center;
+    
+}
+
+.button-confirm-text{
+    display:inline;
+    font-weight: bolder;
+    font-size: small;
+    color:#535353;
+    font-weight: bolder;
+    vertical-align: middle;
+
+    
+}
+
+#start{
+
+    background-color: #C7E78B;
+    border-radius: 5px;
+}
+
+
+#end{
+
+    background-color: #C9C9C9;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+

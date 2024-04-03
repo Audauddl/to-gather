@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세페이지</title>
+    <link rel="stylesheet" href="/admin/project/CSS/projectPage.css" type="text/css">
+    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+</head>
+<body>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+  	<div th:replace="common/header/adminHeader.html"></div>
+    <div th:replace="common/sidebar/adminSidebar.html"></div>
+    
+    <div class="body-content wrapper">
+        
+        <div class="content-table">
+            <table id="table-wrapper">
+                <thead>
+                    <th class="head-title" colspan="2">항목</th>
+                    <th class="content-text1">내용</th>
+                    <th class="content-text2">비고</th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="text-title" colspan="2">번호</td>
+                        <td class="content-text1" th:text="${ adminPage.projNo }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" rowspan="5">메이커<br>정보</td>
+                        <td class="content-title">이름</td>
+                        <td class="content-text1" th:text="${ adminPage.projNm }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">email</td>
+                        <td class="content-text1" th:text="${ adminPage.makerEmail }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">휴대전화</td>
+                        <td class="content-text1" th:text="${ adminPage.makerPhone }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">주소</td>
+                        <td class="content-text1" th:text="${ adminPage.makerAddress }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">소개</td>
+                        <td class="content-text1" th:text="${ adminPage.makerIntro }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" rowspan="4">프로젝트<br>정보</td>
+                        <td class="content-title">펀딩시작일</td>
+                        <td class="content-text1" th:text="${ adminPage.fundingStartDate }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">펀딩종료일</td>
+                        <td class="content-text1" th:text="${ adminPage.fundingEndDate }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">목표금액</td>
+                        <td class="content-text1" th:text="${ adminPage.fundingGoal }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">프로젝트분야</td>
+                        <td class="content-text1" th:text="${ adminPage.projField }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-title" rowspan="4">스토리</td>
+                        <td class="content-title">제목</td>
+                        <td class="content-text1" th:text="${ adminPage.projNm }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">소개</td>
+                        <td class="content-text1" th:text="${ adminPage.projSummary }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    
+                    
+                    <tr>
+         
+                        <td class="content-title" id="title-img">이미지</td>
+                        
+                        <td class="content-text1">
+                        <div class="thu-wrapper" th:block th:each="file : ${ adminFile }">
+                        
+	                        <div class="thu-box">
+	                        	<img th:if="${ file.fileType == '대표사진' }" th:src="@{{path}{nm}(path=${file.filePath},nm=${file.savedFileNm})}"></img>
+	                       		
+	                        </div>                                 
+	                        
+	                        <div class="thu-box">
+	                        	<img th:if="${ file.fileType == '서브사진' }" th:src="@{{path}{nm}(path=${file.filePath},nm=${file.savedFileNm})}"></img>
+	                        	
+	                        </div>
+                        
+                        </div>
+                        </th:block>	
+                        </td>
+                        
+                        <td class="content-text2"></td>
+                    </tr>
+                    </th:block>
+                    <tr>
+                        <td class="content-title">상세소개</td>
+                        <td class="content-text1" th:utext="${ adminPage.projDetail }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+					
+							
+                    <th:block th:each="reward : ${ adminReward }">
+                    <tr>
+						
+                        <td class="text-title" colspan="2">리워드</td>
+                        <td class="content-text1" th:text="${ reward.rewardNm }"></td>
+                        <td class="content-text2"></td>
+                    </tr> 
+                    <tr>          
+                        <td class="content-title" colspan="2">금액</td>
+                        <td class="content-text1" th:text="${ reward.rewardPrice }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title" colspan="2">배송비</td>
+                        <td class="content-text1" th:text="${ reward.rewardFee }"></td>
+                        <td class="content-text2"></td>
+					</tr>
+                    </th:block>
+                   
+                    
+                    <tr>
+                        <td class="text-title" rowspan="3">서류</td>
+                        <td class="content-title">정산서류</td>
+                        <td class="content-text1">
+                        	<div th:block th:each="file : ${ adminFile }">
+                        	<a th:if="${ file.fileType == '정산서류' }" th:href="@{{path}{nm}(path=${file.filePath},nm=${file.savedFileNm})}" target="_blank">Y</a>
+                        	</block>
+                        	</div>
+                        	
+                        </td>
+                        <td class="content-text2"></td>
+                    </tr>
+                     <tr>
+                        <td class="content-title">통장사본</td>
+                        <td class="content-text1">
+                        	<div th:block th:each="file : ${ adminFile }">
+                        	<a th:if="${ file.fileType == '통장사본' }" th:href="@{{path}{nm}(path=${file.filePath},nm=${file.savedFileNm})}" target="_blank">Y</a>
+                        	</block>
+                        	</div>
+                        	
+                        	
+                        </td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">기타서류</td>
+                        <td class="content-text1">
+                        	<div th:block th:each="file : ${ adminFile }">
+                        	<a th:if="${ file.fileType == '기타서류' and file.filePath != null}" th:href="@{{path}{nm}(path=${file.filePath},nm=${file.savedFileNm})}" target="_blank">Y</a>
+                        	</block>                                                       
+                        	</div>
+                        </td>
+                        <td class="content-text2"></td>
+                    </tr>
+					
+					
+					
+                    <tr>
+                    	<td class="text-title" rowspan="2">리워드 설명</td>
+                        <td class="content-title">제목</td>
+                        <td class="content-text1" th:text="${ adminPage.projInfoTitle }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                     <tr>
+
+                        <td class="content-title">설명</td>
+                        <td class="content-text1" th:text="${ adminPage.projInfoBody }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="text-title" colspan="2">후기</td>
+                        <td class="content-text1" th:utext="${ adminPage.projReview }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" rowspan="4">프로젝트<br>상태 변경<br>일시</td>
+                        <td class="content-title">등록</td>
+                        <td class="content-text1" th:text="${ adminPage.projRegDate }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">반려</td>
+                        <td class="content-text1" th:text="${ adminPage.projRejectDate }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">승인</td>
+                        <td class="content-text1" th:text="${ adminPage.projConfirmDate }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">중단</td>
+                        <td class="content-text1" th:text="${ adminPage.projStopDate }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">메인페이지 배너 노출</td>
+                        <td class="mainBannerWrapper">
+                        	
+                        	<!-- 메인배너 설정 -->
+                            <input type="radio" name="mainBanner" id="yes" value="게시">
+                            <label for="yes" class="content-text1">설정</label>
+                            
+                            <!-- 메인배너 해제 -->
+                            <input type="radio" name="mainBanner" id="no" value="마감" checked>
+                            <label for="no" class="content-text1">해제</label>
+                            
+                            <!-- 오늘의 이벤트 설정 -->
+                            <label for="startDate" class="eventDateBox">시작일</label>
+                            <input type="date" id="startDate">
+                            
+                            <!-- 오늘의 이벤트 해제 -->
+                            <label for="endDate" class="eventDateBox" id="eEndbox">종료일</label>
+                            <input type="date" id="endDate">
+                        </td>
+                        <td></td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="text-title" colspan="2">오늘의 프로젝트</td>
+                        <td class="mainBannerWrapper">
+                        	<!-- 메인배너 설정 -->
+                            <input type="radio" name="todayProject" id="yes" value="게시">
+                            <label for="yes" class="content-text1">설정</label>
+                            
+                            <!-- 메인배너 해제 -->
+                            <input type="radio" name="todayProject" id="no" value="마감" checked>
+                            <label for="no" class="content-text1">해제</label>
+                            
+                            <!-- 오늘의 이벤트 설정 -->
+                            <label for="startDateToday" class="eventDateBox">시작일</label>
+                            <input type="date" id="startDateToday">
+                            
+                            <!-- 오늘의 이벤트 해제 -->
+                            <label for="endDateToday" class="eventDateBox" id="eEndbox">종료일</label>
+                            <input type="date" id="endDateToday">
+                        </td>
+                        <td></td>
+                    </tr>
+             
+                </tbody>
+  
+            </table>
+
+
+            <div class="button-wrapper">
+
+                    <button class="button-confirm"><p class="button-confirm-text">승인</p></button>
+                    <button class="button-box1"><p class="button-text">반려</p></button>
+                    <button class="button-box2"><p class="button-text">중단</p></button>
+                    <button class="button-box3"><p class="button-text">확인</p></button>
+                    <a class="button-box" href="/admin/project/list"><p class="button-text">취소</p></a>
+                
+            </div>
+
+        </div>
+    </div>
+	
+	<!-- 프로젝트 상태처리 버튼 -->
+	<script>
+		const projNo = '[[${adminPage.projNo}]]';
+		
+		/* 승인 */
+		const approvalBtn = document.querySelector('.button-confirm');
+		
+		approvalBtn.addEventListener('click', e => {
+			location.href = '/admin/project/confirm?projNo=' + projNo;
+			alert('변경되었습니다.'); 
+			location.href = '/admin/project/page?projNo=' + projNo;
+		});
+		/* 반려 */
+		const rejectBtn = document.querySelector('.button-box1');
+		
+		rejectBtn.addEventListener('click', e => {
+			location.href = '/admin/project/reject?projNo=' + projNo;
+			alert('변경되었습니다.'); 
+			location.href = '/admin/project/page?projNo=' + projNo;});	
+		/* 중단 */
+		const stopBtn = document.querySelector('.button-box2');
+		
+		stopBtn.addEventListener('click', e => {
+			location.href = '/admin/project/stop?projNo=' + projNo;
+			alert('변경되었습니다.'); 
+			location.href = '/admin/project/page?projNo=' + projNo;
+		});	
+		
+		
+	</script>
+	
+	
+		<!-- radio 메인배너, 오늘의 프로젝트 실행 설정  -->
+	<script>
+	
+	const mainBannerBtn = document.querySelector('.button-box3');
+	
+	mainBannerBtn.addEventListener('click', e => {
+	
+	if($("input[name='mainBanner']:radio").onchange){
+		saveBannerData();
+	
+	} else if($("input[name='todayProject']:radio").onchange) {
+		saveTodayProjectData();}
+	
+	});
+		
+	
+	</script>
+
+
+	
+	<!-- 메인 배너 노출 값 가져오기 -->
+	<script>
+	
+		function saveBannerData() {
+			
+			/* radio 값 */
+			const checkedValue = 'input[name="mainBanner"]:checked';
+			const checkedValues = document.querySelector(checkedValue).value;
+							
+			console.log(checkedValues);		
+			
+			/* date 값 */
+			const selectDateStart = document.getElementById("startDate").value;
+			const selectDateEnd = document.getElementById("endDate").value;
+			
+			console.log(selectDateStart);
+			console.log(selectDateEnd);
+			
+			
+			/* 설정값 보내주기 */
+			
+			//create element(form)
+			const newForm = document.createElement('form');
+			
+			if(checkedValues === '게시'){
+				//set attribute(form)
+				newForm.name = 'newform';
+				newForm.method = 'post';
+				newForm.action = '/admin/project/bannerReg?projNo=' + projNo;
+			} else {
+				//set attribute(form)
+				newForm.name = 'newform';
+				newForm.method = 'post';
+				newForm.action = '/admin/project/bannerUpdate?projNo=' + projNo;
+			}
+			
+		
+			//create element(input)
+			const inputStart = document.createElement('input');
+			const inputEnd = document.createElement('input');
+			const inputCategory = document.createElement('input');
+			const inputStatus = document.createElement('input');
+			
+			//data.setAttribute();
+			/* setAttribute(속성 , 바꿀 값)*/
+			inputStart.setAttribute("name", "mpStartDate");
+			inputStart.setAttribute("value", selectDateStart);
+			inputEnd.setAttribute("name", "mpEndDate");
+			inputEnd.setAttribute("value", selectDateEnd);
+			inputCategory.setAttribute("name", "mpCategory");
+			inputCategory.setAttribute("value", "메인배너");
+			inputStatus.setAttribute("name", "mpStatus");
+			inputStatus.setAttribute("value", checkedValues);
+			
+			newForm.appendChild(inputStart);
+			newForm.appendChild(inputEnd);
+			newForm.appendChild(inputCategory);
+			newForm.appendChild(inputStatus);
+			
+			document.body.appendChild(newForm);
+			console.log(newForm);
+			
+			newForm.submit();
+			
+			
+		}
+		
+		
+	</script>
+	
+	
+	<!-- 오늘의 프로젝트 노출 값 가져오기 -->
+	<script>
+	
+		
+	function saveTodayProjectData() {
+		
+		/* radio 값 */
+		const checkedValue = 'input[name="todayProject"]:checked';
+		const checkedValues = document.querySelector(checkedValue).value;
+						
+		console.log(checkedValues);		
+		
+		/* date 값 */
+		const selectDateStart = document.getElementById("startDateToday").value;
+		const selectDateEnd = document.getElementById("endDateToday").value;
+		
+		console.log(selectDateStart);
+		console.log(selectDateEnd);
+		
+		
+		/* 설정값 보내주기 */
+		
+		//create element(form)
+		const newForm = document.createElement('form');
+		
+		if(checkedValues === '게시'){
+			//set attribute(form)
+			newForm.name = 'newform';
+			newForm.method = 'post';
+			newForm.action = '/admin/project/todayProj?projNo=' + projNo;
+		} else {
+			//set attribute(form)
+			newForm.name = 'newform';
+			newForm.method = 'post';
+			newForm.action = '/admin/project/todayProjUpdate?projNo=' + projNo;
+		}
+		
+	
+		//create element(input)
+		const inputStart = document.createElement('input');
+		const inputEnd = document.createElement('input');
+		const inputCategory = document.createElement('input');
+		const inputStatus = document.createElement('input');
+		
+		//data.setAttribute();
+		/* setAttribute(속성 , 바꿀 값)*/
+		inputStart.setAttribute("name", "mpStartDate");
+		inputStart.setAttribute("value", selectDateStart);
+		inputEnd.setAttribute("name", "mpEndDate");
+		inputEnd.setAttribute("value", selectDateEnd);
+		inputCategory.setAttribute("name", "mpCategory");
+		inputCategory.setAttribute("value", "오늘의프로젝트");
+		inputStatus.setAttribute("name", "mpStatus");
+		inputStatus.setAttribute("value", checkedValues);
+		
+		newForm.appendChild(inputStart);
+		newForm.appendChild(inputEnd);
+		newForm.appendChild(inputCategory);
+		newForm.appendChild(inputStatus);
+		
+		document.body.appendChild(newForm);
+		console.log(newForm);
+		
+		newForm.submit();
+		
+	
+	}
+	
+	
+	</script>
+
+
+
+
+	
+    
+</body>
+</html>

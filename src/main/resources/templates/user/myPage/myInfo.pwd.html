@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/user/myPage/CSS/myInfoPwd.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>MyInfo-Pwd</title>
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+</head>
+<body>
+    
+    <div th:replace="common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/login/js/event.js"></script>
+    <div class="wrapper">
+    <div class="aside">
+        
+        <ul>
+            <li><a class="menu-link" href="#myInfo">내 정보</a></li>
+            <br>
+            <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+            <br>
+            <li><a class="menu-link" href="#">좋아요한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#">나의 프로젝트</a></li>
+            <br>
+            <br>
+            <li><a class="menu-link" href="#">로그아웃</a></li>
+            <br>
+            <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+        </ul>
+    </div>
+
+
+    <h1 align="center">비밀번호 재설정</h1>
+    <p align="center">
+        이전과 다른 새로운 비밀번호를 입력해주세요.
+    </p>
+	
+	<form action="/user/myInfo.pwd" method="post">
+    <div class="pwd_resetting">
+        <label for="updatePwd"></label>
+        <input class="pwd" type="password" id="userPwd" name="pwd" placeholder="변경할 비밀번호" required>
+        <br><br>
+        <label for="updatePwd"></label>
+        <input class="pwd" type="password" id="userPwd" name="pwd" placeholder="변경할 비밀번호 재확인" required>
+    </div>
+    <br>
+    <div class="btn-searchPwd_result">
+        <button class="btn-searchPwd-result" id="searchPwd_result" type="submit">비밀번호 변경</button>
+        <button class="btn-searchPwd-result" id="searchPwd_result" type="button">이전으로</button>
+    </div>
+    </form>
+</div>
+<div th:replace="common/footer/userFooter.html"></div>
+
+</body>
+</html>

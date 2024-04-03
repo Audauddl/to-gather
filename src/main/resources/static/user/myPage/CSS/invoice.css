@@ -1,0 +1,98 @@
+
+body {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+    font-size: 18px;
+}
+
+#choice {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 70px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    text-align: center;
+}
+
+#choice:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.userName {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 60px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    text-align: center;
+}
+
+.userName:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.deliveryNo {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 45px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    text-align: center;
+}
+
+.deliveryNo:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.success {
+
+    width:150px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+}
+
+.cancel {
+    width:150px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+}
+
+.btn-invoice {
+    margin-left: 40px;
+}
+
+.success:hover {
+    background-color: #C7E78B;
+}
+
+.cancel:hover {
+    background-color: #C7E78B;
+}

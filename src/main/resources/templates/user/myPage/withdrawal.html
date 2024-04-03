@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>withdrawal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/myPage/CSS/withdrawal.css" type="text/css">
+	
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+
+
+</head>
+<body>
+   
+    <div th:replace="common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/login/js/event.js"></script>
+     
+    <div class="wrapper">
+    <div class="aside">
+        <ul>
+            <li><a class="menu-link" href="#myInfo">내 정보</a></li>
+            <br>
+            <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+            <br>
+            <li><a class="menu-link" href="#">좋아요한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#">나의 프로젝트</a></li>
+            <br>
+            <br>
+            <li><a class="menu-link" href="#" id="logout">로그아웃</a></li>
+            <br>
+            <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+        </ul>
+    </div>
+    
+
+    
+    <h1 align = "center">회원 탈퇴</h1>
+    <p align = "center">
+        더욱 더 발전하는 To gather가 되겠습니다.
+    </p>
+ 
+
+    <div class="withdrawal_Info">
+    <ul>
+        <li>- 프로젝트를 개설하여 진행 중이거나 투자(참여)중인 경우 탈퇴 하실 수 없습니다.</li>
+        <li>- 탈퇴 후 회원님의 개인정보는 파기됩니다.</li>
+        <li>- 회원님께서 남기신 게시글, 댓글 및 펀딩한 프로젝트 투자(참여) 목록 등 투자 이력은 삭제 되지 않습니다.</li>
+    </ul> 
+    </div>
+    
+     
+    <br>
+    <div class="withdrawal">
+        <button class="btn-withdrawal" type="button" id="deleteUser">탈퇴하기</button>
+        <button class="btn-withdrawal" type="button" id="cancel">취소</button>
+    </div>
+   
+</div>
+<div th:replace="common/footer/userFooter.html"></div>
+  
+
+</body>
+</html>

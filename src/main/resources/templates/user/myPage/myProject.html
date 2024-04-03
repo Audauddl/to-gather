@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/user/myPage/CSS/myProject.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>myProject</title>
+</head>
+<body>
+    <div th:replace="common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/login/js/event.js"></script>
+    <div class="wrapper">
+        <div class="aside">
+          
+          <ul>
+              <li><a class="menu-link" href="#myInfo" onclick="location.href='/user/myInfo'">내 정보</a></li>
+              <br>
+              <li><a class="menu-link" href="#myCoupon">보유 쿠폰</a></li>
+              <br>
+              <li><a class="menu-link" href="#likedProject" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|" >좋아요한 프로젝트</a></li>
+              <br>
+              <li><a class="menu-link" href="#" th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|" >후원한 프로젝트</a></li>
+              <br>
+              <li><a class="menu-link" href="#myProject">나의 프로젝트</a></li>
+              <br>
+              <br>
+              <li><a class="menu-link" href="#logout" id="logout">로그아웃</a></li>
+              <br>
+              <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+          </ul>
+      </div>
+
+      <h1>나의 프로젝트</h1>
+
+    <div class="btn"> 
+        <a href="/admin/orderManage/orderList"><input class="btn-myProject" type="button" value="주문 조회"></a>
+        <input class="btn-myProject" type="button" value="정산 조회" id="calculateInquery">
+    </div>
+    <br>
+      <div class="grid">
+        <div class="item">
+            <a href="http://www.naver.com"><img src="/user/myPage/images/나의프로젝트-환경.jpg" alt="환경"></a>
+            <p>프로젝트1</p>
+        </div>
+        
+        <div class="item">
+            <a href="http://www.naver.com"><img src="/user/myPage/images/나의프로젝트-유기동물.jpg" alt="유기동물보호"></a>
+            <p>프로젝트 2</p>
+        </div>
+
+     </div>
+
+     <br><br><br><br><br><br>
+
+     <div class="arrow">
+         <img src="/user/myPage/images/화살표.png">
+     </div>
+
+    </div>
+    <div th:replace="common/footer/userFooter.html"></div>
+
+</body>
+</html>

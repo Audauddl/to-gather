@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/user/myPage/CSS/myPage.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>myPage</title>
+</head>
+<body>
+    <div th:replace="common/header/userHeader.html"></div>
+     <script type="text/javascript" src="/user/login/js/event.js"></script>
+      
+    <div class="wrapper">
+    <div class="aside">
+        <ul>
+            <li><a class="menu-link" href="#myInfo" onclick="location.href='/user/myInfo'">내 정보</a></li>
+            <br>
+            <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+            <br>
+            <li><a class="menu-link" href="#" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|">좋아요한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|">후원한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#" onclick="location.href='/user/myProject'">나의 프로젝트</a></li>
+            <br>
+            <br>
+            <li><a class="menu-link" href="#" id="logout">로그아웃</a></li>
+            <br>
+            <li><a class="menu-link" href="#withdrawal" onclick="location.href='/user/withdrawal'">회원탈퇴</a></li>
+        </ul>
+    </div>
+
+    <h1>마이 페이지</h1>
+    
+    <div class="grid">
+    <div class="item">
+            <a href="/user/myInfo"><img src="/user/myPage/images/내 정보.png" alt="내 정보" 
+                onmouseover="this.src='/user/myPage/images/내 정보 hover.png'"
+                onmouseout="this.src='/user/myPage/images/내 정보.png'"></a>
+           
+        <p>내 정보</p>
+    </div>
+
+    <div class="item">
+           <a href="https://www.google.com/search?q=%EC%A3%84%EC%86%A1%ED%95%A9%EB%8B%88%EB%8B%A4&source=lnms&tbm=isch&sa=X&ved=2ahUKEwipl77H94D-AhUBe94KHXIaC-sQ_AUoAXoECAEQAw&biw=1555&bih=785&dpr=1"><img src="/user/myPage/images/보유쿠폰.png" alt="보유 쿠폰"
+           onmouseover="this.src='/user/myPage/images/보유쿠폰 hover.png'"
+           onmouseout="this.src='/user/myPage/images/보유쿠폰.png'"></a>
+        
+        <p>보유 쿠폰</p>
+    </div>
+
+    <div class="item">
+           <a th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|"><img src="/user/myPage/images/좋아요.png" alt="좋아요한 프로젝트"
+           onmouseover="this.src='/user/myPage/images/좋아요 hover.png'"
+           onmouseout="this.src='/user/myPage/images/좋아요.png'"></a>
+
+        <p> 좋아요한 프로젝트 </p>
+    </div>
+
+    <div class="item">
+            <a th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|"><img src="/user/myPage/images/후원.png" alt="후원한 프로젝트"
+            onmouseover="this.src='/user/myPage/images/후원 hover.png'"
+            onmouseout="this.src='/user/myPage/images/후원.png'"></a>
+
+        <p> 후원한 프로젝트 </p>
+    </div>
+
+    <div class="item">
+           <a href="/user/myProject"><img src="/user/myPage/images/나의 프로젝트.png" alt="나의 프로젝트"
+           onmouseover="this.src='/user/myPage/images/나의 프로젝트 hover.png'"
+           onmouseout="this.src='/user/myPage/images/나의 프로젝트.png'"></a>
+
+        
+           <p>나의 프로젝트</p>
+    </div>
+</div>
+</div>
+<div th:replace="common/footer/userFooter.html"></div>
+
+
+
+</body>
+</html>

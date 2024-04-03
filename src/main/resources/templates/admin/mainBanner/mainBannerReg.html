@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 배너 등록</title>
+    <link rel="stylesheet" href="/admin/mainBanner/mainBannerReg.css" type="text/css">
+    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+</head>
+<body>
+
+   <div th:replace="common/header/adminHeader.html">
+    </div>
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+
+    
+    <div class="body-content wrapper">
+        <div class="content-table">
+            <table id="table-wrapper">
+                <thead>
+                    <th class="head-title" colspan="2">항목</th>
+                    <th class="content-text1">내용</th>
+                    <th class="content-text2">비고</th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="text-title" colspan="2">배너코드</td>
+                        <td class="content-text1" th:text="${ Banner.mpCode }"></td>
+                        <td class="content-text2">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">연결프로젝트</td>
+                        <td class="content-text1" th:text="${ Banner.projNo }"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">노출 시작</td>
+                        <td class="content-text1" th:text="${#dates.format(Banner.mpStartDate, 'yyyy-MM-dd')}"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">노출 종료</td>
+                        <td class="content-text1" th:text="${#dates.format(Banner.mpEndDate, 'yyyy-MM-dd')}"></td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+
+					<tr>
+                        <td class="text-title" colspan="2">배너 이미지</td>
+                        <td class="content-text1">
+                        <img th:src="@{{path}{nm}(path=${bannerFile.filePath}, nm=${bannerFile.savedFileNm})}"></img>
+                        </td>								                        
+                        <td class="content-text2"></td>
+                    </tr>
+                    
+                    
+                </tbody>
+  
+            </table>
+
+            <div class="button-wrapper">
+                
+                    <a class="button-confirm" href="/admin/mainbanner/list"><p class="button-confirm-text">확인</p></a>
+            
+                  
+            </div>
+
+
+        </div>
+        
+
+    </div>
+
+  
+</body>
+</html>

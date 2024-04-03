@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/viewProjects.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>viewSelectedProjects</title>
+</head>
+<body>
+	<div th:replace="common/header/userHeader.html"></div>
+	<script type="text/javascript" src="/user/project/js/viewProjects.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	
+    <flex class="justify-between">
+        <div class="title-box">
+            <flex> <!-- 카테고리 번호에 따른 이미지, 명칭 변경 -->
+            <th:block th:switch="${ category }">
+	            <th:block th:case="education">
+		            <img src="/user/project/images/education.png">
+            		<p class="title">교육 프로젝트</p>
+	            </th:block>
+	            <th:block th:case="disaster">
+		            <img src="/user/project/images/disaster.png">
+		            <p class="title">자연 재해 지원 프로젝트</p>
+	            </th:block>
+	            <th:block th:case="environment">
+		            <img src="/user/project/images/environment.png">
+            		<p class="title">환경 보호 프로젝트</p>
+	            </th:block>
+	            <th:block th:case="medical">
+		            <img src="/user/project/images/medical.png">
+            		<p class="title">의료 지원 프로젝트</p>
+	            </th:block>
+	            <th:block th:case="organic">
+		            <img src="/user/project/images/dog.png">
+            		<p class="title">유기 동물 보호 프로젝트</p>
+	            </th:block>
+	            <th:block th:case="wild">
+		            <img src="/user/project/images/dolphin.png">
+            		<p class="title">야생 동물 보존 프로젝트</p>
+	            </th:block>
+	            <th:block th:case="pet">
+		            <img src="/user/project/images/paws.png">
+            		<p class="title">반려 동물 케어 프로젝트</p>
+	            </th:block>
+            </flex>
+        </div>
+<!--         <div class="sorting-box">
+            <select name="sorting" id="sorting" class="input">
+                <option value="all" selected>전체</option>
+                <option value="recent">최신순</option>
+                <option value="like">좋아요순</option>
+                <option value="close">마감임박순</option>
+            </select>
+        </div> -->
+    </flex>
+    
+    <div class="wrapper" id="more-projects">
+    	<th:block th:each="project : ${ projectList }">
+	        <div th:data-proj-no="${ project.projNo }" class="project-block loading">
+	            <th:block th:each=" file : ${ project.fileList }" >
+	            	<img th:if="${ file.thumPath != null }" th:src="${ file.thumPath }" class="project-image">
+	            </th:block>
+	            <div class="display-box">
+	                <p th:text="${ project.projSummary }" class="project-summary"></p>
+	            </div>
+	            <div class="project-info">
+	                <p th:text="${ project.maker.makerName }" class="maker-name"></p>
+	                <p th:text="${ project.projName }" class="project-name"></p>
+	            </div>
+	            <th:block th:if="${ project.leftDays } > 0">
+	            	<div class="funding-date"><span th:text="${ project.leftDays }"></span>일 남음</div>
+	            </th:block>
+	            <th:block th:if="${ project.leftDays } <= 0">
+	            	<div th:text="마감" class="funding-date"></div>
+	            </th:block>
+	            <flex>
+	                <p class="current-funding"><span th:text="${ project.fundingAchive == 0 ? '0' : #numbers.formatInteger(project.fundingAchive, 3, 'COMMA') }" ></span>원</p>
+	                <p class="percent"><span th:text="${ project.percent }"></span>%</p>
+	            </flex>
+	        </div>
+		</th:block>
+    </div>
+    
+    <div class="wrapper">
+		<div class="more-button" id="more-button">more</div> 
+    </div>
+    
+    <div th:replace="common/footer/userFooter.html"></div>
+    
+
+    
+</body>
+</html>

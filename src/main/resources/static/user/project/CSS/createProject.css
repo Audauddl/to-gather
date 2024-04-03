@@ -1,0 +1,374 @@
+@charset "UTF-8";
+
+/* 모든 createProject 공통 속성 */
+html {
+    scroll-behavior: smooth;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353;
+    font-size: 100%;
+    background-color: #F8F8F8;
+}
+
+.wrapper { /* wrapper는 해당 width를 가지고, 화면을 줄여도 위치를 가운데로 유지 */
+    padding-top: 120px; /* header와의 gap */
+    max-width: 1100px;
+    margin: 0 auto; 
+    display: flex;
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+}
+
+/* step 바 */
+.steps {
+    width: 200px;
+    position: fixed;
+    margin-left: 1200px;
+    margin-top: 50px;
+}
+
+.steps a {
+    text-decoration: none; /* 링크의 밑줄 제거 */ 
+    color: inherit; /* 링크의 색상 제거 */
+}
+
+.step {
+    font-size: 20px;
+    color: #C2C2C2;
+    margin: 0 auto;
+    text-align : center;
+}
+
+.step-subject {
+    font-size: 31px;
+    margin-top: auto;
+    padding: 5px;
+    margin-bottom: 45px;
+    cursor: pointer;
+}
+
+.step-subject:hover,
+.running {
+    color: #81AE64; 
+}
+
+.go { 
+    height: 100px; /* 각 step페이지로의 이동을 위한 div의 높이 */
+}
+
+/* box */
+.description {
+    text-align: center;
+    color: #81AE64;
+    font-size: 28px;
+    margin-left: -300px;
+    margin-bottom: 10px;
+}
+
+.box {
+    position: relative;
+    border: 3px solid #709053;
+    border-radius: 20px;
+    width: 900px;
+    height: auto;
+    box-shadow: 20px 20px #FFF4C9;
+    background-color: white;
+    padding: 40px;
+    margin-bottom: 50px;
+    margin-left: -15%; /* box 위치 조절 */
+}
+
+flex {
+    display: flex;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.input { /* 모든 input 클래스의 속성 */
+    border-radius: 20px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 13px 30px;
+    border: 1.5px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+}
+
+.input:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.items div {
+    margin: 0px 20px; /* input이 포함되어있는 div의 양 옆 간격 */
+}
+
+.guide {
+    background-color: #F8F8F8;
+    border-radius: 20px;
+    padding: 20px 30px;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+red {
+    color: rgb(255, 82, 82);
+}
+
+gray {
+    color: #C2C2C2;
+}
+
+select { /* select 화살표 커스텀 */
+    background: url('../images/polygon2.png') no-repeat 92% 55%; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.gray-text {
+    color: #C2C2C2;
+    margin-top : -25px;
+    font-size: 18px;
+}
+
+.upload {
+    position: absolute;
+    color: #709053;
+    font-size: 30px;
+    cursor: pointer;
+    right: 20px;
+    bottom :20px;
+}
+
+.upload:hover {
+    color: #C7E78B;
+}
+
+.bottom-solid {
+    position: relative; /* '파일 올리기' 버튼의 위치 고정을 위함 */
+    border-bottom: 3px solid #709053;
+    margin: 20px 0px; /* 첨부된 파일명과 위 요소들과의 간격 */
+}
+
+input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기 */
+    display: none;
+}
+
+.upload-name {
+    height: 50px;
+    padding: 0 55px;
+    vertical-align: middle;
+    border: 1px solid #709053;
+    width: 87%;
+    color: #999999;
+    background-color: #F8F8F8;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 17px;
+}
+
+.for-icon {
+    position: relative;
+}
+
+.file-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+}
+
+.justify-between {
+    justify-content: space-between;
+    border-bottom: 3px solid #709053;
+    margin: 20px 0px; /* 아래 리워드 요소들과 위 요소들과의 간격 */
+}
+
+.reward-container {
+    position: relative;
+}
+
+#remove-reward {
+    position: absolute;
+    right: 180px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+#add-reward {
+    position: absolute;
+    right: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+#remove-reward:hover,
+#add-reward:hover {
+    color: #709053;
+}
+
+.reward-info {
+    border: 1.5px solid #709053;
+    border-radius: 20px;
+}
+
+#reward-contents {
+    margin-bottom: 30px;
+}
+
+
+/* 최종 제출 버튼 */
+.submit {
+    font-family: 'Do Hyeon', sans-serif;
+    color: white;
+    font-size: 30px;
+    background-color: #81AE64;
+    border: 5px solid #81AE64;
+    padding: 10px 35px;
+    border-radius: 20px;
+    margin: 50px 0px 100px 200px;
+}
+
+.submit:hover {
+    color: #81AE64;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* -------------------------------------------------------------------- */
+
+/* 1. Maker 정보 */
+#profile-area {
+    position: relative;
+    margin-right: 40px;
+    margin-top: 90px;
+}
+
+#preview-area { /* 첨부된 이미지가 비율과 맞지 않을 경우, */
+    position: relative;
+    width: 230px;
+    height: 230px;
+    border-radius: 100%;
+}
+
+#preview-image { /* 이미지의 크기를 고정시켜 줄이는 것은 보기 좋지 않으므로, 비율에 맞춰 자르기 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.plus {
+    position: absolute;
+    bottom: 40%;
+    left: 6%;
+    color: white;
+    background-color: #81AE64;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    padding: 10px 10px;
+}
+
+#plus-image {
+    margin: -12px;
+}
+
+/* 3. 스토리 기획 */
+#main-preview-area {
+    position: relative;
+    width: 600px;
+    height: 450px;
+    margin-top: 50px;
+    margin-left: 150px; /* preview 이미지 가운데 정렬 */
+    display: none; /* 이미지가 첨부될 때 추가시키기 위해 none */
+}
+
+.sub-preview-area {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    margin-top: 50px;
+    margin-left: 150px; /* preview 이미지 가운데 정렬 */
+    cursor: pointer;
+    background-color: #F8F8F8;
+}
+
+.sub-preview-area .file-icon {
+    padding: 50px 70px;
+}
+
+#main-preview-image,
+.sub-preview-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+}
+
+/* 스크롤바 설정 */
+#notice-content::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* 스크롤바 막대 설정 */
+#notice-content::-webkit-scrollbar-thumb {
+    background-color: #DEDCDC;
+    border-radius: 10px; /* 스크롤바 둥글게 설정 */
+}
+
+/* 스크롤바 뒷 배경 설정 */
+#notice-content::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0); /* 투명 */
+}
+
+textarea {
+    resize: none;
+}
+
+/* 6. 정산 확인 */
+table {
+    font-size: 22px;
+    /* width: 100%; */
+    border-top: 3px solid #709053;
+    border-bottom: 3px solid #709053;
+    border-collapse: collapse;
+    margin: 20px 0px;;
+  }
+
+  .left-td {
+    border-bottom: 1px solid #444444;
+    border-left: none;
+    padding: -10px;
+    background-color: #F8F8F8;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 160px;
+    font-weight: 500;
+    align: right;
+  }
+
+  .left-td gray {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .right-td {
+    border-bottom: 1px solid #444444;
+    border-left: 3px solid #709053;
+    padding: 0px 450px 0px 20px;
+    align: right;
+  }

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.settle.model.dao.AdminSettleMapper">
+
+
+    <resultMap id="settleResultMap" type="com.greedy.togather.admin.settle.model.dto.AdminSettleDTO">
+		<id property="settleNo" column="SETTLE_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="totalFundingPrice" column="TOTAL_FUNDING_PRICE"/>
+		<result property="totalFee" column="TOTAL_FEE"/>
+		<result property="vat" column="VAT"/>
+		<result property="donation" column="DONATION"/>
+		<result property="finalPrice" column="FINAL_PRICE"/>
+		<result property="settleDate" column="SETTLE_DATE"/>
+		<result property="settleStatus" column="SETTLE_STATUS"/>
+		
+		<association property="proj" resultMap="projectResultMap"/>
+	</resultMap>
+    
+	<resultMap id="projectResultMap" type="com.greedy.togather.admin.settle.model.dto.AdminProjectDTO">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="categoryNo" column="CATEGORY_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="projNm" column="PROJ_NM"/>
+    	<result property="projSummary" column="PROJ_SUMMARY"/>
+    	<result property="projDetail" column="PROJ_DETAIL"/>
+		<result property="projInfoTitle" column="PROJ_INFO_TITLE"/>
+		<result property="projInfoBody" column="PROJ_INFO_BODY"/>
+		<result property="fundingStartDate" column="FUNDING_START_DATE"/>
+		<result property="fundingEndDate" column="FINDING_END_DATE"/>
+		<result property="fundingGoal" column="FUNDING_GOAL"/>
+		<result property="fundingAchive" column="FUNDING_ACHIVE"/>
+		<result property="projRegDate" column="PROJ_REG_DATE"/>
+		<result property="projRejectDate" column="PROJ_REJECT_DATE"/>
+		<result property="projConfirmDate" column="PROJ_CONFIRM_DATE"/>
+		<result property="projStopDate" column="PROJ_STOP_DATE"/>
+		<result property="projStatus" column="PROJ_STATUS"/>
+		<result property="projReview" column="PROJ_REVIEW"/>
+		
+		<association property="maker" resultMap="makerResultMap"/>
+		<collection property="fundingList" resultMap="fundingResultMap"/>
+		<collection property="userList" resultMap="userResultMap"/>
+	</resultMap>
+
+	<resultMap id="makerResultMap" type="com.greedy.togather.admin.settle.model.dto.AdminMakerDTO">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="makerNm" column="MAKER_NM"/>
+		<result property="makerAddress" column="MAKER_ADDRESS"/>
+		<result property="makerPhone" column="MAKER_PHONE"/>
+		<result property="makerEmail" column="MAKER_EMAIL"/>
+		<result property="makerIntro" column="MAKER_INTRO"/>
+	</resultMap>
+	
+	<resultMap id="userResultMap" type="com.greedy.togather.admin.settle.model.dto.AdminUserDTO" >
+		<id property="userNo" column="USER_NO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="profileNm" column="PROFILE_NM"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="quitYn" column="QUIT_YN"/>
+		<result property="userToken" column="USER_TOKEN"/>
+	</resultMap>
+		
+	<resultMap type="com.greedy.togather.admin.settle.model.dto.AdminFundingDTO" id="fundingResultMap">	
+		<id property="orderNo" column="ORDER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		
+		<association property="pay" resultMap="paymentResultMap"/>
+		<association property="user" resultMap="userResultMap"/>
+	</resultMap>
+	
+ 	<resultMap type="com.greedy.togather.admin.order.model.dto.AdminOrderDTO" id="orderResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+		
+		<association property="pay" resultMap="paymentResultMap"/>	
+	</resultMap>
+	 
+	<resultMap type="com.greedy.togather.admin.order.model.dto.AdminPaymentDTO" id="paymentResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+		
+		<association property="refund" resultMap="refundResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.admin.order.model.dto.AdminRefundDTO" id="refundResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="refundDate" column="REFUND_DATE"/>
+		<result property="refundPrice" column="REFUND_PRICE"/>
+		<result property="refundReason" column="REFUND_REASON"/>
+	</resultMap>
+	
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+          FROM TBL_SETTLE SE
+          JOIN TBL_PROJECT PJ ON (SE.PROJ_NO = PJ.PROJ_NO)
+          		<where>
+	            <if test="searchCondition == 'projNo'">
+                 	PJ.PROJ_NO LIKE '%' || #{ searchValue } || '%'
+            	</if>
+	            <if test="searchCondition == 'projNm'">
+	                PJ.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            <if test="searchCondition == 'settleDate'">
+	                SE.SETTLE_DATE LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            <if test="searchCondition == 'settleStatus'">
+	                SE.SETTLE_STATUS = #{ searchValue }
+	            </if>
+	            </where>
+    </select>
+   
+    
+	<select id="selectSettleList" resultMap="settleResultMap">
+		SELECT
+			   S2.SETTLE_NO
+		     , S2.PROJ_NO
+		     , S2.PROJ_NM
+		     , S2.SETTLE_DATE
+		     , S2.SETTLE_STATUS
+		  FROM (SELECT
+		               ROWNUM RNUM
+		             , S1.SETTLE_NO
+		             , S1.PROJ_NO
+		             , S1.PROJ_NM
+		             , S1.SETTLE_DATE
+		             , S1.SETTLE_STATUS
+		          FROM (SELECT
+		          			   SE.SETTLE_NO	
+		                     , PJ.PROJ_NO
+		                     , PJ.PROJ_NM
+		                     , SE.SETTLE_DATE
+		                     , SE.SETTLE_STATUS
+		                  FROM TBL_SETTLE SE
+		                  JOIN TBL_PROJECT PJ ON (SE.PROJ_NO = PJ.PROJ_NO)
+		                <where>
+			            <if test="searchCondition == 'projNo'">
+		                 	PJ.PROJ_NO LIKE '%' || #{ searchValue } || '%'
+		            	</if>
+			            <if test="searchCondition == 'projNm'">
+			                PJ.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            <if test="searchCondition == 'settleDate'">
+			                SE.SETTLE_DATE LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            <if test="searchCondition == 'settleStatus'">
+			                SE.SETTLE_STATUS = #{ searchValue }
+			            </if>
+			            </where>
+			            AND PJ.PROJ_STATUS = '마감' 
+			            ORDER BY SE.SETTLE_NO DESC) S1
+		          <![CDATA[ WHERE ROWNUM <= #{ endRow } ]]>
+		        )S2
+		        WHERE RNUM >= #{ startRow }   
+	</select>
+
+	<delete id="deleteSettleChecked" parameterType="string">
+		DELETE
+ 		  FROM TBL_SETTLE SE 
+  	     WHERE SE.PROJ_NO = #{ projNo }     
+	</delete>
+	
+	<select id="selectProjInfo" resultMap="settleResultMap">
+		SELECT
+		   SE.SETTLE_NO		
+	     , PJ.PROJ_NO
+	     , PJ.PROJ_NM
+	     , MK.MAKER_NM
+	     , PJ.FUNDING_END_DATE
+	     , SE.SETTLE_DATE
+	  FROM TBL_SETTLE SE
+	  LEFT JOIN TBL_PROJECT PJ ON (SE.PROJ_NO = PJ.PROJ_NO)
+	  JOIN TBL_MAKER MK ON (PJ.PROJ_NO = MK.PROJ_NO)
+	  WHERE SE.SETTLE_NO = #{ settleNo }
+	</select>
+	
+	<select id="selectFundingInfo" resultMap="fundingResultMap">
+		 SELECT 
+		       PY.PAY_NO 
+		     , US.EMAIL
+		     , US.USER_NM
+		     , PY.PAY_DATE
+		     , PY.PAY_PRICE
+		     , RF.REFUND_DATE
+		     , RF.REFUND_PRICE
+		     , RF.REFUND_REASON
+		  FROM TBL_PROJECT PJ
+		  LEFT JOIN TBL_ORDER O ON (PJ.PROJ_NO = O.PROJ_NO)
+		  LEFT JOIN TBL_USER US ON (O.USER_NO = US.USER_NO)
+		  LEFT JOIN TBL_PAYMENT PY ON (O.ORDER_NO = PY.ORDER_NO)
+		  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+		  WHERE PJ.PROJ_NO = #{ projNo }
+	</select>
+	
+	<!-- 정산 버튼 -->
+	<update id="doSettle">
+		UPDATE
+		       TBL_SETTLE SE
+		   SET SE.SETTLE_STATUS = 'Y'
+		     , SE.SETTLE_DATE = SYSDATE
+		 WHERE SE.PROJ_NO = #{ projNo }      
+	</update>
+	
+	<!--  스케쥴링 -->
+	<select id="selectEndProject" resultMap="projectResultMap">
+	<!-- 	SELECT
+			   *	
+		  FROM TBL_PROJECT
+		 WHERE TO_CHAR(FUNDING_END_DATE, 'YYMMDD') = TO_CHAR(SYSDATE, 'YYMMDD')
+		   AND PROJ_STATUS = '마감' 
+	-->	    
+		   		SELECT
+               PJ.*
+             , MK.*
+             , O.*
+             , PY.*
+             , RF.*
+		  FROM TBL_PROJECT PJ
+		  JOIN TBL_MAKER MK ON (PJ.PROJ_NO = MK.PROJ_NO)
+		  LEFT JOIN TBL_ORDER O ON (PJ.PROJ_NO = O.PROJ_NO)
+		  LEFT JOIN TBL_PAYMENT PY ON (O.ORDER_NO = PY.ORDER_NO)
+		  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+		 WHERE TO_CHAR(PJ.FUNDING_END_DATE, 'YYMMDD') = TO_CHAR(SYSDATE, 'YYMMDD')
+		   AND PJ.PROJ_STATUS = '마감'
+	</select>
+	
+	<insert id="insertTblSettle">
+		INSERT INTO TBL_SETTLE
+		(
+		SETTLE_NO,
+		PROJ_NO
+		)
+		VALUES
+		(
+		'SE'||LPAD(SEQ_SETTLE_NO.NEXTVAL, 9, '0'),
+         #{ projNo }
+        )
+	</insert>
+
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.mainBanner.dao.AdminBannerMapper">
+
+
+	<resultMap id="adminMainResultMap" type="com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO">
+		<id property="mpCode" column="MP_CODE"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="mpStartDate" column="MP_START_DATE"/>
+		<result property="mpEndDate" column="MP_END_DATE"/>
+		<result property="mpRegDate" column="MP_REG_DATE"/>
+		<result property="mpCategory" column="MP_CATEGORY"/>
+		<result property="mpStatus" column="MP_STATUS"/>
+		
+		<collection property="adminFileList" resultMap="adminMainResultMap"/>		
+		
+	</resultMap>
+	
+	<resultMap id="adminBannerImgResultMap" type="com.greedy.togather.admin.mainBanner.dto.AdminBannerFileDTO">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="projNo" column="PROJ_NO"/>		
+		<result property="fileType" column="FILE_TYPE"/>		
+		<result property="originalFileNm" column="ORIGINAL_FILE_TYPE"/>
+		<result property="savedFileNm" column="SAVED_FILE_NM"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="thumPath" column="THUM_PATH"/>
+	</resultMap>
+
+
+
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+          FROM TBL_MAINPAGE A
+          
+          <if test="searchCondition == 'projNo'">
+            JOIN TBL_PROJECT B ON(A.PROJ_NO = B.PROJ_NO)
+        </if>          
+        
+        <where>
+            <if test="searchCondition == 'projNo'">
+                B.PROJ_NO = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'mpStatus'">
+                A.MP_STATUS = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'mpCategory'">
+                A.MP_CATEGORY = #{ searchValue }
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectBannerList" resultMap="adminMainResultMap">
+        SELECT 
+	           
+	           A.PROJ_NO
+			 , A.MP_CODE
+	         , A.MP_START_DATE
+	         , A.MP_END_DATE
+
+	         , A.MP_STATUS
+
+
+          FROM (SELECT 
+                       ROWNUM RNUM
+                     , B.PROJ_NO
+					 , B.MP_CODE
+                     , B.MP_START_DATE
+			         , B.MP_END_DATE
+
+			         , B.MP_STATUS
+
+
+                  FROM (SELECT 
+                  			   C.PROJ_NO
+                  			 , C.MP_CODE
+                             , C.MP_START_DATE
+					         , C.MP_END_DATE
+					         , C.MP_STATUS
+							 , C.MP_CATEGORY
+
+                          FROM TBL_MAINPAGE C
+             
+         <if test="searchCondition == 'projNo'">
+            JOIN TBL_PROJECT E ON(C.PROJ_NO = E.PROJ_NO)
+        </if>                
+        <where>
+          <if test="searchCondition == 'projNo'">
+                E.PROJ_NO = #{ searchValue }
+          </if>
+          <if test="searchCondition == 'mpStatus'">
+                C.MP_STATUS = #{ searchValue }
+          </if>
+          <if test="searchCondition == 'mpCategory'">
+                C.MP_CATEGORY = #{ searchValue }
+          </if>
+
+        </where>
+        ORDER BY C.MP_START_DATE DESC
+        ) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ endRow }
+                  ]]>
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+        ORDER BY 1 DESC
+    </select>
+    
+       
+    <select id="bannerReadPage" resultMap="adminMainResultMap">
+ 	SELECT
+ 		 C.MP_CODE
+ 		,C.PROJ_NO
+ 		,C.MP_START_DATE
+ 		,C.MP_END_DATE
+ 	FROM TBL_MAINPAGE C
+ 	LEFT JOIN TBL_PROJECT A ON (C.PROJ_NO = A.PROJ_NO)
+ 	LEFT JOIN TBL_FILE B ON (C.PROJ_NO = B.PROJ_NO)
+   WHERE C.PROJ_NO = #{ projNo }
+ 
+ </select>
+ 
+ <select id="adminBannerReadFile" resultMap="adminBannerImgResultMap">
+ 	SELECT
+ 	      C.PROJ_NO
+ 	     ,C.FILE_PATH
+ 		 ,C.THUM_PATH
+ 		 ,C.SAVED_FILE_NM
+ 		 ,C.FILE_TYPE
+ 	  FROM TBL_FILE C
+ LEFT JOIN TBL_PROJECT A ON (C.PROJ_NO = A.PROJ_NO) 
+ WHERE C.PROJ_NO = #{ projNo }
+   AND C.FILE_TYPE = '대표사진'
+
+ </select>
+    
+    
+    
+
+
+</mapper>

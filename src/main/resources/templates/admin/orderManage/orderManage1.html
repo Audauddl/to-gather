@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"><head>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/admin/orderManage/CSS/orderManage1.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>관리자 주문관리1</title>                    
+</head>
+<body>
+		<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div> 
+	
+
+		
+    <div class="content">
+
+        <div class="content1">
+            <div class="menu-title">주문 관리</div>
+ 
+            <div class="searchbar">
+                <form id="searchForm" action="/admin/orderManage/orderList" method="get">
+                
+			<select id="searchCondition" name="searchCondition" class="sort">
+				<option value="orderNo"
+					th:selected="${ paging.searchCondition eq 'orderNo'}">주문번호</option>
+				<option value="projNm"
+					th:selected="${ paging.searchCondition eq 'projNm'}">프로젝트명</option>
+				
+			
+			</select> 
+			
+			<input type="search"  class="searchContent" name="searchValue"
+				th:value="${ paging.searchValue }">
+                <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                </form>         
+                                 
+            </div>
+        </div>
+        
+
+
+        <div class="content2">
+            <table>
+                <tr>
+                    <th class="table-header">주문번호</th>
+                    <th class="table-header">프로젝트명</th>
+                    <th class="table-header">리워드명</th>
+                    <th class="table-header">수량</th>
+                    <th class="table-header">결제금액</th>
+                    <th class="table-header">주문일</th>
+                    <th class="table-header">상세정보</th>
+                    <th class="table-header">배송상태</th>
+                    <th class="table-header">환불상태</th>
+                    <th class="table-header">송장번호</th>
+                </tr>
+				<tr th:each="order : ${ orderManage1 }" class="table-content">
+                    <td th:text="${ order.orderNo }"></td>
+                    <td th:text="${ order.projNm }"></td>
+                    <td th:text="${ order.rewardNm }"></td>
+                    <td th:text="${ order.rewardQuantity }"></td>
+                    <td th:text="${ order.payPrice }"></td>
+                    <td th:text="${#dates.format(order.orderDate, 'MM-dd HH:mm')  }"></td>
+                	<td><button class="order-detail"type="button" 
+                                th:onclick="|location.href='@{'/admin/orderManage/detail/' + ${ order.orderNo }}'|">조회</button></td>
+                </tr>
+               
+       <!--              <td><button class="order-detail" type="button" 
+                                th:onclick="|location.href='@{'/admin/orderManage/orderDetail'|">조회</button></td>
+                -->
+               
+               
+            </table>
+        </div>
+
+              <div class="content4" id="paging">
+        	<!-- 페이징 바 -->
+				<!--  검색어가 있을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition != null and paging.searchValue!= null and !paging.searchValue.isEmpty() }">
+					<!-- 맨 앞으로 이동 -->
+					<button class="paging prev2"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button class="paging prev1"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block 
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button class="paging numbers"
+							th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button class="paging next1"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button class="paging next2"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>
+				
+				<!--  검색어가 없을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+					<!-- 맨 앞으로 이동 -->
+					<button class="paging prev2" 
+					  	th:onclick="'location.href=\'/admin/orderManage/orderList?page=1\''"
+					    th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button class="paging prev1"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${paging.page - 1}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block 
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button class="paging numbers"
+							th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${page}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button class="paging next1"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${paging.page + 1}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button class="paging next2"
+						th:onclick="'location.href=\'/admin/orderManage/orderList?page=' + @{${paging.maxPage}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>			     
+		</div>
+
+    </div>
+    
+   </div>
+
+</body>
+</html>

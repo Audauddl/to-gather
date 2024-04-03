@@ -1,0 +1,321 @@
+
+.wrapper { 
+    padding-top: 120px; 
+  	max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+
+}
+body {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+}
+
+h1 {
+    font-size: 40px;
+    margin-top: -3px;
+}
+
+input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기 */
+    display: none;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #535353;
+}
+
+
+.aside ul li {
+    list-style-type: none;
+    font-size:25px;
+    font-weight: normal;
+  
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+ 
+}
+
+.userId {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.userId:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.userName {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.userName:focus{
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.updatePwd{
+    width:300px;
+    height: 36px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 17px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+}
+
+.phone {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.phone:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.address1 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.address1:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.address2 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.address2:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.btn-phone {
+
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+
+}
+
+.searchZipCode {
+
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+
+}
+
+.address2 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.btn-phone {
+
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+
+}
+
+
+.btn-search {
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+}
+
+
+.btn-profile {
+    width:100px;
+    height: 30px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+}
+
+.btn-myInfo,
+.btn-myProject,
+.btn-delete {
+
+    width:150px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+    
+}
+
+   
+
+
+.btn-phone:hover {
+    background-color: #C7E78B;
+}
+
+.pwd:hover {
+    background-color: #C7E78B;
+}
+
+.btn-search:hover {
+    background-color: #C7E78B;
+}
+
+.btn-profile:hover {
+    background-color: #C7E78B;
+}
+
+.btn-myInfo:hover {
+    background-color: #C7E78B;
+}
+
+.menu-link:hover {
+    color: #81AE64;
+ }
+ 
+.updateInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+
+.my-Info {
+    text-align: center;
+
+    margin-left: -260px;
+}
+
+.aside {
+    width: 250px;
+    float: right;
+}
+
+
+#profile-area {
+    position: relative;
+}
+
+#preview-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin-left: 60px;
+}
+
+.upload-name {
+    display: none;
+}
+
+#real-file { 
+    display: none;
+}
+
+.info {
+	margin-top: -220px;
+}
+
+

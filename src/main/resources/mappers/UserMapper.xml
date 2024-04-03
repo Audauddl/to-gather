@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.user.user.model.dao.UserMapper">
+
+	<resultMap type="com.greedy.togather.user.user.model.dto.UserDTO" id="loginUserResultMap">
+	
+		<id property="userNo" column="USER_NO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="profileNm" column="PROFILE_NM"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="quitYn" column="QUIT_YN"/>
+		<result property="userToken" column="USER_TOKEN"/>
+		
+		<collection property="userRole" resultMap="userRoleResultMap"/>	
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.user.model.dto.UserRoleDTO" id="userRoleResultMap">
+	
+		<id property="authNo" column="AUTH_NO"/>
+		<id property="userNo" column="USER_NO"/>
+		
+		<association property="auth" resultMap="authorityResultMap"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.user.model.dto.AuthDTO" id="authorityResultMap">
+		<id property="authNo" column="AUTH_NO"/>
+		<result property="authNm" column="AUTH_NM"/>
+		<result property="authInfo" column="AUTH_INFO"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="likeResultMap">
+
+	 	<id property="projNo" column="PROJ_NO"/>
+	    <result property="categoryNo" column="CATEGORY_NO"/>
+	    <result property="userNo" column="USER_NO"/>
+	    <result property="projName" column="PROJ_NM"/>
+	    <result property="projSummary" column="PROJ_SUMMARY"/>
+	    <result property="projDetail" column="PROJ_DETAIL"/>
+	    <result property="projInfoTitle" column="PROJ_INFO_TITLE"/>
+	    <result property="projInfoBody" column="PROJ_INFO_BODY"/>
+	    <result property="fundingEndDate" column="FUNDING_END_DATE"/>
+	    <result property="fundingGoal" column="FUNDING_GOAL"/>
+	    <result property="fundingAchive" column="FUNDING_ACHIVE"/>
+	    <result property="projStatus" column="PROJ_STATUS"/>
+	    <result property="projReview" column="PROJ_REVIEW"/>
+	    <result property="leftDays" column="LEFT_DAYS"/> 
+	    <result property="percent" column="PERCENT"/>
+	    <result property="totalLikes" column="TOTAL_LIKES"/>
+
+	  <association property="likeDTO" javaType="com.greedy.togather.user.project.dto.LikeDTO">
+		<id property="likeNo" column="LIKE_NO"/>
+	  	<result property="userNo" column="USER_NO"/>
+	  	<result property="projNo" column="PROJ_NO"/>
+	  </association>
+	  
+	  <association property="userDTO" javaType="com.greedy.togather.user.user.model.dto.UserDTO">
+	    <id property="userNo" column="USER_NO"/>
+	    <result property="email" column="EMAIL"/>
+	    <result property="pwd" column="PWD"/>
+	    <result property="userNm" column="USER_NM"/>
+	    <result property="profileNm" column="PROFILE_NM"/>
+	    <result property="phone" column="PHONE"/>
+	    <result property="address" column="ADDRESS"/>
+	    <result property="joinDate" column="JOIN_DATE"/>
+	    <result property="quitDate" column="QUIT_DATE"/>
+	    <result property="quitYn" column="QUIT_YN"/>
+	    <result property="userToken" column="USER_TOKEN"/>
+	  </association>
+	  
+	  <association property="fileDTO" javaType="com.greedy.togather.user.project.dto.FileDTO">
+	  	<id property="fileNo" column="FILE_NO"/>
+	  	<result property="projNo" column="PROJ_NO"/>
+	  	<result property="fileType" column="FILE_TYPE"/>
+	  	<result property="originalFileName" column="ORIGINAL_FILE_NM"/>
+	  	<result property="savedFileName" column="SAVED_FILE_NM"/>
+	  	<result property="filePath" column="FILE_PATH"/>
+	  	<result property="thumPath" column="THUM_PATH"/>
+	 </association>
+	  
+	</resultMap> 
+	
+
+	<select id="findByUserId" resultMap="loginUserResultMap">
+	
+		  SELECT
+               A.USER_NO
+		     , A.EMAIL
+             , A.PWD
+		     , A.USER_NM
+		     , A.PROFILE_NM
+		     , A.PHONE
+		     , A.ADDRESS
+		     , A.JOIN_DATE
+		     , A.QUIT_DATE
+		     , A.QUIT_YN
+		     , B.AUTH_NO AUTH_NO
+		     , B.USER_NO USER_NO
+		     , C.AUTH_NO AUTH_NO
+		     , C.AUTH_NM AUTH_NM
+		     , C.AUTH_INFO AUTH_INFO
+          FROM TBL_USER A
+          LEFT JOIN TBL_USER_ROLE B ON (A.USER_NO = B.USER_NO)
+		  LEFT JOIN TBL_AUTH C ON (B.AUTH_NO = C.AUTH_NO)
+         WHERE A.QUIT_YN = 'N'
+           AND A.EMAIL = #{ email }
+           
+	</select> 
+	
+	<select id="selectUserById" resultType="string">
+        SELECT
+               EMAIL
+          FROM TBL_USER 
+         WHERE QUIT_YN = 'N'
+           AND EMAIL = #{ email }
+    </select>
+
+    <insert id="insertUser">
+        INSERT
+          INTO TBL_USER 
+        (
+          USER_NO
+        , EMAIL
+        , PWD
+        , USER_NM
+        , PHONE
+        , ADDRESS
+        , JOIN_DATE
+        , QUIT_YN
+        
+        )
+        VALUES
+        (
+          'US'||LPAD(SEQ_USER_NO.NEXTVAL,9, '0')
+        , #{ email }
+        , #{ pwd }
+        , #{ userNm }
+        , #{ phone }
+        , #{ address }
+        , SYSDATE
+        , 'N'
+        
+        )
+	</insert>
+	
+	<insert id="insertUserRole">
+		INSERT
+          INTO TBL_USER_ROLE
+        (
+          USER_NO
+        , AUTH_NO  
+        
+        )
+        VALUES
+        (
+          'US'||LPAD(SEQ_USER_NO.CURRVAL,9, '0')
+        , 'AU01'
+	
+        )
+        
+	</insert>
+	
+	<insert id="insertAuth">
+	INSERT
+		INTO TBL_AUTH
+		(
+		  AUTH_NO  
+		, AUTH_NM
+		, AUTH_INFO
+		
+		)
+		VALUES
+		(
+		  'AU01'
+		, 'ROLE_USER'
+		, '일반회원입니다.'
+		
+		)
+	
+	</insert>
+
+
+    <select id="selectEncryptedPwd" resultType="string">
+        SELECT
+               PWD
+          FROM TBL_USER
+         WHERE QUIT_YN = 'N'
+           AND EMAIL = #{ email }
+	</select>
+	
+	<!-- <select id="selectUser">
+		SELECT
+			   USER_NO
+		     , EMAIL
+		     , PWD
+		     , USER_NM
+		     , PROFILE_NM
+		     , PHONE
+		     , ADDRESS
+		     , JOIN_DATE
+		     , QUIT_DATE
+		     , QUIT_YN
+		 FROM  TBL_USER A
+		WHERE  QUIT_YN = 'N'
+		  AND  EMAIL = #{ email }
+	</select> -->
+
+    <update id="updateUser">
+        UPDATE 
+              TBL_USER 
+          SET PHONE = #{ phone }
+            , ADDRESS = #{ address }
+        WHERE QUIT_YN = 'N'
+          AND USER_NO = #{ userNo }
+    </update>
+    
+    <update id="updatePwd">
+    UPDATE
+    	   TBL_USER
+       SET PWD = #{ pwd }
+     WHERE QUIT_YN = 'N'
+       AND USER_NO = #{ userNo }	
+    
+    </update>
+
+    <update id="deleteUser">
+        UPDATE 
+              TBL_USER 
+          SET QUIT_YN = 'Y'
+        WHERE QUIT_YN = 'N'
+          AND EMAIL = #{ email }
+    </update>
+    
+    
+    <select id="findLoginId" resultType="string">
+    
+    SELECT
+    	
+      EMAIL
+      FROM TBL_USER 
+      WHERE QUIT_YN = 'N'
+  AND USER_NM = #{ userNm }
+  AND PHONE = #{ phone }
+    
+    </select>
+    
+
+	<update id="updatePT">
+    UPDATE 
+    		TBL_USER 	
+    SET PWD = #{pwd}
+    WHERE EMAIL = #{email}
+	</update>
+
+	<select id="UserByEmail" resultMap="loginUserResultMap">
+    SELECT *
+    FROM TBL_USER
+    WHERE EMAIL = #{email}
+	</select>
+	
+	<update id="registThumb">
+	
+		UPDATE
+			  TBL_USER 
+			 SET PROFILE_NM = #{ profileNm }
+			 WHERE QUIT_YN = 'N'
+			 AND USER_NO = #{ userNo }
+		
+		
+	</update>
+	
+	<update id="deleteThumb">
+	
+	 UPDATE 
+	 	    TBL_USER
+	  SET PROFILE_NM = NULL		
+      WHERE QUIT_YN = 'N'
+      AND EMAIL = #{ email }
+	
+	</update>
+	
+	<select id="selectUserProfile" resultMap="loginUserResultMap">
+	SELECT
+			PROFILE_NM
+			FROM TBL_USER
+			WHERE QUIT_YN = 'N'
+			AND USER_NO = #{ userNo }
+	
+	</select>
+	
+	
+   <select id="selectLikeProject" resultMap="likeResultMap">
+
+	SELECT
+       A.PROJ_NO
+     , A.USER_NO
+     , A.PROJ_NM
+     , A.PROJ_SUMMARY
+     , B.LIKE_NO
+     FROM TBL_PROJECT A
+     LEFT JOIN TBL_LIKE B ON(A.PROJ_NO = B.PROJ_NO)
+     LEFT JOIN TBL_USER C ON(A.USER_NO = C.USER_NO)
+     WHERE B.USER_NO = #{ userNo }
+
+	</select>  
+	
+
+		<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+		
+		SELECT
+		
+			 COUNT(*)
+	 	FROM TBL_PROJECT A
+	 	
+        <if test="searchCondition == 'projNo'">
+            JOIN TBL_LIKE B ON(A.PROJ_NO = B.PROJ_NO)
+        </if>
+		   <where>
+		  <if test="searchCondition == 'projNo'">
+		     B.PROJ_NO LIKE '%' || #{ searchValue } || '%'
+		  </if>
+		   <if test="searchCondition == 'projName'">
+		     A.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+		  </if>
+		    <if test="searchCondition == 'projSummary'">
+		     A.PROJ_SUMMARY LIKE '%' || #{ searchValue } || '%'	
+		   </if>
+		   </where>
+		</select>
+
+
+	<!--   <select id="selectLikeProject" resultMap="likeResultMap">  
+         
+  SELECT 
+          A.PROJ_NO
+      	, A.USER_NO
+        , A.PROJ_NM
+        , A.PROJ_SUMMARY
+    FROM (
+        SELECT 
+            ROWNUM RNUM
+            , B.PROJ_NO
+            , B.USER_NO
+            , B.PROJ_NM
+            , B.PROJ_SUMMARY
+        FROM (
+            SELECT
+                  C.PROJ_NO
+              	, C.USER_NO
+                , C.PROJ_NM
+                , C.PROJ_SUMMARY
+                
+            FROM TBL_PROJECT C
+            
+               <if test="searchCondition == 'userNo'">
+               JOIN TBL_USER D ON(C.USER_NO = D.USER_NO)
+               </if>
+               <if test="searchCondition == 'projNo'">
+               JOIN TBL_LIKE D ON(C.PROJ_NO = D.PROJ_NO)
+               </if>
+               
+            <where>
+            
+                <if test="searchCondition == 'projNo'">
+                    C.PROJ_NO LIKE '%' || #{ searchValue } || '%'   
+                </if>
+                <if test="searchCondition == 'projName'">
+                    C.PROJ_NM LIKE '%' || #{ searchValue } || '%'            
+                </if>
+                <if test="searchCondition == 'projSummary'">
+                    C.PROJ_SUMMARY LIKE '%' || #{ searchValue } || '%'
+                </if>       
+            </where>
+            ORDER BY C.PROJ_NO DESC
+        ) B
+        <![CDATA[
+        WHERE ROWNUM <= #{ endRow }
+        ]]>
+    ) A
+     JOIN TBL_USER D ON(A.USER_NO = D.USER_NO)
+     JOIN TBL_LIKE E ON(A.PROJ_NO = E.PROJ_NO)
+    WHERE A.RNUM >= #{ startRow }
+
+    ORDER BY 1 DESC  
+    
+    </select> 
+    -->
+
+	
+	
+
+
+</mapper>

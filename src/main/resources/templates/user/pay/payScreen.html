@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"> -->
+    <link rel="stylesheet" href="/user/pay/CSS/payScreen.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>payScreen</title>
+    <!-- <script>
+        const message = '[[${message}]]';
+        message && alert(message);
+    </script> -->
+</head>
+<body>
+    
+    <!-- <th:block sec:authorize="isAnonymous()">
+
+        <SCript>
+            location.href="http://localhost:8001/user/login";
+        </SCript>
+    </th:block> -->
+ <!-- <th:block sec:authorize="isAuthenticated()"> -->
+	<div th:replace="/common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/pay/js/payScreen.js"></script>	
+    <section id="grid1">
+        <div hidden id="pjNo" th:text="${ payD.projNo }"></div>
+        <div hidden id="rewardNo" th:text="${ reward.rewardNo }"></div>
+        <div hidden id="userNo" th:text="${ #authentication.principal.userNo }"></div>
+        <div hidden id="uneremail" th:text="${ #authentication.principal.email }"></div>
+        <div class="item1">
+            <div  data-v-67d79bfc="" class="reward-order-form" data-component-name="pageRewardOrderForm">
+                <div  class="container">
+                    <div  class="row">
+                        <div  class="outline">
+                            <div  class="wrapper">
+                                <a  href="/reward/13401" class="apoint" title="프로젝트 상세로 이동">
+                                    <img class="arrow" src="/user/pay/images/arrow_left_icon.png">
+                                </a>
+                                <a  href="/reward/13401" class="project-img1" title="프로젝트 조회">
+                                    <img class="pjimg" src="/user/pay/images/화면 캡처 2023-02-27 172655.png" alt="">
+                                </a> 
+                                <header class="box-line1">
+                                    <a  href="/reward/13401" class="title router-link-active" title="프로젝트 조회">
+                                        <span id="pjTitle" th:text="${ payD.projName }"></span>
+                                    </a>
+                                    <div  class="maker-name">
+                                        <span th:text="${ payD.maker.makerName }"></span>
+                                    </div>
+                                </header>
+                                <div  class="parts">
+                                    <div  class="part">
+                                        <div  class="subject">
+                                            <span >선택 리워드</span>
+                                        </div>
+                                        <div  class="content1">
+                                            <div  class="amount">
+                                                <div  class="price">
+                                                    <span  class="pPrice" style="color: darkgray;">참여 금액:</span>
+                                                    <b  class="font-lg" id="rewardPrice" th:text="${ reward.rewardPrice }"></b>
+                                                    <span >원</span>
+                                                </div>
+                                                <div  class="count">
+                                                    <label  for="countbox">수량: </label>
+                                                    <input  id="countbox" type="number" min="1" step="1" value="1" inputmode="numeric" class="number form-control border-focus-point font-sm" data-component-name="componentNumber">
+                                                </div>
+                                            </div>
+                                            <div  class="reward-title">
+                                                <div id="rewardtitle" th:text="${ reward.rewardName }">4</div>
+                                            </div>
+                                            <div class="cubox">
+                                                <div class="cuuse">
+                                                    <span>쿠폰 사용</span>
+                                                </div>
+                                                <div class="cucheck">
+                                                    <input id="selectcoupon" type="checkbox">
+                                                    <label for="selectcoupon">사용</label>
+                                                    <a href="/user/payScreen/payCoupon.html" onclick="window.open(this.href, '_blank', 'width=500;, height=500;, toolbars=no, scrollbars=yes'); return false;">변경</a>
+                                                    <div>
+                                                        <span class="cutext"></span>
+                                                        <br>
+                                                        <span class="cuprice"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!---->
+                                           
+                                            <!---->
+                                        </div>
+                                    </div>
+                                    <div  class="part">
+                                        <div  class="subject">
+                                            <label  class="desc"for="pageRewardOrderFormAddAmt">추가 참여금</label>
+                                            <span  class="desc1">참여금을 추가로 후원할 수 있습니다(선택)</span>
+                                        </div>
+                                        <div  class="content1">
+                                            <input class="contentbox" id="pageRewardOrderFormAddAmt" type="tel" pattern="[0-9]+" inputmode="numeric" autocomplete="off" maxlength="20" oninput="onlyNumber(this);">
+                                        </div>
+                                    </div>
+                                    <!---->
+                                    <!---->
+
+                                    <div  class="part paid">
+                                        <div  class="subject">
+                                            <label  for="supporterPhoneNumber">
+                                                <span  class="color-point"></span>
+                                                <span > 결제자 연락처</span></label>
+                                            </div>
+                                            <div  class="content3">
+                                                <div  class="form-group mb-0">
+                                                    <input data-v-36cfb067=""  id="supporterPhoneNumber" type="tel" placeholder="ex) 01012345678" maxlength="11" class="control-supporter-phone" readonly th:value="${ #authentication.principal.phone }">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div  class="part receive">
+                                            <div  class="subject"><label  for="pageRewardOrderFormReceiveName">리워드 수령 정보</label>
+                                            </div>
+                                            <div  class="side">
+                                            </div>
+                                                <div  class="content2">
+                                                        <div  class="row">
+                                                            <div  class="form-group col-md-6">
+                                                                <label  for="pageRewardOrderFormReceiveName" class="subject font-sm">
+                                                                    <span  class="color-point"></span><span > 이름</span>
+                                                                </label>
+                                                                <br>
+                                                            <input type="text" id="pageRewardOrderFormReceiveName" class="font-box" placeholder="ex) 오마이" th:value="${ #authentication.principal.userNm }">
+                                                            </div>
+                                                            <div  class="form-group col-md-6 hp">
+                                                                <label  for="pageRewardOrderFormHp" class="subject font-sm">
+                                                                    <span  class="color-point"></span>
+                                                                    <span > 휴대전화</span>
+                                                                </label>
+                                                                <br>
+                                                                <input id="pageRewardOrderFormHp" class="font-box" type="tel" placeholder="ex) 01012345678" maxlength="11" th:value="${ #authentication.principal.phone }">
+                                                            </div>
+                                                        </div>
+                                                        <div  class="row">
+                                                            <div  class="form-group col-md-6">
+                                                                <label  for="rewardOrderFormAddressName" class="subject font-sm">
+                                                                    <span  class="color-point"></span>
+                                                                    <span > 배송지명</span>
+                                                                </label>
+                                                                <br>
+                                                                <select  id="rewardOrderFormAddressName" class="rewoard-box">
+                                                                    <option  value="집">집</option>
+                                                                    <option  value="회사">회사</option>
+                                                                    <option  value="가족">가족</option>
+                                                                    <option  value="친구">친구</option>
+                                                                    <option  value="직접 입력">직접 입력</option>
+                                                                    <input type="text" id="selboxAddressName" class="rewoard-box rewoard-box3" name="selboxAddressName"/>
+                                                                </select><!---->
+                                                            </div>
+                                                            <div class="form-group col-md-6 memo">
+                                                                <label  for="rewardOrderFormMemo" class="subject font-sm">
+                                                                    <span >배송 메모</span>
+                                                                </label>
+                                                                <br>
+                                                                <select  id="rewardOrderFormMemo" class="rewoard-box rewoard-box2">
+                                                                    <option  value="배송 전 미리 연락주세요.">배송 전 미리 연락주세요.</option>
+                                                                    <option  value="부재 시 문 앞에 놓아주세요.">부재 시 문 앞에 놓아주세요.</option>
+                                                                    <option  value="부재 시 경비실에 맡겨 주세요.">부재 시 경비실에 맡겨 주세요.</option>
+                                                                    <option  value="부재 시 전화나 문자 남겨 주세요.">부재 시 전화나 문자 남겨 주세요.</option>
+                                                                    <option  value="직접 입력">직접 입력</option>
+                                                                </select><!---->
+                                                                <input type="text" id="selboxMemo" class="rewoard-box rewoard-box3" name="selboxMemo"/>
+                                                            </div>
+                                                        </div>
+                                                        <div id="data1" class="form-group">
+                                                            <div  class="relative">
+                                                                <label  for="rewradAddress" class="subject font-sm">
+                                                                    <span  class="color-point"></span>
+                                                                    <span > 주소</span>
+                                                                </label>
+                                                                <div id="addre" class="address">
+                                                                    <button id="rewradAddress" class="btn-rewradAddress" onclick="abc()">주소를 검색하시려면 이곳을 클릭하세요.</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                                                        <script>
+                                                            const $projNo1 = document.getElementById('pjNo').innerText;
+                                                            console.log($projNo1);
+                                                            const $uneremail = document.getElementById('uneremail').innerText;
+                                                            console.log($uneremail);
+                                                        </script>
+                                                        <!---->
+                                                    </div>
+                                                </div>
+                                                <div  class="part payment">
+                                                    <div  class="subject">
+                                                        <span >결제 수단</span>
+                                                    <!---->
+                                                    </div>
+                                                    <div  class="content">
+                                                        <ul  class="tight no-scrollbar">
+                                                            <li  data-pay="naverpay" class="active">
+                                                                <button id="1" class="btn" value="kakao">
+                                                                    <span >
+                                                                        <img class="img" src="/user/pay/images/회색네이버.jpg"></img>
+                                                                        <img class="off" src="/user/pay/images/(웅디자인) 네이버 심볼.png"></img>
+                                                                    </span>
+                                                                    <div  class="text1">카카오페이</div>
+                                                                </button>
+                                                            </li>
+                                                            <li  data-pay="card" class="">
+                                                                <button  id="2" class="btn" value="card">
+                                                                    <span >
+                                                                        <img class="img" src="/user/pay/images/회색카드.png"></img>
+                                                                        <img class="off" src="/user/pay/images/컬러카드.png"></img>
+                                                                    </span>
+                                                                    <div  class="text1">카드</div>
+                                                                </button>
+                                                            </li>
+                                                            <li  data-pay="real" class="">
+                                                                <button id="3" class="btn" value="transfer">
+                                                                    <span>
+                                                                        <img class="img" src="/user/pay/images/회색통장.png"></img>
+                                                                        <img class="off" src="/user/pay/images/컬러통장.png"></img>
+                                                                    </span>
+                                                                <div  class="text1">계좌이체</div>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                    <div id="pay1">
+                                                        <!-- <div class="credit-card" data-component-name="componentCreditCard">
+                                                            <div class="wrapper3">
+                                                                <div class="name font-md">
+                                                                    <span >하나SK카드</span>
+                                                                </div>
+                                                                <div class="silver">
+
+                                                                </div>
+                                                                <div class="rect font-sm">
+                                                                    <span>등록 완료</span>
+                                                                </div>
+                                                                <div class="num font-lg">
+                                                                    <span>5531 **** **** **81</span>
+                                                                </div>
+                                                                <div class="date">
+                                                                    <span>
+                                                                        <span class="font-sm">VALID THRU </span>
+                                                                        <span class="font-lg">** **</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="actions">
+                                                                    <button type="button" class="btn3 btn-outline-light font-sm">직접 입력
+
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    <!---->
+                                                </div>
+                                            </div>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="pay col-lg-5">
+                                    <div  class="wrapper2">
+                                        <div  class="outer">
+                                            <div  class="inner">
+                                                <div  class="details">
+                                                    <table  class="table">
+                                                        <tbody >
+                                                            <tr >
+                                                                <th >
+                                                                    <span class="float-left">후원금</span>
+                                                                </th>
+                                                                <td >
+                                                                    <span  class="float-right"><b th:text="${ reward.rewardPrice }"></b>
+                                                                        <span>원</span>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr >
+                                                                <th >
+                                                                    <span class="float-left">배송비</span>
+                                                                </th>
+                                                                <td >
+                                                                    <span  class="float-right"><b id="deliveryPrice">2500</b>
+                                                                        <span>원</span>
+                                                                    </span>
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                            <!---->
+                                                            <!---->
+                                                            <!---->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div  class="subject clearfix" th:with="ejgkrl=${reward.rewardPrice}">
+                                                    <p hidden id="rmaksenj" th:text="${ ejgkrl }"></p>
+                                                    <span  class="float-left">최종 금액</span>
+                                                    <span  class="float-right"><b  id="finalPrice" th:text="${ ejgkrl } ? ${ ejgkrl +2500 } : ${ ejgkrl } "></b>
+                                                        <span  class="asdf" id="">원</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <script>
+                                            //   console.log($pjNo);
+                                            // th:text="${ reward.rewardPrice+2500+ } "
+                                            </script>
+                                            <div  class="guide font-sm">
+                                                <p >목표액 1,000,000원에 미달하여도 진행되는 프로젝트입니다. 결제는 프로젝트 후원 시 바로 진행됩니다.</p>
+                                                <p  class="keep-all">투게더는 플랫폼을 제공하는 중개자로 리워드 제공에 관한 지연, 제품의 하자 등으로 인한 일체의 법적 책임은 프로젝트 진행자에게 있습니다. 하지만 오마이컴퍼니는 진행자와 후원자간의 원활한 의사소통을 위해 최선의 노력을 다하겠습니다.</p>
+                                                <div  class="form-check">
+                                                    <div >
+                                                        <input  type="checkbox" id="pageCheck1" class="form-check-input">
+                                                        <label  for="pageCheck1" class="form-check-label">개인정보 제3자 제공 동의</label>
+                                                        <a  class="pointer-u float-right">내용 보기</a>
+                                                    </div>
+                                                </div>
+                                                <div  class="form-check">
+                                                    <div >
+                                                        <input  type="checkbox" id="pageCheck2" class="form-check-input">
+                                                        <label  for="pageCheck2" class="form-check-label">펀딩 결제시 유의사항 확인</label>
+                                                        <a  class="pointer-u float-right">내용 보기</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div  class="action">
+                                            <button  id="submitPay" class="btn-block btn-point font-lg">
+                                                <span cla="b">후원하기</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+
+    
+                    </script>
+        </div>
+
+    </section>
+<div th:replace="/common/footer/userFooter.html"></div>
+<!-- </th:block> -->
+</body>
+</html>

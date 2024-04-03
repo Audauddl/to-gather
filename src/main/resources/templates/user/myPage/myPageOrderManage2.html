@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/src/main/resources/static/user/myPage/CSS/myPageOrderManage2.css">
+    <title>주문 관리2</title>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="box">
+    <div class="aside">   
+      <ul>
+        <li><a class="menu-link" href="#myInfo">내 정보</a></li>
+        <br>
+        <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+        <br>
+        <li><a class="menu-link" href="#">좋아요한 프로젝트</a></li>
+        <br>
+        <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
+        <br>
+        <li><a class="menu-link" href="#">나의 프로젝트</a></li>
+        <br>
+        <br>
+        <li><a class="menu-link" href="#">로그아웃</a></li>
+        <br>
+        <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+    </ul>
+  </div>
+
+  <div class="table-container">
+
+  <div class="content1">
+    <div class="menu-title"><h1>나의 프로젝트 > 주문관리</h1></div>
+  </div>
+
+  <div class="content">
+  <div class="content2">
+      <button class="orderManagement">주문관리</button>
+      <button class="settleSearch">정산조회</button>
+  </div>
+  </div> <br><br><br>
+
+
+  <div class="">
+  <table>
+    <tbody>
+        <tr class="left-aligned">
+            <th>정보검색</th>
+            <th>
+                <span class="status">배송중(1)</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="status">환불요청(1)</span>
+            </th>
+           <th></th>
+          </tr>
+
+        <tr class="left-aligned">
+           <th>조건검색</th>
+            <th class="content1">    
+
+                    <div class="searchbar">
+
+                        <form id="searchForm" action="" method="get">
+                            <select class="sort">
+                              <option value="orderNo">주문번호</option>
+                              <option value="projectNo">프로젝트명</option>
+                              <option value="rewardNm">리워드명</option>
+                              <option value="quantity">수량</option>
+                              <option value="price">결제금액</option>
+                              <option value="orderDate">주문일</option>
+                            </select>
+
+                            <input type="text" class="searchContent">
+                            <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                            </form>                  
+                     </div>
+                   </div>     
+                </div>
+              </div>
+
+            </th>
+            <th></th>
+        </tr>
+    </tbody>
+  </table><br>
+  
+  <table>
+  <tbody>
+          <tr>
+              <th>주문번호</th>
+              <th>프로젝트명</th>
+              <th>리워드명</th>
+              <th>수량</th>
+              <th>결제금액</th>
+              <th>주문일</th>
+              <th>송장번호</th>
+              <th>배송상태</th>
+              <th>환불상태</th>
+              <th>상세정보</th>
+          </tr>
+
+          <th>1</th>
+          <th>환경사랑</th>
+          <th>친환경 샤워필터</th>
+          <th>1ea</th>
+          <th>₩22,400</th>
+          <th>23/04/01</th>
+          <th><span class="status">조회</span></th>
+          <th>배송중</th>
+          <th>환불요청</th>
+          <th><span class="status">조회</span></th>
+          </tr>
+      </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td rowspan="4"></td>
+        <td>번호</td>
+        <td>1</td>
+        <td>프로젝트명</td>
+        <td>환경사랑</td>
+      </tr>
+      <tr>
+      <td>리워드명</td>
+      <td>친환경 샤워필터</td>
+      <td>수량</td>
+      <td>1ea</td>
+    </tr>
+
+    <tr>
+      <td>결제금액</td>
+      <td>₩22,400</td>
+      <td>주문일자</td>
+      <td>23/04/01</td>
+    </tr>
+
+    <tr>
+      <td>배송상태</td>
+      <td>배송중</td>
+      <td>배송완료일자</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td rowspan="3">MAKER<BR> INFO.</td>
+      <td>MAKER</td>
+      <td>박지성</td>
+      <td>이메일</td>
+      <td>QPR_LEGEND@gmail.com</td>
+    </tr>
+
+    <tr>
+      <td>전화번호</td>
+      <td></td>
+      <td>휴대폰</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td >주소</td>
+      <td colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td rowspan="4">SUPPORTER<BR>INFO.</td>
+      <td>SUPPORTER</td>
+      <td>설인아</td>
+      <td>이메일</td>
+      <td>INA_SEOL@gmail.com</td>
+    </tr>
+    <tr>
+      <td>전화번호</td>
+      <td></td>
+      <td>휴대폰데이터</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>주소</td>
+      <td colspan="3"></td>
+    </tr>
+    <tr>
+      <td>환불사유</td>
+      <td colspan="3"></td>
+    </tr>
+    </tbody>
+  </table><br><br><br>
+
+  </div>
+  <div class="parent" style="display: flex; justify-content: center;">
+    <div class="content2">
+      <button class="orderManagement">이전 페이지로</button>
+      <button class="settleSearch">목록</button>
+    </div>
+  </div>
+  </div>
+
+
+</body>
+</html>

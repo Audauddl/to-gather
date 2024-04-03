@@ -1,0 +1,226 @@
+@charset "UTF-8"; 
+
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-size: 12px;
+}
+
+*
+/*위의 별 지우지 마세요.*/
+{
+    font-family: 'BMDOHYEON';
+    color: #535353;
+
+}
+
+
+
+
+/*전체적인 설정*/
+
+.wrapper { 
+    padding-top: 120px; 
+    max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+}
+
+body {
+    font-family: 'Do Hyeon';
+    font-size: 15px;
+    background-color: white;
+    
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+align-items: center;
+margin-bottom: 30px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    }
+    
+    th,
+    td {
+    padding: 3px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #535353;
+    }
+    
+    th {
+    background-color: #f8f8f8;
+    }
+    
+    tr:nth-child(even) {
+    background-color: white
+    }
+    
+    tr:hover {
+    background-color: #ddd;
+    }
+    
+    
+/*사이드바*/
+
+    .box {
+
+        display: flex;
+    
+    }
+    
+    .aside {
+        width: 350px;
+    }
+    
+    
+    .aside ul li {
+    
+        list-style-type: none;
+    
+        font-size: 25px;
+    
+        font-weight: normal;
+    
+    }
+    
+    
+    .menu-link {
+    
+        text-decoration: none;
+    
+        color: #535353}
+    
+    
+
+
+
+/*주문관리*/
+.order-management {
+font-size: 32px;
+margin: 10px;
+}
+
+
+/*드롭다운*/
+.sort { 
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    font-size: 14px;
+    color: #424242;
+}
+
+/*검색바*/
+.searchbar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 320px;
+    height: 100px;
+    
+}
+
+.searchContent {
+    width: 220px;
+    height: 30px;
+    border: 1px solid #424242;
+    border-radius: 8px;
+}
+
+/*검색 버튼*/
+.search-button {
+    position: absolute;
+    left: 278px;
+    top: 33.5px;
+    width: 33px;
+    height: 33px;
+    background-color: #ffffff;
+    border: 1px solid #424242;
+    border-radius: 8px;
+    background-color: #424242;
+}
+
+.bi {
+   position: absolute;
+   font-size: 18px;
+   top: 7px;
+   left: 7px;
+   color:#ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*상세보기 조회 (녹색버튼)*/
+.status {
+background-color: #709053;
+color: white;
+border-radius: 10px;
+padding: 4px;
+font-size: 1em;
+display: inline-block;
+width: 40px;
+text-align: center;
+}
+
+/* content2 (상단녹색버튼)*/
+
+.content2 {
+    display: flex;
+    
+    height: 30px;
+    padding: 0 10px;
+}
+
+.content2 button{
+    border: 0px;
+    border-radius: 8px;
+    min-width: 70px;
+    width: auto;
+    height: 30px;
+    background-color: #c7e78e;
+    margin-left: 10px;
+}
+
+/* content3 (페이지네이션)*/
+.pagination {
+    text-align: center;
+    width:100%;
+    padding-left: 0px;
+    text-decoration: none;
+    list-style: none;
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 3px 5px;
+}
+
+
+
+

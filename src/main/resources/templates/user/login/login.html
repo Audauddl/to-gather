@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+            xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/login/CSS/login.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+
+</head>
+<body>
+       <div th:replace="/common/header/userHeader.html"></div>
+        <script type="text/javascript" src="/user/login/js/event.js"></script>
+ 
+        
+      <div class="wrapper">
+
+      <h1 align = "center">이메일 로그인</h1>
+       
+       <form action="/user/login" method="POST">
+          <div class="email-login">
+            <input class="email" type="text" id="userId" name="userId" placeholder="아이디(이메일)" maxlength=50 size=20 required>
+            <br><br>
+    		<input class="pwd" type="password" id="userPwd" name="userPwd" placeholder="비밀번호" maxlength=12 size=20 required>
+          </div>
+            
+            <br>
+      <div class="login-email">
+            <button id="login" class="btn-email" type="submit">이메일 로그인</button>
+            <br>
+       </div>
+       <br>
+       </form>
+ 
+ <div class="select">
+      <button class="login-select" id="regist" type="button" onclick="location.href='/user/signup'">회원가입</button>
+      <button class="login-select" id="searchId" type="button" onclick="location.href='/user/searchId'">아이디 찾기</button>
+      <button class="login-select" id="searchPwd" type="button" onclick="location.href='/user/searchPwd'">비밀번호 찾기</button>
+ </div>
+</div>
+
+
+
+
+<div th:replace="/common/footer/userFooter.html"></div>
+</body>
+</html>

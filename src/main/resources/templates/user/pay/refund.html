@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/user/pay/CSS/refund.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/user/pay/js/refund.js"></script>
+    <title>refund</title>
+</head>
+<body>
+<th:block th:each=" can : ${ cancel }">
+    <div id="order" hidden th:text="${ can.orderNo }"></div>
+    <div id="price" hidden th:text="${ can.payPrice}"></div>
+    <div id="payNo" hidden th:text="${ can.payment.payNo }"></div>
+    <div class="container">
+        <div class="text-top">
+            <h1>후원 취소를 원하시나요?</h1>
+        </div>
+        <div>
+            <div class="outLIne">
+                <br><br>
+                <div class="Inline">
+                    <br>
+                    <img src="/user/pay/images/v5_74.png">
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 th:text="${ can.project.projName }"></h2>
+            <h2 class="pjTitle">To-Gather와 함께 동행해주세요!</h2>
+            <h2 class="body-text">후원자님의 따듯한 격러는 누군가에는 큰 기회가 됩니다.</h2>
+        </div>
+        <div>
+            <h3>신중하게 고민하고 결정해주세요</h3>
+        </div>
+        <div class="body-foot">
+            <input id="refund" class="btn mbtn" type="button" value="환불 신청">
+            <input class="btn" type="button" value="닫기">
+        </div>
+    </div>
+</th:each>
+
+    <script>
+        const $orderNo = document.getElementById('order').innerText;
+        const $price = document.getElementById('price').innerText;
+        const $payNo = document.getElementById('payNo').innerText;
+        console.log($orderNo);
+   </script>
+ 
+
+</body>
+</html>

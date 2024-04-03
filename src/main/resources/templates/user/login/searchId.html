@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>searchId</title>
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/login/CSS/searchId.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+   <div th:replace="common/header/userHeader.html"></div>
+   
+   <div class="wrapper">
+   
+   <h1 align = "center">아이디 찾기</h1>
+   <p align = "center">
+       기존 가입 회원정보에 휴대전화 번호가 등록 되어있지 않았을 경우,
+       아이디 찾기 서비스에 제한이 있을 수 있습니다.
+   </p>
+   <form action="/user/searchId" method="post">
+   <div class="searchId">
+       <label for="username"></label>
+       <input class="name" type="text" id="userName" name="userNm" placeholder="이름" required>
+       <br><br>
+       <label for="phone"></label>
+       <input class="phone2" type="tel" id="phone" name="phone" placeholder="휴대전화" required>
+       <br>
+   </div>
+   
+   <br>
+   <div class="btn-search-Id">
+       <button class="btn-searchId" id="search_Id" type="submit">아이디 찾기</button>
+   </div>
+</form>
+</div>
+
+
+<div th:replace="common/footer/userFooter.html"></div>
+
+</body>
+</html>

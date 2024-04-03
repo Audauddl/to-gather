@@ -1,0 +1,125 @@
+
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 공통 */
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'BMDOHYEON';
+    text-decoration: none;
+    list-style: none;
+    color: #535353;
+    top: 0px;
+}
+
+/* 관리자 헤더 영역 */
+.header {
+    width: 100vh;
+    position: fixed;
+
+    background-color: #ffffff;
+    box-shadow:3px 3px 2px 1px rgb(222, 222, 222);
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    z-index: 2;
+}
+
+.logo {
+    margin: 10px 40px;
+    width: 200px;   
+}
+
+.header img {
+    width: 130px;
+    height: 70px;
+
+}
+.header .title {
+    text-align: center;
+}
+
+.header .user-info {
+    display: flex;
+    width: 200px;  
+    margin-right: 40px;
+    align-items: center;
+}
+
+.header .user-name{
+    margin-left: 10px;
+    margin-right: 20px;
+    width: 70px;
+    font-size: 20px;
+}
+
+.button-login {
+    width: 120px;
+    border: none;
+    border-radius: 15px;
+    background-color: #81ae64;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 10px 10px;
+
+}
+
+.button-login:hover {
+    background-color: #c7e78b;
+}
+
+/* 관리자 사이드바 영역*/
+.sidebar {
+    position: fixed;
+    margin-top: 70px; /* 상단 메뉴바 높이에 맞추기*/
+    width: 200px;
+    height: calc(100% - 60px);
+    background-color: #ffffff;
+    box-shadow: 3px 3px 2px 1px rgb(222, 222, 222);
+    z-index: 1;
+
+}
+
+.sidebar ul {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sidebar ul li {
+    width: 100;
+    height: 80px;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.sidebar li:hover {
+    background-color:#81ae64;
+}
+.sidebar a:hover {
+    color:#ffffff;
+}
+
+.sidebar a{
+    width: 100%;
+    color: #535353;
+    height: 80px;
+    font-size: 20px;
+    line-height: 1.5;
+    display:inline-block;
+    text-align: center;
+    padding-top: 30px;
+}
+

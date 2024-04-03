@@ -1,0 +1,466 @@
+/* 전체 그리드 */
+#grid1 {
+    display: grid;
+    margin-left: 20%;
+    margin-right: 20%;
+    flex-wrap: wrap;
+    line-height: 1.5;
+    /* grid-template-columns: 1fr  */
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif
+}
+
+.container{
+    /* display: grid; */
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 150px;
+    /* padding-right: 15px;
+    margin-right: auto;
+    padding-left: 15px;
+    margin-left: auto; */
+}
+
+
+
+.row{
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* padding-left: 4.125rem; */
+    
+}
+
+/* 화살표 */
+.apoint {
+    width: 3%;
+    height: 3%;
+    object-fit: fill;
+}
+
+.arrow {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 3% 3%;
+    max-width: 2%;
+    margin-bottom: 2%;
+}
+
+/* 상단 박스 */
+.box-line1{
+    padding-right: 11.25rem;
+    padding-bottom: 2.1875rem;
+    margin-bottom: 2.1875rem;
+    border-bottom: 0.0625rem solid #dee2e6;
+    border-bottom-width: 0.0625rem;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(222, 226, 230);
+    font-size: 1.5rem;
+}
+
+.maker-name {
+    padding-top: 2%;
+}
+
+/* 프로젝트 이미지 및 컬럼 분리*/
+.outline {
+    position: relative;
+    width: 60%;
+    flex-wrap: wrap;
+}
+.project-img1 {
+    position: absolute;
+    display: inline-block;
+    width: 10%;
+    height: 10%;
+    right: 0%;
+    margin-top: 2%;
+    
+}
+.pjimg{
+    width: 100%;
+    height: 100%;
+}
+
+/* 박스별 패딩 */
+.subject {
+    padding-bottom: 1.1875rem;
+    padding-top: 2rem;
+}
+/* 참여 금액 수량 가로 정렬*/
+.price {
+    display: inline;
+}
+
+/* 수량 체크 */
+.count {
+    float : right;
+    font-weight: 600;
+   
+}
+
+#countbox {
+    width: 70px;
+    height: 30px;
+    border: 1px solid #c7e78b;
+    border-radius: 5px;
+    font-weight:400;
+    padding-bottom: 5%;
+}
+
+span {
+    font-weight: 700
+}
+
+.reward-title {
+    border: 0.0625rem solid #dee2e6;
+    border-radius: 7px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 2%;
+    background-color: #f8f9fa;
+}
+
+/* 참여금 */
+.desc{
+    font-weight: 700;
+}
+
+.desc1 {
+    font-weight: 300;
+    font-size: small;
+}
+/* 박스 */
+.contentbox{
+    border: 0.0625rem solid #dee2e6;
+    width: 95%;
+    border-radius: 5px;
+    padding: 2%;
+}
+
+.pay {
+    display: flex;
+    position: relative;
+    padding-left: 4.125rem;
+    width:30%;
+    flex-flow: wrap;
+    flex-grow: 1;
+}
+
+/* *, ::after, ::before {
+    box-sizing: border-box;
+} */
+
+/* 쿠폰 */
+
+.cubox {
+    margin-bottom: 5%;
+}
+
+.cuuse {
+    display: inline;
+}
+
+.cucheck {
+    float: right;
+}
+
+/* .content{
+    border: 0.0625rem solid #dee2e6;
+    width: 100%;
+    border-radius: 5px;
+    padding: 1%;
+} */
+
+/* 별 */
+.color-point {
+    margin: 10px 0;
+    position: relative;
+    display: block;
+    color: #c7e78b;
+    width: 4px;
+    height: 0px;
+    border-right: 16px solid transparent;
+    border-bottom: 10px solid #c7e78b;
+    border-left: 9px solid transparent;
+    transform: rotate(40deg);
+}
+
+.color-point::before {
+    border-right: 13px solid transparent;
+    border-bottom: 11px solid #c7e78b;
+    border-left: 15.5px solid transparent;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: 0px;
+    left: -8px;
+    display: block;
+    content: '';
+    transform: rotate(69deg);
+}
+
+.color-point::after{
+    position: absolute;
+    display: block;
+    color: #c7e78b;
+    top: -5px;
+    left: -4px;
+    width: 0px;
+    height: 0px;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #c7e78b;
+    border-left: 10px solid transparent;
+    transform: rotate(-75deg);
+    content: '';
+}
+
+.font-box, .rewoard-box {
+    border: 0.0625rem solid #dee2e6;
+    width: 100%;
+    border-radius: 5px;
+    padding: 1%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* 배송 및 리워드 수령 정보 박스 크기*/
+.memo {
+    margin-top: auto;
+}
+
+.rewoard-box {
+    width: 315px;
+}
+
+.rewoard-box2 {
+    width: 315px;
+}
+
+.font-box {
+    width: 280px;
+}
+
+.btn-rewradAddress, #detailed-address {
+    border: 0.0625rem solid #dee2e6;
+    width: 100%;
+    border-radius: 5px;
+    padding: 1%;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+#detailed-address {
+    margin-top: 10px;
+   
+}
+
+.rewoard-box3 {
+    margin-top: 3%;
+    display: none;
+}
+
+.memo {
+    display: inline;
+}
+
+.outer{
+    border: 0.0625rem solid #dee2e6;
+}
+
+
+.inner {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+}
+
+.details {
+    border-bottom: 0.0625rem solid #dee2e6;
+    padding-bottom: 1.5625rem;
+    margin-bottom: 1.5625rem;
+}
+
+.wrapper2 {
+    position: sticky;
+}
+
+.table {
+    width: 100%;
+    margin-left: 0%;
+    font-size: 20px;
+}
+
+.guide {
+    border-top: 0.0625rem solid #dee2e6;
+    padding: 1.5625rem 1.25rem;
+    background: #f8f9fa;
+}
+
+.clearfix {
+    font-size: 20px;
+    margin-bottom: 2rem;
+    
+}
+
+.float-left {
+    float: left!important;
+}
+
+.float-right {
+    float: right!important;
+}
+
+.btn-point {
+    margin-top: 5%;
+    background-color: #81AE64;
+    border-color: #81AE64;
+    color: #fff;
+    width: 100%;
+}
+
+.btn-point {
+    padding: 1.625rem 0.9375rem;
+    margin-left: 2px;
+    background-color: #81AE64;
+    width: 500px;
+    height: 70px;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 50px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+}
+
+p {
+    font-weight: 500;
+}
+
+.tight {
+    list-style: none;
+}
+
+#supporterPhoneNumber {
+    border: 0.0625rem solid #dee2e6;
+    width: 95%;
+    border-radius: 5px;
+    padding: 2%;
+}
+
+.btn {
+    /* width: 90px;
+    height: 90px; */
+    background-color: white;
+    border-width: 3px;
+    /* border-color:#81AE64; */
+    
+}
+
+.content ul li {
+    /* position :relative; */
+    display: inline-block;
+}
+
+
+
+.img {
+    /* margin-left: 40px; */
+    width: 50px;
+    height: 50px;
+    position: relative;
+    cursor: pointer;
+}
+
+.off {
+    /* margin-left: 40px; */
+    display: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+/* 카드 정보 화면*/
+.pay1 {
+    text-align: left;
+    padding-top: 0.9375rem;
+    max-width: 29.375rem;
+}
+
+.credit-card {
+    background: #49545f;
+    color: #fff;
+    position: relative;
+    padding-top: 75%;
+    border-radius: 0.25rem;
+    border: 0.0625rem solid #eee;
+}
+
+.wrapper3 {
+    /* padding: 3%; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+}
+
+.credit-card >.wrapper3 .name {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: .0625rem;
+
+}
+
+.credit-card >.wrapper3 .rect {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: .0625rem;
+}
+
+.credit-card >.wrapper3 .num {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: 0.5rem;
+}
+
+.credit-card >.wrapper3 .date {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: 0.5rem;
+}
+
+.credit-card>.wrapper3 .silver {
+    background-color: white;
+    height: 3.75rem;
+}
+
+.btn3 {
+    float: right;
+    /* margin: 0.3125rem 0; */
+    padding: 0.625rem 0.3125rem;
+    margin-right: 2%;
+    background-color: #81AE64;
+    color:#fff;
+    width: 100px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+#pay1 {
+    display: none;
+}
+
+.cutext, .cuprice{
+    font-size: 10px;
+    
+    /* display: none; */
+}

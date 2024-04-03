@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.user.pay.dao.PaymentMapper">
+	
+	<resultMap id="payOrderResultMap" type="com.greedy.togather.user.pay.dto.PaymentDTO">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+ 		<!-- <association property="projName" resultMap="viewProjectDetailResultMap"/> -->
+	</resultMap>
+	
+	<!-- 카테고리 선택 or 검색어 입력을 통해 프로젝트 리스트 조회를 위한 resultMap -->
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="viewProjectsResultMap">
+		<id property="projNo" column="PROJ_NO" />
+		<result property="projName" column="PROJ_NM" />
+		<result property="projSummary" column="PROJ_SUMMARY" />
+		<result property="fundingEndDate" column="FUNDING_END_DATE" />
+		<result property="fundingGoal" column="FUNDING_GOAL" />
+		<result property="fundingAchive" column="FUNDING_ACHIVE" />
+		<result property="projStatus" column="PROJ_STATUS" />
+		<result property="leftDays" column="LEFT_DAYS" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="percent" column="PERCENT" /> <!-- 쿼리문에서 가공된 데이터 -->
+
+		<association property="category" resultMap="categoryResultMap" />
+		<association property="maker" resultMap="makerResultMap" />
+		<collection property="likeList" resultMap="likeResultMap" />
+		<collection property="fileList" resultMap="fileResultMap" />
+	</resultMap>
+
+	<!-- 프로젝트의 상세 페이지 조회를 위한 resultMap -->
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="viewProjectDetailResultMap">
+		<id property="projNo" column="PROJ_NO" />
+		<result property="userNo" column="USER_NO" />
+		<result property="projName" column="PROJ_NM" />
+		<result property="projDetail" column="PROJ_DETAIL" />
+		<result property="projInfoTitle" column="PROJ_INFO_TITLE" />
+		<result property="projInfoBody" column="PROJ_INFO_BODY" />
+		<result property="fundingEndDate" column="FUNDING_END_DATE" />
+		<result property="fundingGoal" column="FUNDING_GOAL" />
+		<result property="fundingAchive" column="FUNDING_ACHIVE" />
+		<result property="projStatus" column="PROJ_STATUS" />
+		<result property="projReview" column="PROJ_REVIEW" />
+		<result property="leftDays" column="LEFT_DAYS" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="percent" column="PERCENT" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalLikes" column="TOTAL_LIKES" /> <!-- 쿼리문에서 가공된 데이터 -->
+
+		<association property="maker" resultMap="makerResultMap" />
+		<!-- <collection property="likeList" resultMap="likeResultMap"/> -->
+		<collection property="fileList" resultMap="fileResultMap" />
+		<collection property="replyList" resultMap="replyResultMap" />
+	</resultMap>
+
+	<!-- CategoryDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.CategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATEGORY_NO" />
+		<result property="projField" column="PROJ_FIELD" />
+	</resultMap>
+
+	<!-- MakerDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.MakerDTO" id="makerResultMap">
+		<id property="projNo" column="PROJ_NO" />
+		<result property="makerProfileName" column="MAKER_PROFILE_NM"/>
+		<result property="makerName" column="MAKER_NM" />
+		<result property="maerAddress" column="MAKER_ADDRESS" />
+		<result property="makerPhone" column="MAKER_PHONE" />
+		<result property="makerEmail" column="MAKER_EMAIL" />
+		<result property="makerIntro" column="MAKER_INTRO" />
+	</resultMap>
+
+	<!-- LikeDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.LikeDTO" id="likeResultMap">
+		<id property="likeNo" column="LIKE_NO" />
+		<result property="userNo" column="USER_NO" />
+		<result property="projNo" column="PROJ_NO" />
+		
+		<collection property="user" javaType="com.greedy.togather.user.user.model.dto.UserDTO">
+			<id property="userNo" column="USER_NO" />
+		</collection>
+	</resultMap>
+
+	<!-- RewardDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.RewardDTO" id="rewardResultMap">
+		<id property="rewardNo" column="REWARD_NO" />
+		<result property="projNo" column="PROJ_NO" />
+		<result property="rewardName" column="REWARD_NM" />
+		<result property="rewardContent" column="REWARD_CONTENT" />
+		<result property="rewardPrice" column="REWARD_PRICE" />
+		<result property="rewardFee" column="REWARD_FEE" />
+		<result property="rewardDueDate" column="REWARD_DUE_DATE" />
+		<result property="orderCount" column="ORDER_COUNT" /> <!-- 쿼리문에서 가공된 데이터 -->
+
+		<collection property="orderList" resultMap="orderResultMap" />
+	</resultMap>
+
+	<!-- ReplyDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.ReplyDTO" id="replyResultMap">
+		<id property="replyNo" column="REPLY_NO" />
+		<result property="userNo" column="USER_NO" />
+		<!-- <result property="projNo" column="PROJ_NO" /> --> <!-- 댓글이 없을 경우, 페이지가 로드되지 않으므로 주석처리 -->
+		<result property="replyBody" column="REPLY_BODY" />
+		<result property="replyRegDate" column="REPLY_REG_DATE" />
+		<result property="donation" column="DONATION" />
+		<result property="userId" column="USER_ID" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalDonation" column="TOTAL_DONATION" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalReply" column="TOTAL_REPLY" /> <!-- 쿼리문에서 가공된 데이터 -->
+
+		<association property="writer" javaType="com.greedy.togather.user.user.model.dto.UserDTO">
+			<id property="userNo" column="USER_NO" />
+			<result property="email" column="EMAIL" />
+			<result property="pwd" column="PWD" />
+			<result property="userNm" column="USER_NM" />
+			<result property="profileNm" column="PROFILE_NM" />
+			<result property="phone" column="PHONE" />
+			<result property="address" column="ADDRESS" />
+			<result property="joinDate" column="JOIN_DATE" />
+			<result property="quitDate" column="QUIT_DATE" />
+			<result property="quitYn" column="QUIT_YN" />
+			<result property="userToken" column="USER_TOKEN" />
+		</association>
+	</resultMap>
+
+	<!-- FileDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.FileDTO" id="fileResultMap">
+		<id property="fileNo" column="FILE_NO" />
+		<result property="projNo" column="PROJ_NO" />
+		<result property="fileType" column="FILE_TYPE" />
+		<result property="originalFileName" column="ORIGINAL_FILE_NM" />
+		<result property="savedFileName" column="SAVED_FILE_NM" />
+		<result property="filePath" column="FILE_PATH" />
+		<result property="thumPath" column="THUM_PATH" />
+	</resultMap>
+
+	<!-- OrderDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.OrderDTO" id="orderResultMap">
+		<id property="orderNo" column="ORDER_NO" />
+		<result property="rewardNo" column="REWARD_NO" />
+	</resultMap>
+	
+	<!-- PayOrderDTO -->
+	<resultMap type="com.greedy.togather.user.pay.dto.PayOrderDTO" id="PayOrderMentResultMap">
+		<id property="orderNo" column="ORDER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="rewardQuantity" column="REWARD_QUANTITY"/>
+		<result property="rewardPrice" column="REWARD_PRICE"/>
+		<result property="extraReward" column="EXTRA_REWARD"/>
+		<result property="deliveryFee" column="DELIVERY_FEE"/>
+		<result property="dcPrice" column="DC_PRICE"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		
+		<association property="reward" resultMap="rewardResultMap"/>
+		<association property="project" resultMap="viewProjectDetailResultMap"/>
+		<association property="payment" resultMap="payOrderResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.pay.dto.RefundDTO" id="RefundDTOResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="refundDate" column="REFUND_DATE"/>
+		<result property="refundPrice" column="REFUND_PRICE"/>
+		<result property="refundReason" column="REFUND_REASON"/>
+		<result property="refundStatus" column="REFUND_STATUS"/>
+		
+		<association property="userNo" resultMap="loginUserResultMap"/>
+		<association property="orderNo" resultMap="PayOrderMentResultMap"/>
+		<association property="projNo" resultMap="viewProjectDetailResultMap"/>
+		<association property="projName" resultMap="viewProjectDetailResultMap"/>
+	</resultMap>
+	
+		<resultMap id="loginUserResultMap" type="com.greedy.togather.user.user.model.dto.UserDTO">
+		<id property="userNo" column="USER_NO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="profileNm" column="PROFILE_NM"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="quitYn" column="QUIT_YN"/>
+		<result property="userToken" column="USER_TOKEN"/>
+	</resultMap>
+	
+		<select id="selectProjectDetail" resultMap="viewProjectDetailResultMap">
+		SELECT
+			A.PROJ_NO
+	    ,   TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    ,   A.PROJ_NM
+	    ,   A.FUNDING_ACHIVE
+	    ,   TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    ,   A.FUNDING_GOAL AS
+	    ,   C.MAKER_PROFILE_NM
+	    ,   C.MAKER_NM
+	    ,   C.MAKER_INTRO
+	    ,   (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = A.PROJ_NO) AS TOTAL_LIKES
+	    ,   A.PROJ_INFO_TITLE
+	    ,   A.PROJ_INFO_BODY
+	    ,   A.PROJ_DETAIL
+	    ,   A.PROJ_REVIEW
+	    ,   B.SAVED_FILE_NM
+	    ,   B.FILE_PATH
+	    ,   D.REPLY_NO
+        ,   D.REPLY_BODY
+        ,   D.REPLY_REG_DATE
+        ,   D.DONATION
+	    ,   E.PROFILE_NM
+	    ,   SUBSTR(E.EMAIL, 1, INSTR(E.EMAIL, '@') -1) AS USER_ID
+	    FROM TBL_PROJECT A
+	    LEFT OUTER JOIN TBL_FILE B ON(A.PROJ_NO = B.PROJ_NO AND B.FILE_TYPE IN ('대표사진', '서브사진'))
+	    LEFT JOIN TBL_MAKER C ON(A.PROJ_NO = C.PROJ_NO)
+	    LEFT JOIN TBL_REPLY D ON(A.PROJ_NO = D.PROJ_NO)
+	    LEFT JOIN TBL_USER E ON(D.USER_NO = E.USER_NO)
+	    WHERE A.PROJ_NO = #{ projNo }
+	    AND A.PROJ_STATUS IN ('진행', '마감')
+	    ORDER BY D.REPLY_NO DESC
+	</select>
+	
+		<!-- 프로젝트 상세 페이지 중, 리워드 조회 -->
+	<select id="selectRewardList" resultMap="rewardResultMap">
+		SELECT
+			A.REWARD_NO
+	    ,   A.REWARD_NM
+	    ,   A.REWARD_CONTENT
+	    ,   A.REWARD_PRICE
+	    ,   A.REWARD_DUE_DATE
+	    ,   (SELECT COUNT(ORDER_NO) FROM TBL_ORDER B WHERE B.REWARD_NO = A.REWARD_NO) AS ORDER_COUNT
+	    FROM TBL_REWARD A
+	   WHERE A.REWARD_NO = #{ rewardNo }
+	    <!-- WHERE A.PROJ_NO = #{ projNo } -->
+	    <!-- ORDER BY A.REWARD_PRICE -->
+	</select>
+	
+	<insert id="registOrder">
+		INSERT
+		INTO TBL_ORDER A
+		(
+		  A.ORDER_NO
+		, A.USER_NO
+		, A.PROJ_NO
+		, A.REWARD_NO
+		, A.ORDER_DATE
+		, A.REWARD_QUANTITY
+		, A.REWARD_PRICE
+		, A.EXTRA_REWARD
+		, A.DELIVERY_FEE
+		, A.DC_PRICE
+		, A.PAY_PRICE
+		)
+		VALUES
+		(
+		  'OR'||LPAD(SEQ_ORDER_NO.NEXTVAL,9,'0')
+		, #{ userNo }
+		, #{ reward.projNo }
+		, #{ reward.rewardNo }
+		, SYSDATE
+		, #{ rewardQuantity }
+		, #{ rewardPrice }
+		, NULL
+		, #{ deliveryFee }
+		, NULL
+		, #{ payPrice }
+		)
+	</insert>
+	
+	<insert id="registDelivery">
+	INSERT
+	INTO TBL_DELIVERY B
+	(
+	  B.ORDER_NO
+	, B.RECIPIENT_NM
+	, B.RECIPIENT_ADDRESS
+	, B.RECIPIENT_PHONE
+	, B.DELIVERY_NM
+	, B.INVOICE_NO
+	, B.DELIVERY_START_DATE
+	, B.BUY_FIXED_DATE
+	, B.DELIVERY_STATUS
+	)
+	VALUES
+	(
+	  'OR'||LPAD(SEQ_ORDER_NO.CURRVAL,9,'0')
+	, #{ delivery.recipientNm }
+	, #{ delivery.recipientAddress }
+	, #{ delivery.recipientPhone }
+	, NULL
+	, NULL
+	, NULL
+	, NULL
+	, NULL
+	)
+	</insert>
+	
+	<insert id='registPayment'>
+	INSERT
+	INTO TBL_PAYMENT C
+	(
+	  C.PAY_NO
+	, C.ORDER_NO
+	, C.PAY_METHOD
+	, C.PAY_PRICE
+	, C.PAY_DATE
+	)
+	VALUES
+	(
+	  'PY'||LPAD(SEQ_PAY_NO.NEXTVAL,9,'0')
+	, 'OR'||LPAD(SEQ_ORDER_NO.CURRVAL,9,'0')
+	, #{ payment.payMethod }
+	, #{ payPrice }
+	, SYSDATE
+	)
+	</insert>
+	
+	<update id="updatefundingAchive">
+	UPDATE
+		   TBL_PROJECT
+	  SET
+    FUNDING_ACHIVE = COALESCE(FUNDING_ACHIVE, 0) + #{payPrice}
+	 WHERE PROJ_NO = #{ reward.projNo }
+	</update>
+	
+	<select id="selectPayment" resultMap="payOrderResultMap">
+	SELECT *
+	  FROM (
+	        SELECT *
+	          FROM TBL_PAYMENT
+	         ORDER BY PAY_NO DESC
+	        ) 
+	 WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertRefund">
+	INSERT 
+	INTO TBL_REFUND
+	(
+	  PAY_NO
+	, REFUND_DATE
+	, REFUND_PRICE
+	, REFUND_REASON
+	, REFUND_STATUS  
+	)
+	VALUES
+	(
+	  #{ payNo }
+	, SYSDATE
+	, #{ payPrice }
+	, '리워드불량'
+	, 'Yes'
+	)
+	</insert>
+	
+	<select id="selectFundList" resultMap="PayOrderMentResultMap">
+
+SELECT
+    A.ORDER_NO,
+    A.USER_NO,
+    A.ORDER_DATE,
+    A.REWARD_QUANTITY,
+    A.REWARD_PRICE,
+    A.EXTRA_REWARD,
+    A.DELIVERY_FEE,
+    A.DC_PRICE,
+    A.PAY_PRICE,
+    B.PROJ_NO,
+    B.REWARD_NM,
+    C.PROJ_NM
+FROM
+    TBL_ORDER A
+    LEFT JOIN TBL_REWARD B ON (A.PROJ_NO = B.PROJ_NO AND A.REWARD_NO = B.REWARD_NO)
+    LEFT JOIN TBL_PROJECT C ON B.PROJ_NO = C.PROJ_NO
+    LEFT JOIN TBL_PAYMENT D ON A.ORDER_NO = D.ORDER_NO
+WHERE
+    A.USER_NO = #{ userNo } AND NOT EXISTS (
+        SELECT
+            1
+        FROM
+            TBL_REFUND E
+        WHERE
+            D.PAY_NO = E.PAY_NO AND E.REFUND_STATUS = 'Yes'
+    )
+GROUP BY
+    A.ORDER_NO,
+    A.USER_NO,
+    A.ORDER_DATE,
+    A.REWARD_QUANTITY,
+    A.REWARD_PRICE,
+    A.EXTRA_REWARD,
+    A.DELIVERY_FEE,
+    A.DC_PRICE,
+    A.PAY_PRICE,
+    B.PROJ_NO,
+    B.REWARD_NM,
+    C.PROJ_NM
+ORDER BY
+    A.ORDER_DATE DESC
+
+	</select>
+	
+	<select id="selectFund" resultMap="PayOrderMentResultMap">
+    SELECT DISTINCT
+		   A.ORDER_NO
+		 , A.USER_NO
+		 , A.ORDER_DATE
+		 , A.REWARD_QUANTITY
+		 , A.REWARD_PRICE
+		 , A.EXTRA_REWARD
+		 , A.DELIVERY_FEE
+		 , A.DC_PRICE
+		 , A.PAY_PRICE
+		 , B.PROJ_NO
+		 , B.REWARD_NM
+		 , C.PROJ_NM
+		 , D.PAY_NO
+	  FROM TBL_ORDER A
+ LEFT JOIN TBL_REWARD B ON(A.PROJ_NO = B.PROJ_NO)
+ LEFT JOIN TBL_PROJECT C ON (B.PROJ_NO = C.PROJ_NO)
+ LEFT JOIN TBL_PAYMENT D ON (A.ORDER_NO = D.ORDER_NO)
+ LEFT JOIN TBL_REFUND E ON (D.PAY_NO = E.PAY_NO)
+	 WHERE A.ORDER_NO = #{ orderNo }
+	</select>	
+	<select id="selectRefund" resultMap="RefundDTOResultMap">
+<!-- 	SELECT
+		   A.PAY_NO
+		 , A.REFUND_DATE
+		 , A.REFUND_PRICE
+		 , A.REFUND_REASON
+		 , C.USER_NO
+		 , D.ORDER_NO
+		 , E.PROJ_NO
+		 , E.PROJ_NM
+      FROM TBL_REFUND A
+      FULL OUTER JOIN TBL_PAYMENT B ON(A.PAY_NO = B.PAY_NO)
+      FULL OUTER JOIN TBL_ORDER D ON(B.ORDER_NO = D.ORDER_NO)
+      FULL JOIN TBL_ORDER C ON(D.ORDER_NO = C.ORDER_NO)
+      FULL OUTER JOIN TBL_PROJECT E ON(C.PROJ_NO = E.PROJ_NO)
+     WHERE C.USER_NO = #{ userNo }
+       AND 
+    ORDER BY A.REFUND_DATE DESC   -->
+SELECT 
+    A.PAY_NO
+    , A.REFUND_DATE
+    , A.REFUND_PRICE
+    , A.REFUND_REASON
+    , A.REFUND_STATUS
+    , C.USER_NO
+    , D.ORDER_NO
+    , E.PROJ_NO
+    , E.PROJ_NM
+FROM TBL_REFUND A
+RIGHT JOIN TBL_PAYMENT B ON (A.PAY_NO = B.PAY_NO)
+LEFT JOIN TBL_ORDER D ON (B.ORDER_NO = D.ORDER_NO)
+LEFT JOIN TBL_PROJECT E ON (D.PROJ_NO = E.PROJ_NO)
+LEFT JOIN TBL_ORDER C ON (D.USER_NO = C.USER_NO)
+WHERE C.USER_NO = #{ userNo }
+  AND A.REFUND_STATUS = 'Yes'
+ORDER BY A.REFUND_DATE DESC
+	</select>
+	
+	<select id="selectFundList1" resultType="int">
+<!-- 	SELECT DISTINCT
+	COUNT(*)
+	FROM TBL_ORDER A
+	LEFT JOIN TBL_REWARD B ON(A.PROJ_NO = B.PROJ_NO)
+	LEFT JOIN TBL_PROJECT C ON(B.PROJ_NO = C.PROJ_NO)
+	LEFT JOIN TBL_PAYMENT D ON(A.ORDER_NO = D.ORDER_NO)
+	WHERE A.USER_NO = #{ userNo }
+	AND NOT EXISTS (SELECT 1 FROM TBL_REFUND E WHERE D.PAY_NO = E.PAY_NO AND
+	E.REFUND_STATUS = 'Yes')
+	ORDER BY A.ORDER_DATE DESC; -->
+	
+SELECT COUNT(DISTINCT A.ORDER_NO)
+FROM TBL_ORDER A 
+LEFT JOIN TBL_REWARD B ON (A.PROJ_NO = B.PROJ_NO AND A.REWARD_NO = B.REWARD_NO) 
+LEFT JOIN TBL_PROJECT C ON B.PROJ_NO = C.PROJ_NO 
+LEFT JOIN TBL_PAYMENT D ON A.ORDER_NO = D.ORDER_NO 
+WHERE A.USER_NO = #{userNo} AND NOT EXISTS (
+    SELECT 1 
+    FROM TBL_REFUND E 
+    WHERE D.PAY_NO = E.PAY_NO AND E.REFUND_STATUS = 'Yes'
+) 
+ORDER BY A.ORDER_DATE DESC
+	</select>
+
+</mapper>
+
+
+	

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/main/CSS/adminMain.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>adminMain</title>
+</head>
+<body>
+     
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+
+    <div class="main">
+        <div class="content">
+            <a class="cards user" href="admin/user/list">
+                <i class="bi bi-file-earmark-person"></i>
+                <div class="text">회원</div>
+            </a>
+            <a class="cards project" href="/">
+                <i class="bi bi-file-earmark-ppt"></i>
+                <div class="text">프로젝트</div>
+            </a>
+            <a class="cards reward" href="#">
+                <i class="bi bi-gift"></i>
+                <div class="text">리워드</div>
+            </a>
+            <a class="cards order" href="/admin/orderManage/orderList">
+                <i class="bi bi-cart"></i>
+                <div class="text">주문</div>
+            </a>
+            <a class="cards settle" href="admin/settle/list">
+                <i class="bi bi-calculator"></i>
+                <div class="text">정산</div>
+            </a>
+            <a class="cards board" href="/admin/board/list">
+                <i class="bi bi-pencil-square"></i>
+                <div class="text">게시판</div>
+            </a>
+            <a class="cards mainpage" href="#">
+                <i class="bi bi-window"></i>
+                <div class="text">메인 관리</div>
+            </a>
+            <a class="cards coupon" href="#">
+                <i class="bi bi-cash-coin"></i>
+                <div class="text">쿠폰관리</div>
+            </a>
+        </div>   
+    </div>
+
+</body>
+</html>

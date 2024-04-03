@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/submitProject.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>submitProject</title>
+</head>
+<body>
+	<div th:replace="common/header/userHeader.html"></div>
+	
+    <div class="wrapper">
+        <div class="text">
+            <h1>프로젝트 신청이<br> 정상적으로 접수되었습니다 :)</h1>
+            <h3>To-Gather와 함께 동행해주셔서 감사해요!</h3>
+            <p>접수된 프로젝트는 영업일 2일 이내 심사하여 피드백 드리겠습니다.</p>
+        </div>
+        <img class="logo" src="/common/userCommon/images/logo.png">
+    </div>
+    
+    <div th:replace="common/footer/userFooter.html"></div>
+</body>
+</html>

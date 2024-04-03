@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"><head>
+<head>  
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="/admin/orderManage/CSS/orderManage2.css">
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>관리자 주문관리2</title>
+</head>
+<body>
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+   
+    <div class="content">
+
+       
+
+  <div class="content1">
+    <div class="menu-title">주문 관리 > 정보 조회</div>
+  </div>
+
+  		<br>
+     <div class="content2">
+        
+          	<tr th:each="order : ${ orderManage2 }" class="table-content">
+           <p>주문 정보</p>
+            <table>
+                <tr>
+                    <th class="table-header">주문 번호</th>
+                    <td colspan="3" class="table-body" th:text="${ order.orderNo }"></td>
+
+                </tr>
+                <tr>
+                    <th class="table-header" >프로젝트 번호</th>
+                    <td colspan="3" class="table-body" th:text="${ order.projNo }"></td>
+                </tr>
+                <tr>
+                    <th class="table-header" >주문자 번호</th>
+                    <td colspan="3" class="table-body" th:text="${ order.userNo }"></td>
+                </tr>
+               
+            </table>
+            </form> 
+        </div>
+
+<div class="content3">
+            <p>Maker 정보</p>
+            <table>
+                <tr class="table-header" >
+                <th style="width: 100px">Maker 이름</th>
+				<th style="width: 100px">이메일</th>
+				<th style="width: 100px">휴대폰</th>
+				<th style="width: 300px">주소</th>
+				
+                
+                
+                
+                    
+                </tr>
+                		
+                	<tr class="table-content" th:each=" order : ${orderManage2}">
+                    <td style="height: 35px" th:text="${ order.makerNm }"></td>
+                    <td style="height: 35px" th:text="${ order.makerEmail }"></td>
+                    <td style="height: 35px" th:text="${ order.makerPhone }"></td>
+                    <td style="height: 35px" th:text="${ order.makerAddress }" ></td>
+
+                </tr>
+                </table>
+                </div>
+                <div class="content3">
+                
+               <p>Supporter 정보</p>
+            <table>
+                <tr class="table-header" >
+					<th style="width: 150px">이메일</th>
+					<th style="width: 150px">휴대폰</th>
+					<th style="width: 300px">주소</th>
+				
+                </tr>
+                		
+                	<tr class="table-content" th:each=" order : ${orderManage2}">
+                    <td style="height: 35px" th:text="${ order.email }"></td>
+                    <td style="height: 35px" th:text="${ order.phone }"></td>
+                    <td style="height: 35px" th:text="${ order.address }" ></td>
+
+                </tr>  
+                
+                
+                
+                		
+            </table>
+            
+               
+				
+			<div class="content4">
+  			<button type="button" class="order-back" id="backBtn">이전 페이지</button>
+			</div>
+
+			<script>
+ 			 const backBtn = document.getElementById("backBtn");
+
+  				backBtn.addEventListener("click", function() {
+   				 window.location.href = "/admin/orderManage/orderList";
+  				});
+			</script>
+
+				<style>
+  				.order-back {
+   				 border: 0px;
+   				 border-radius: 8px;
+   				 width: 70px;
+  				 height: 30px;
+   				 background-color: #81ae64;
+    			 color: #ffffff;
+    			 cursor: pointer;
+  				}
+
+  				 .order-back:hover {
+    			  background-color: #c7e78e;
+    			 }
+				</style>
+
+             </div>
+            </div>
+           </body>
+           
+           
+     </html>

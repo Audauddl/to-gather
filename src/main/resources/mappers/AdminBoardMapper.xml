@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.board.model.dao.AdminBoardMapper">
+
+   <resultMap type="com.greedy.togather.admin.board.model.dto.AdminBoardDTO"  id="boardResultMap">
+    <id property="boardNo" column="BOARD_NO"/>
+    <result property="boardType" column="BOARD_TYPE"/>
+    <result property="boardTitle" column="BOARD_TITLE"/>
+    <result property="boardContent" column="BOARD_CONTENT"/>
+    <result property="writeDate" column="WRITE_DATE"/>
+    <result property="postStatus" column="POST_STATUS"/>
+    <result property="modifyDate" column="MODIFY_DATE"/>
+    <result property="boardTitleHead" column="BOARD_TITLE_HEAD"/>
+    <result property="views" column="BOARD_VIEWS"/>
+    <result property="userNo" column="USER_NO"/>
+</resultMap>
+
+<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+    SELECT 
+        COUNT(*)
+    FROM TBL_BOARD
+    WHERE POST_STATUS = 'Y' <!-- POST_STATUS = 'Y' 상태인 게시물만 표시   -->
+    <if test="searchCondition == 'boardNo'">
+        AND BOARD_NO LIKE '%' || #{ searchValue } || '%'
+    </if>
+    <if test="searchCondition == 'boardType'">
+        AND NLS_UPPER(BOARD_TYPE) LIKE NLS_UPPER('%'||#{searchValue}||'%')
+                         <!-- 대문자 소문자 값 모두 검색 되게 설정  -->
+        
+        
+    </if>
+    <if test="searchCondition == 'boardTitle'">
+        AND BOARD_TITLE LIKE '%' || #{ searchValue } || '%'
+    </if>
+</select>
+
+<select id="selectBoardList" resultMap="boardResultMap">
+    SELECT   
+        BOARD_NO
+        , BOARD_TYPE
+        , BOARD_TITLE
+        , WRITE_DATE
+        , VIEWS
+    FROM (
+        SELECT
+            ROWNUM RNUM
+            , BOARD_NO
+            , BOARD_TYPE
+            , BOARD_TITLE
+            , WRITE_DATE
+            , VIEWS
+        FROM (
+            SELECT
+                BOARD_NO
+                , BOARD_TYPE
+                , BOARD_TITLE
+                , WRITE_DATE
+                , VIEWS
+            FROM TBL_BOARD
+            WHERE POST_STATUS = 'Y' <!-- POST_STATUS = 'Y' 상태인 게시물만 표시   -->
+            <if test="searchCondition == 'boardNo'">
+                AND BOARD_NO LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'boardType'">
+                AND NLS_UPPER(BOARD_TYPE) LIKE NLS_UPPER('%'||#{searchValue}||'%')
+                 			<!-- 대문자 소문자 값 모두 검색 되게 설정  -->
+                
+            </if>
+            <if test="searchCondition == 'boardTitle'">
+                AND BOARD_TITLE LIKE '%' || #{ searchValue } || '%'
+            </if>
+            ORDER BY to_number(board_no) DESC
+        )
+        WHERE ROWNUM &lt;= #{ endRow }
+    ) WHERE RNUM &gt;= #{ startRow }
+</select>
+</mapper>

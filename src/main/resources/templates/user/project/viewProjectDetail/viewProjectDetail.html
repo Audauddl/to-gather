@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/viewProjectDetail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>viewProjectDetail</title>
+</head>
+<body>
+	<div th:replace="common/header/userHeader.html"></div>
+	<script type="text/javascript" src="/user/project/js/viewProjectDetail.js"></script> 
+	<script src="/user/project/js/jquery-3.6.3.min.js"></script>
+	 
+
+    <div class="wrapper">
+        <!-- 대표 사진 -->
+        <div class="slider">
+        	<th:block th:each=" file : ${ detail.fileList }">
+            		<img th:src="${ file.filePath + file.savedFileName }" class="slide">
+		    </th:block>
+        </div>
+
+        <!-- 프로젝트 정보 -->
+        <div class="info">
+        	<th:block th:if="${ detail.leftDays } > 0">
+            	<div id="days"><span th:text="${ detail.leftDays }"></span>일 남음</div>
+            </th:block>
+            <th:block th:if="${ detail.leftDays } <= 0">
+            	<div id="days">마감</div>
+            </th:block>
+            <h1 id="title" th:text="${ detail.projName }"></h1>
+            <div id="funding">
+            	<p id="amount" th:text="${detail.fundingAchive == 0 ? '0원' : #numbers.formatInteger(detail.fundingAchive, 3, 'COMMA') + '원'}"></p>
+                <p id="percent"><span th:text="${ detail.percent }"></span>%</p>
+                <div id="goal-box">
+                <p id="goal"><span th:text="${ #numbers.formatInteger(detail.fundingGoal, 3, 'COMMA') }"></span>원 목표</p>
+                </div>
+            </div>
+            <th:block sec:authorize="isAnonymous()">
+            	<div id="maker" onclick="location.href='/user/login'">
+	                	<img id="maker-image" th:src="${ detail.maker.makerProfileName }">
+	                <div id="maker-info">
+	                    <p id="maker-name" th:text="${ detail.maker.makerName }"></p>
+	                    <p id="maker-summary" th:text="${ detail.maker.makerIntro }"></p>
+	                </div>
+	            </div>
+			</th:block>
+			<th:block sec:authorize="isAuthenticated()">
+	            <div id="maker" onclick="sendEmailToMaker()">
+	                	<img id="maker-image" th:src="${ detail.maker.makerProfileName }">
+	                <div id="maker-info">
+	                    <p id="maker-name" th:text="${ detail.maker.makerName }"></p>
+	                    <p id="maker-summary" th:text="${ detail.maker.makerIntro }"></p>
+	                </div>
+	            </div>
+			</th:block>
+            
+            <script>
+	            /* 메이커 박스 클릭 시, 해당 메이커의 이메일로 1:1 문의 기능 */
+	        	function sendEmailToMaker() {
+	        		let email = '[[${ detail.maker.makerEmail }]]';
+	        	    let subject = "프로젝트에 대해 문의드립니다 :)";
+	        	    let body = "안녕하세요 :) " + "[[${ detail.maker.makerName }]]" + "님";
+	        	    window.location.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+	        	}
+            </script>
+            
+            <div id="boxes">
+                <div id="like-box" th:data-proj-no="${ detail.projNo }">
+                	<th:block sec:authorize="isAnonymous()">
+                	<img src='/user/project/images/like-empty.png' id="like-btn" class="like" onclick="location.href='/user/login'">
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                    <img th:src="${ loadIsLiked == 1 ? '/user/project/images/like-full.png' : '/user/project/images/like-empty.png'}" id="like-btn" class="like">
+                    </th:block>
+                    <p id="like-people"><span th:text="${ detail.totalLikes }"></span>명이 좋아합니다 :)</p>
+                </div>
+                <div id="share-box">
+                    <img src="/user/project/images/share.png" id="share">
+                    <p>공유하기</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스토리&후기 바 -->
+        <div class="story-bar">
+            <ul class="menu">
+                <flex>
+                    <li class="menu-bar is_on">
+                    <a href="#story" class="btn"><span>스토리</span></a>
+                    </li>
+                    <li class="menu-bar">
+                    <a href="#review" class="btn"><span>소식ㆍ후기</span></a>
+                    </li>
+                </flex>
+            </ul>
+        </div>
+
+        <!-- 스토리&후기 바디 -->
+        <div class="story-body">
+            <div th:utext="${ detail.projDetail }" id="story" class="content"></div>
+            <div id="review" class="content">
+            	<th:block th:if="${ detail.projReview == null }">
+		            <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
+		            <div class="create-review-box">
+		                <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
+		                <th:block sec:authorize="isAnonymous()">
+		                <button class="create-review-button" onclick="location.href='/user/login'">후기 작성하기</button>
+						</th:block>
+						<th:block sec:authorize="isAuthenticated()">
+						<th:block th:if="${ #authentication.principal.userNo == detail.userNo}">
+		                <button th:data-proj-no="${ detail.projNo }" class="create-review-button" id="create-review-button" onclick="createReview()">후기 작성하기</button>
+		                </th:block>
+		                <th:block th:unless="${ #authentication.principal.userNo == detail.userNo}">
+		                <button class="create-review-button" id="create-review-button" onclick="alert('해당 프로젝트의 Maker만 후기를 작성할 수 있습니다!');">후기 작성하기</button>
+		                </th:block>
+						</th:block>
+	            <th:block th:unless="${ detail.projReview == null }">
+	            	<div th:utext="${ detail.projReview }"></div>
+                </th:block>
+		            </div>
+		        </th:block>
+            </div>
+        </div>
+        <script>
+        	function createReview() {
+        	  const reviewButton = document.querySelector("#create-review-button");
+        	  const projNo = reviewButton.dataset.projNo;
+        	  console.log(projNo);
+        	  window.location.href = '/project/review?projNo=' + projNo;
+        	}
+        </script>
+
+        <!-- 리워드 안내 -->
+        <div class="guide">
+            <div id="title-box">
+                <p id="guide-title" th:text="${ detail.projInfoTitle }"></p>
+                <img src="/user/project/images/polygon.png" id="polygon">
+            </div>
+            <pre th:text="${ detail.projInfoBody }" id="guide-content">
+            </pre>
+        </div>
+
+        <script>
+            $(function(){
+                $("#title-box").click(function(){
+                    $("#guide-content").slideToggle();
+                })
+            })
+        </script>
+
+        <!-- 리워드 선택 바 -->
+        <div class="reward-bar">
+            <div id="choose-reward">리워드 선택</div>
+        </div>
+
+        <!-- 리워드 선택 바디 -->
+		<p hidden id="reward" ></p>
+        <div class="reward-body">
+            <th:block th:each="reward : ${ rewardList }">
+	            <div class="rewards">
+	                <div class="reward-header">
+	                    <p class="reward-title"><span th:text="${ #numbers.formatInteger(reward.rewardPrice, 3, 'COMMA')}" id="price"></span>원 펀딩</p>
+	                    <div id="supporters"><span th:text="${ reward.orderCount }"></span>명 참여</div>
+	                </div>
+	                <h3 th:text="${ reward.rewardName }" id="reward-name"></h3>
+	                <div id="reward-content">
+	                    <pre th:text="${ reward.rewardContent }">
+	                        
+	                    </pre>
+	                </div>
+	                <div id="reward-footer">
+	                <p id="expected">발송 예정일<br> : <span th:text="${ reward.rewardDueDate }" id="date"></span></p>
+	                <th:block th:if="${ detail.leftDays } > 0">
+	                	<button type="button" class="funding-button" th:onclick="|location.href='@{/pay/payScreen?(projNo=${detail.projNo},rewardNo=${reward.rewardNo})}'|">후원하기</button>
+	                </th:block>
+	                <th:block th:if="${ detail.leftDays } <= 0">
+	                	<button type="button" class="funding-button close">후원마감</button>
+	                </th:block>
+	                </div>
+	            </div>
+            </th:block>
+        </div>
+		
+        <!-- 댓글 -->
+        <div class="comment">
+        	<th:block th:if="${ donationAndReplyCount.totalDonation != 0 }">
+            	<div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
+            </th:block>
+            <th:block th:unless="${ donationAndReplyCount.totalDonation != 0 }">
+            	<div id="comment-title">총 댓글 기부금 <span th:text="${ donationAndReplyCount.totalDonation }" id="donation"></span>원</div>
+            </th:block>
+            <div id="comment-body">
+                <div id="comment-container">
+                	<th:block sec:authorize="isAnonymous()">
+                	<img th:src="'/user/project/images/profile4.png'" id="commenter">
+                	</th:block>
+                	<th:block sec:authorize="isAuthenticated()">
+                    <img th:src="${ #authentication.principal.profileNm == null? '/user/project/images/profile4.png' : #authentication.principal.profileNm }" id="commenter">
+                    </th:block>
+                    <th:block sec:authorize="isAnonymous()">
+                    <textarea id="comment-box" maxlength="500" placeholder="따뜻한 댓글을 작성해주세요! To-Gather가 기부금을 지원합니다 :)" onclick="location.href='/user/login'"></textarea>
+					</th:block>
+					<th:block sec:authorize="isAuthenticated()">
+                    <textarea id="comment-box" maxlength="500" placeholder="따뜻한 댓글을 작성해주세요! To-Gather가 기부금을 지원합니다 :)"></textarea>
+					</th:block>
+                </div>
+                <div id="mini-container">
+                    <p>내용을 작성하지 않으실 경우, '응원 합니다!'로 등록됩니다.</p>
+                    <p id="count-content"><span id="counter">0</span>/500</p>
+                    <button type="button" id="regist-comment">등록</button>
+                </div>
+                <script>
+                    /* 댓글 textarea 글자 수 세기 */
+                    $('#comment-box').keyup(function (e) {
+                        let content = $(this).val();
+                        $('#counter').text(content.length);
+                        
+                        // 글자수 제한
+                        if (content.length > 500) {
+                            alert('댓글은 500자까지 입력 가능합니다 :)');
+                        };
+                    });
+                    
+                    /* 등록 버튼 누르면 counter 초기화 */
+                    $('#regist-comment').click(function (e) {
+                    	$('#counter').text(0);
+                    })
+                </script>
+            </div>
+            <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count"></span>개</div>
+            <div id="comment-wrapper">
+		        <div th:each="reply : ${ detail.replyList }" id="comment-list">
+		          	<div class="loading">
+			            <div id="flex1">
+			                <div id="flex2">
+			                <p th:text="${ reply.userId }" id="user-id"></p>
+			                <th:block th:if="${ reply.donation == 100 }">
+			               		<p id="gift">✨100원</p>
+			                </th:block>
+			                </div>
+			                <p th:text="${ reply.replyRegDate }" id="regist-date"></p>
+			            </div>
+			            <div id="flex3">
+			               		<img th:src="${ reply.writer.profileNm == null ? '/user/project/images/profile4.png' : reply.writer.profileNm }" id="profiles">
+			                <div>
+			                    <textarea th:text="${ reply.replyBody }" id="comment" readonly></textarea>
+			                </div>
+			            </div>
+		            </div>
+	            </div>
+			</div>
+			<!-- 더보기 -->
+			<div class="more-button" id="more-button">more</div>
+			<script>
+				/* 더보기 페이징 기능 */
+			    load('#comment-wrapper', '3'); /* 기본 첫 화면에서 노출 될 프로젝트의 갯수 지정 */
+	
+			    document.querySelector('.more-button').addEventListener('click', function() {
+			       load('#comment-wrapper', '3', '#more-button');
+			    });
+	
+			    /* more 버튼을 클릭할 때 마다 실행 될 함수 */
+			    function load(id, cnt, btn) {
+			        let viewReply = document.querySelectorAll(id + ' .loading:not(.active)'); /* loading 중 active가 아닌 것 */
+			        let viewLength = viewReply.length; /* 화면에 노출되지 않은 프로젝트들의 개수 */
+			        let viewTotalCount;
+			        
+			        if (cnt < viewLength) {
+			            viewTotalCount = cnt;
+			        } else {
+			           viewTotalCount = viewLength;
+			            document.querySelector('.more-button').style.display = 'none'; /* 더이상 로드될 프로젝트가 없는 경우 more 버튼 display:none */
+			        }
+	
+			        for (let i = 0; i < viewTotalCount; i++) {
+			            viewReply[i].classList.add('active'); 
+			        }
+			    }
+			
+				/* 댓글 등록하기 */
+				if(document.getElementById("regist-comment")) {
+					
+					const registComment = document.getElementById("regist-comment");
+					const commentBox = document.getElementById("comment-box");
+					const counter = document.getElementById("counter");
+					
+					registComment.onclick = function(){
+						
+						/* 프로젝트 번호와 댓글 내용 변수에 담기 */
+						const projNo = '[[${ detail.projNo }]]';
+						const replyBody = commentBox.value;
+						
+						/* 비동기 통신 */
+						fetch("/project/registReply", {
+							method : 'POST',
+							headers : {
+								'Content-Type' : 'application/json;charset=UTF-8'
+							},
+							body : JSON.stringify({
+								/* ReplyDTO의 필드명: 변수명 (자동으로 ReplyDTO 타입으로 받을 수 있도록) */
+								projNo: projNo, 
+								replyBody: replyBody
+							})
+						})
+						.then(data => {
+							/* 수행이 완료되고 나서 실행할 것들 */
+							console.log(data);
+							commentBox.value = '';	// 댓글 입력 창 비우기
+							counter.value= 0;		// 글자 수 다시 0으로 만들기
+							loadReply();			// 댓글 다시 로드하기 (함수 사용)
+						})
+						.catch(error => console.log(error));
+					};
+				}
+				
+				/* 댓글 조회하기 */
+				function loadReply() {
+					
+					const projNo = '[[${ detail.projNo }]]';
+					
+					/* get방식 요청 */
+					fetch("/project/loadReply?projNo=" + projNo )
+					.then(result => result.json())
+					.then(data => {
+						console.log(data);
+						viewAllReply(data); /* 등록된 댓글을 포함한 최신 댓글 조회 */
+					})
+					.catch(error => console.log(error));
+				};
+				
+				/* 등록된 댓글을 포함한 최신 댓글 조회 */
+				function viewAllReply(replyList) { /* 배열 형태로 replyList 전달 받음 */
+					
+					const commentWrapper = document.querySelector("#comment-wrapper");
+					commentWrapper.innerHTML = ""; /* 원래 있던 내용 삭제 */
+					
+					replyList.forEach(reply => {
+						console.log("호출 되는 중!");
+						
+						/* 댓글 하나하나 동적으로 생성 */
+						const commentList = document.createElement('div');
+						const flex1 = document.createElement('div');
+						const flex2 = document.createElement('div');
+						const userId = document.createElement('p');
+						const gift = document.createElement('p');
+						const registDate = document.createElement('p');
+						const flex3 = document.createElement('div');
+						const profiles = document.createElement('img');
+						const divInFlex3 = document.createElement('div');
+						const comment = document.createElement('textarea');
+						
+						commentList.id = 'comment-list';
+						flex1.id = 'flex1';
+					 	flex2.id = 'flex2';
+					    flex3.id = 'flex3';
+					    userId.id = 'user-id';
+					    gift.id = 'gift';
+					    registDate.id = 'regist-date';
+					    profiles.id = 'profiles';
+					    comment.id = 'comment';
+					    
+					    commentList.appendChild(flex1);
+					    commentList.appendChild(flex3);
+						flex1.appendChild(flex2);
+						flex1.appendChild(registDate);
+						flex2.appendChild(userId);
+						flex2.appendChild(gift);
+						flex3.appendChild(profiles);
+						flex3.appendChild(divInFlex3);
+						divInFlex3.appendChild(comment);
+						
+						/* 프로필 사진 */
+						if(reply.writer.profileNm == null) {
+							profiles.src = '/user/project/images/profile4.png';
+						} else {
+							profiles.src = reply.writer.profileNm;
+						}
+						
+						/* 아이디 */
+						userId.textContent = reply.userId;
+						
+						/* 기부금 */
+						if (reply.donation == 100) {
+		                    gift.textContent = '✨100원';
+		                }
+						
+						/* 작성일 */
+						registDate.textContent = reply.replyRegDate;
+						
+						/* 댓글 내용 */
+						comment.textContent = reply.replyBody;
+						comment.readOnly = true;
+						
+						/* 새로 조회한 댓글 리스트 붙여주기 */
+						commentWrapper.appendChild(commentList);
+						
+					});
+				
+				}
+				
+				
+				
+				/* 좋아요 기능 */
+				$(document).ready(function() {
+					  // 좋아요 버튼 클릭 시
+					  $('#like-btn').on('click', function() {
+					    let projNo = $('#like-box').data('proj-no');
+					    let data = { projNo: projNo };
+					    /* LikeDTO의 필드명: 변수명 (자동으로 LikeDTO 타입으로 받을 수 있도록) */
+						console.log(projNo);
+					    $.ajax({
+					      type: 'POST',
+					      url: '/project/like',
+					      data: JSON.stringify(data),
+					      contentType: 'application/json;charset=UTF-8',
+					      success: function(result) {
+					    	  console.log(result);
+					        if (result === 'liked') {
+					          $('#like-btn').attr('src', '/user/project/images/like-full.png');
+					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) + 1) + '</span>명이 좋아합니다 :)');
+					        } else {
+					          $('#like-btn').attr('src', '/user/project/images/like-empty.png');
+					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) - 1) + '</span>명이 좋아합니다 :)');
+					        }
+					      },
+					      error: function(xhr, status, error) {
+					        alert('에러 발생!');
+					        console.log(xhr.responseText);
+					      }
+					    });
+					  });
+				});
+			</script>
+			
+        </div>
+    </div>
+
+    <div th:replace="common/footer/userFooter.html"></div>
+</body>
+</html>

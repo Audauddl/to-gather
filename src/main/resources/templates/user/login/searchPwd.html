@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>searchPwd</title>
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/login/CSS/searchPwd.css" type="text/css">
+</head>
+<body>
+
+ <div th:replace="common/header/userHeader.html"></div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  
+ <div class="wrapper">
+ <h1 align="center">비밀번호 찾기</h1>
+ <p align="center">
+     휴대전화와 이메일 주소를 입력해주세요.<br>임시비밀번호를 발급해드립니다.
+ </p>
+
+<form action="/user/searchPwd" method="post">
+<div class="searchPwd">
+     <input class="phone" type="number" id="phone" name="phone" placeholder="휴대전화" required>
+     <br><br>
+     <input class="email" type="text" id="emailId" name="email" placeholder="이메일 주소" required>
+   	 <br>
+    
+ </div>
+<br>
+ <div class="search_Pwd">
+     <button class="btn-searchPwd" type="button" onclick="mailsend()">비밀번호 찾기</button>
+ </div>
+ </form>
+</div>
+<script type="text/javascript" src="/user/login/js/searchPwd.js"></script>
+
+<div th:replace="common/footer/userFooter.html"></div>
+</body>
+</html>

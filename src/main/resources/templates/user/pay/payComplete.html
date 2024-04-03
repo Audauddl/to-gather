@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html 
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/user/pay/CSS/payComplete.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>payComplete</title>
+</head>
+<body>
+<th:block sec:authorize="isAuthenticated()">
+	<div th:replace="common/header/userHeader.html"></div>
+	
+    <div class="container">
+        <div class="outline">
+            <div class="first">
+                <img src="/user/login/images/logo.png" class="center logo123"></div>
+            <div class="text-top">
+                <h1>결제가 완료 되었습니다.</h1>
+                <h3></h3>
+            </div>
+            <div>
+                <p class="p1" th:text="${ order.payMethod } + '로 ' + ${ order.payPrice } + '원 결제 하셨습니다.' "></p>
+                <p class="p2" th:text="'결제 완료 시간 '+ ${ order.payDate }"></p>
+            </div>
+            <div class="text-body">
+                <h1 class="togather">To-Gather와 함께 동행해주세여 감사해요!</h1>
+                <span class="asd">결제 및 환불은 마이페이지에서 가능합니다.</span>
+            </div>
+        </div>
+        <!-- <div class="text-foot">
+            <h2 class="pjIntro">김민정님! To-Gather와 함께 동행해요!</h2>
+            <div>
+                <div class="imgBox">
+                    <a href="../">
+                    <img class="logo4" src="/user/pay/images/v1_649.png">
+                </div>
+                <h3 class="pjTitle">우리 아이가 달라졌어요</h3>
+                <h4 class="pjPrice">1,000원</h4></a>
+            </div>
+        </div>-->
+    </div>
+    
+    
+    <div th:replace="common/footer/userFooter.html"></div> 
+</th:block>     	
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 관리</title>
+    <link rel="stylesheet" href="/admin/project/CSS/projectHome.css" type="text/css">
+    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+</head>
+<body>
+   <div th:replace="common/header/adminHeader.html">
+    </div>
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+    
+    
+    <div class="body-content wrapper">
+        
+        <div class="grid-content">
+            
+            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ statusMap['statEvaluation'].searchCondition}, searchValue=${ statusMap['statEvaluation'].searchValue})}">
+                				
+                    <div class="menu-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-file-earmark-break-fill" viewBox="0 0 16 16">
+                        <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V9H2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM2 12h12v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H.5z"/>
+                        </svg>
+                    </div>
+                    <p class="menu-text">심사 대기 프로젝트</p>
+                
+            </a>       
+            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ statusMap['statStart'].searchCondition}, searchValue=${ statusMap['statStart'].searchValue})}">
+              <div class="menu-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
+                    <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/>
+                    <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5Zm6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+                </svg>
+              </div>
+              <p class="menu-text">진행 프로젝트</p>
+            </a>
+            <a class="menu-box"  th:href="@{/admin/project/list(searchCondition=${ statusMap['statReject'].searchCondition}, searchValue=${ statusMap['statReject'].searchValue})}">
+                <div class="menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-file-earmark-x-fill" viewBox="0 0 16 16">
+                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.854 7.146 8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 1 1 .708-.708z"/>
+                    </svg>
+                </div>
+              <p class="menu-text">반려 프로젝트</p>
+            </a>
+            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ statusMap['statEnd'].searchCondition}, searchValue=${ statusMap['statEnd'].searchValue})}">
+                <div class="menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-clock-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                    </svg>
+                </div>
+              <p class="menu-text">마감프로젝트</p>
+            </a>
+            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ statusMap['statReview'].searchCondition}, searchValue=${ statusMap['statReview'].searchValue})}">
+                
+                    <div class="menu-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chat-right-quote-fill" viewBox="0 0 16 16">
+                            <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM7.194 4.766c.087.124.163.26.227.401.428.948.393 2.377-.942 3.706a.446.446 0 0 1-.612.01.405.405 0 0 1-.011-.59c.419-.416.672-.831.809-1.22-.269.165-.588.26-.93.26C4.775 7.333 4 6.587 4 5.667 4 4.747 4.776 4 5.734 4c.271 0 .528.06.756.166l.008.004c.169.07.327.182.469.324.085.083.161.174.227.272zM11 7.073c-.269.165-.588.26-.93.26-.958 0-1.735-.746-1.735-1.666 0-.92.777-1.667 1.734-1.667.271 0 .528.06.756.166l.008.004c.17.07.327.182.469.324.085.083.161.174.227.272.087.124.164.26.228.401.428.948.392 2.377-.942 3.706a.446.446 0 0 1-.613.01.405.405 0 0 1-.011-.59c.42-.416.672-.831.81-1.22z"/>
+                        </svg>
+                    </div>
+                    <p class="menu-text">프로젝트 후기</p>
+                
+            </a>
+            
+            
+        </div>
+     </div>
+
+
+
+    
+</body>
+</html>

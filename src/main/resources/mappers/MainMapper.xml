@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.user.main.dao.MainMapper">
+
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="viewProjectsResultMap">
+		<id property="projNo" column="PROJ_NO" />
+		<result property="projName" column="PROJ_NM" />
+		<result property="projSummary" column="PROJ_SUMMARY" />
+		<result property="fundingEndDate" column="FUNDING_END_DATE" />
+		<result property="fundingGoal" column="FUNDING_GOAL" />
+		<result property="fundingAchive" column="FUNDING_ACHIVE" />
+		<result property="projStatus" column="PROJ_STATUS" />
+		<result property="leftDays" column="LEFT_DAYS" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="percent" column="PERCENT" /> <!-- 쿼리문에서 가공된 데이터 -->
+
+		<association property="maker" resultMap="makerResultMap" />
+		<collection property="fileList" resultMap="fileResultMap" />
+		<collection property="mainPage" resultMap="mainPageResultMap"/>
+	</resultMap>
+
+	<!-- MakerDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.MakerDTO" id="makerResultMap">
+		<id property="projNo" column="PROJ_NO" />
+		<result property="makerName" column="MAKER_NM" />
+		<result property="maerAddress" column="MAKER_ADDRESS" />
+		<result property="makerPhone" column="MAKER_PHONE" />
+		<result property="makerEmail" column="MAKER_EMAIL" />
+		<result property="makerIntro" column="MAKER_INTRO" />
+	</resultMap>
+	
+	<!-- FileDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.FileDTO" id="fileResultMap">
+		<id property="fileNo" column="FILE_NO" />
+		<result property="projNo" column="PROJ_NO" />
+		<result property="fileType" column="FILE_TYPE" />
+		<result property="originalFileName" column="ORIGINAL_FILE_NM" />
+		<result property="savedFileName" column="SAVED_FILE_NM" />
+		<result property="filePath" column="FILE_PATH" />
+		<result property="thumPath" column="THUM_PATH" />
+	</resultMap>
+	
+	<!-- MainPageDTO -->
+	<resultMap type="com.greedy.togather.user.main.dto.MainPageDTO" id="mainPageResultMap">
+		<id property="mpCode" column="MP_CODE"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="mpStartDate" column="MP_START_DATE"/>
+		<result property="mpEndDate" column="MP_END_DATE"/>
+		<result property="mpCategory" column="MP_CATEGORY"/>
+		<result property="mpStatus" column="MP_STATUS"/>
+	</resultMap>
+
+	<!-- ========================================================================================================= -->
+	
+	<!-- 메인 프로젝트 조회 -->
+	<select id="selectMainProject" resultMap="viewProjectsResultMap">
+		SELECT 
+	        A.PROJ_NO
+	    ,   B.FILE_NO
+	    ,   B.SAVED_FILE_NM
+	    ,   B.FILE_PATH
+	    FROM TBL_PROJECT A
+	    LEFT JOIN TBL_FILE B ON A.PROJ_NO = B.PROJ_NO
+	    LEFT JOIN TBL_MAINPAGE C ON A.PROJ_NO = C.PROJ_NO
+	    WHERE A.PROJ_STATUS = '진행'
+	    AND B.FILE_TYPE = '대표사진'
+	    AND C.MP_END_DATE >= SYSDATE
+	    AND C.MP_STATUS = '게시'
+	    AND C.MP_CATEGORY = '메인배너'
+	
+	</select>
+	
+	<!-- 오늘의 프로젝트 조회 -->
+	<select id="selectTodayProject" resultMap="viewProjectsResultMap">
+		SELECT 
+	        A.PROJ_NO
+	    ,   B.THUM_PATH
+	    ,   A.PROJ_SUMMARY
+	    ,	A.PROJ_NM
+	    ,	TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    ,   A.FUNDING_ACHIVE
+	    ,	TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    ,	A.PROJ_STATUS
+	    ,   C.MAKER_NM
+	    ,   D.MP_CODE
+	    ,   D.MP_END_DATE
+	    ,   D.MP_CATEGORY
+	    FROM TBL_PROJECT A
+	    LEFT JOIN TBL_FILE B ON A.PROJ_NO = B.PROJ_NO
+	    LEFT JOIN TBL_MAKER C ON A.PROJ_NO = C.PROJ_NO
+	    LEFT JOIN TBL_MAINPAGE D ON A.PROJ_NO = D.PROJ_NO
+	    WHERE A.PROJ_STATUS = '진행'
+	    AND D.MP_END_DATE >= SYSDATE
+	    AND D.MP_STATUS = '게시'
+	    AND D.MP_CATEGORY = '오늘의 프로젝트'
+	</select>
+	
+	<!-- 인기 프로젝트 조회 -->
+	<select id="selectPopularProject" resultMap="viewProjectsResultMap">
+		SELECT 
+	        ROWNUM
+	    ,   A.PROJ_NO
+	    ,   B.THUM_PATH
+	    ,   A.PROJ_SUMMARY
+	    ,	A.PROJ_NM
+	    ,	TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    ,   A.FUNDING_ACHIVE
+	    ,	TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    ,	A.PROJ_STATUS
+	    ,   (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = A.PROJ_NO) AS TOTAL_LIKES
+	    ,   C.MAKER_NM
+	    FROM (  SELECT  Z.*
+	                ,   (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = Z.PROJ_NO) AS LIKES
+	                FROM TBL_PROJECT Z
+	                WHERE Z.PROJ_STATUS = '진행'
+	                ORDER BY (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = Z.PROJ_NO) DESC
+	         ) A
+	    JOIN TBL_FILE B ON A.PROJ_NO = B.PROJ_NO
+	    JOIN TBL_MAKER C ON A.PROJ_NO = C.PROJ_NO
+	    <![CDATA[
+	    WHERE ROWNUM <= 8 ]]>
+	    AND B.FILE_TYPE = '대표사진'
+	    AND A.PROJ_STATUS = '진행'
+	    ORDER BY (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO =  A.PROJ_NO) DESC
+	</select>
+
+</mapper>
+

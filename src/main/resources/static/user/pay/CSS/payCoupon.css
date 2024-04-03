@@ -1,0 +1,70 @@
+@charset "UTF-8";
+body {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+}
+
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353;
+}
+
+body {
+    margin: 0; /* header를 화면에 여백없이 설정하기 위해 */
+    overflow-x: hidden; /* 가로 스크롤바 숨기기 */
+    overflow-y: auto;
+}
+
+#header {
+    display: flex;
+    position: fixed; 
+    width: 100vw;
+    /* height: 10vh; */
+    height: 90px;
+    background-color: rgb(255, 255, 255);
+    box-shadow:3px 3px 2px 1px rgb(222, 222, 222);
+}
+
+/* logo */
+#logo {
+    margin: 10px 40px;
+    margin-left: 30px;
+    top: 10%;
+    height: 70px;
+}
+
+p {
+    position: relative;
+    font-size: 25px;
+    margin-left: 40%;
+}
+
+.listbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 150px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.list {
+    text-align: center;
+    width: 200px;
+    border: 1px solid black;
+    margin: auto;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.btn {
+    width: 200px;
+    background-color: white;
+}
+
+.btn:hover {
+    transform: scale(1.4);
+}

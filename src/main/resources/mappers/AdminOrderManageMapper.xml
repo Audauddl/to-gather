@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 주문 관리 매퍼에 대한 쿼리를 작성-->
+<mapper namespace="com.greedy.togather.admin.orderManage.model.dao.AdminOrderManageMapper">
+		
+	<resultMap type="com.greedy.togather.admin.orderManage.model.dto.AdminOrderManageDTO" id="orderManageResultMap" >
+		<id property="orderNo" column="ORDER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="rewardQuantity" column="REWARD_QUANTITY"/>
+		<result property="rewardPrice" column="REWARD_PRICE"/>
+		<result property="extraReward" column="EXTRA_REWARD"/>
+		<result property="deliveryFee" column="DELIVERY_FEE"/>
+		<result property="dcPrice" column="DC_PRICE"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="projNm" column="PROJ_NM"/>
+		<result property="rewardNm" column="REWARD_NM"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="makerNm" column="MAKER_NM"/>
+		<result property="makerEmail" column="MAKER_EMAIL"/>
+		<result property="makerPhone" column="MAKER_PHONE"/>
+		<result property="makerAddress" column="MAKER_ADDRESS"/>
+	
+		
+			
+
+	
+		
+		
+	</resultMap>
+		
+		
+		<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+         FROM TBL_ORDER
+         <if test="searchCondition == 'projNm'">
+                JOIN TBL_PROJECT ON TBL_ORDER.PROJ_NO = TBL_PROJECT.PROJ_NO
+            </if>
+         <where>
+            <if test="searchCondition == 'orderNo'">
+                ORDER_NO LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'projNm'">
+            
+                PROJ_NM LIKE '%' || #{ searchValue } || '%'
+            </if>
+      
+        </where>
+         </select> 	   
+         
+    <!-- 주문 목록을 가져오는 쿼리를 작성합니다. -->
+    <select id="selectOrderManageList" resultMap="orderManageResultMap">
+    
+  
+        SELECT
+            ORDER_NO,      <!-- 주문 번호를 가져옵니다. -->
+            PROJ_NM,      <!-- 프로젝트 이름을 가져옵니다. -->
+            REWARD_NM,     <!-- 리워드 이름을 가져옵니다. -->
+            REWARD_QUANTITY,<!-- 리워드 수량을 가져옵니다. -->
+            PAY_PRICE,      <!-- 결제 가격을 가져옵니다. -->
+            ORDER_DATE      <!-- 주문 날짜를 가져옵니다. -->
+        FROM (
+                SELECT 
+                       		ROWNUM RNUM,     
+        				 	ORDER_NO,      <!-- 주문 번호를 가져옵니다. -->
+            				PROJ_NM,      <!-- 프로젝트 이름을 가져옵니다. -->
+            				REWARD_NM,     <!-- 리워드 이름을 가져옵니다. -->
+            				REWARD_QUANTITY,<!-- 리워드 수량을 가져옵니다. -->
+            				PAY_PRICE,      <!-- 결제 가격을 가져옵니다. -->
+            				ORDER_DATE      <!-- 주문 날짜를 가져옵니다. -->
+       		  FROM (
+                SELECT
+                      ORDER_NO,      <!-- 주문 번호를 가져옵니다. -->
+            		  PROJ_NM,      <!-- 프로젝트 이름을 가져옵니다. -->
+            	      REWARD_NM,     <!-- 리워드 이름을 가져옵니다. -->
+            		  REWARD_QUANTITY,<!-- 리워드 수량을 가져옵니다. -->
+            		  PAY_PRICE,      <!-- 결제 가격을 가져옵니다. -->
+            		  ORDER_DATE      <!-- 주문 날짜를 가져옵니다. -->
+       		
+       		
+       		FROM TBL_ORDER 
+       		JOIN TBL_PROJECT ON TBL_ORDER.PROJ_NO = TBL_PROJECT.PROJ_NO
+       	    JOIN TBL_REWARD ON TBL_ORDER.REWARD_NO = TBL_REWARD.REWARD_NO
+       		  <where>
+            <if test="searchCondition == 'orderNo'">
+                ORDER_NO LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'projNm'">
+                PROJ_NM LIKE '%' || #{ searchValue } || '%'
+            </if>
+      
+        	   </where>
+            
+        
+         ORDER BY ORDER_NO DESC)
+         
+           <![CDATA[  
+                WHERE ROWNUM <= #{ endRow }
+                                               ]]>)
+                where RNUM >= #{ startRow }
+   
+   
+    </select>
+    
+       
+ <!--   <update id="incrementNoticeCount">
+        UPDATE 
+            TBL_NOTICE
+        SET NOTICE_HIT = NOTICE_HIT + 1
+        WHERE NOTICE_CODE = #{ noticeCode }
+    </update> -->
+    
+    
+ <!--     주문 상세 정보를 가져오는 쿼리를 작성합니다.
+    <select id="getOrderDetail" resultType="com.greedy.togather.admin.orderManage.dto.AdminOrderManagementMapp">
+        SELECT
+            order_id AS orderId,     주문 번호를 가져옵니다.
+            customer_name AS customerName, 고객 이름을 가져옵니다.
+            product_name AS productName,   제품 이름을 가져옵니다.
+            quantity,                     주문 수량을 가져옵니다.
+            status                       배송 상태를 가져옵니다.
+        FROM
+            orders                       orders 테이블에서 데이터를 가져옵니다.
+        WHERE
+            order_id = #{orderId}         주문 번호를 기준으로 데이터를 가져옵니다.
+    </select> -->
+
+
+
+ <select id="selectOrderDetail" resultMap="orderManageResultMap">
+ 			SELECT
+    					a.order_no,
+    					b.proj_nm,
+    					c.reward_nm,
+    					a.reward_quantity,
+    					a.pay_price,
+    					a.order_date,
+    					a.user_no,
+    					a.proj_no,
+    					d.maker_nm,
+    					d.maker_email,
+    					d.maker_phone,
+    					d.maker_address,
+   						e.user_nm,
+    					e.email,
+    					e.phone,
+    					e.address
+    
+				FROM tbl_order a
+    			JOIN tbl_project b ON ( a.proj_no = b.proj_no )
+    			JOIN tbl_reward  c ON ( a.reward_no = c.reward_no )
+    			left JOIN tbl_maker   d ON ( a.proj_no = d.proj_no )
+    			left JOIN tbl_user    e ON ( a.user_no = e.user_no )
+
+				WHERE a.order_no =  #{ no }
+				ORDER BY order_no DESC
+        
+    </select>
+
+
+
+
+
+
+
+</mapper>
+
+
+
+
+

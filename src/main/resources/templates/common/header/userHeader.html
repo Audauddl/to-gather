@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/common/userCommon/CSS/userCommon.css">
+    <script type="text/javascript" src="/common/userCommon/js/userCommon.js"></script> 
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>userHeader</title>
+</head>
+<body>
+    <!-- header -->
+    <div id="Header">
+        <img id="Logo" src="/common/userCommon/images/logo.png" onclick="location.href='/'">
+        <div class="For people">
+            <div class="Category">For People</div>
+            <div class="Items">
+                <div class="Item">
+                    <img src="/common/userCommon/images/education.png" class="Icon">
+                    <button type="button" class="Button" id="Education" onclick="location.href='/project/education'">교육 프로젝트</button>
+                </div>
+                <div class="Item">
+                    <img src="/common/userCommon/images/disaster.png" class="Icon">
+                    <button type="button" class="Button" id="Disaster" onclick="location.href='/project/disaster'">자연 재해 지원 프로젝트</button>
+                </div>
+                <div class="Item">
+                    <img src="/common/userCommon/images/environment.png" class="Icon">
+                    <button type="button" class="Button" id="Environment" onclick="location.href='/project/environment'">환경 보호 프로젝트</button>
+                </div>
+                <div class="Item">
+                    <img src="/common/userCommon/images/medical.png" class="Icon">
+                    <button type="button" class="Button" id="Medical" onclick="location.href='/project/medical'">의료 지원 프로젝트</button>
+                </div>
+             </div>
+        </div>
+        <div class="For animals">
+            <div class="Category">For Animals</div>
+            <div class="Items">
+                <div class="Item">
+                    <img src="/common/userCommon/images/dog.png" class="Icon">
+                    <button type="button" class="Button" id="Organic" onclick="location.href='/project/organic'">유기 동물 보호 프로젝트</button>
+                </div>
+                <div class="Item">
+                    <img src="/common/userCommon/images/dolphin.png" class="Icon">
+                    <button type="button" class="Button" id="Wild" onclick="location.href='/project/wild'">야생 동물 보존 프로젝트</button>
+                </div>
+                <div class="Item">
+                    <img src="/common/userCommon/images/paws.png" class="Icon">
+                    <button type="button" class="Button" id="Pet" onclick="location.href='/project/pet'">반려 동물 케어 프로젝트</button>
+                </div>
+            </div>
+        </div>
+        <th:block sec:authorize="hasRole('ADMIN')">
+        <div class="For manager">
+            <div class="Category" onclick="location.href='/admin'"><img id="Manager" src="/common/userCommon/images/manager.png">For Manager</div>
+        </div>
+        </th:block>
+        <div id="Container">
+        <form action="/project/searched" method="get">
+	        <div class="Search">
+	            <input type="text" placeholder="프로젝트명 / Maker명 입력 :)" name="word" id="Search-bar">
+	            <img id="Find" src="/common/userCommon/images/find.png" onclick="submitForm()">
+	        </div>
+        </form>
+        
+        <script>
+		function submitForm() {
+		  document.querySelector('form').submit();
+		}
+		</script>
+        
+        <th:block sec:authorize="isAnonymous()">
+        <button type="button" class="UserStatus" id="Log-in" onclick="location.href='/user/login'">Log In</button>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+        <button type="button" class="UserStatus" id="My-page" onclick="location.href='/user/myPage'">My Page</button>
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        <button type="button" id="Start-project" onclick="location.href='/user/login'">프로젝트 신청</button>
+		</th:block>
+		<th:block sec:authorize="isAuthenticated()">
+        <button type="button" id="Start-project" onclick="location.href='/project/create'">프로젝트 신청</button>
+		</th:block>
+        </div>
+    </div>
+
+    <!-- to-top button -->
+    <a href="#">
+    <img src="/common/userCommon/images/to-top-button.png" id="To-top">
+    </a>
+    
+    <!-- chat button -->
+    <img src="/common/userCommon/images/chat.png" id="chat">
+    
+    <script>
+	    /* chat 버튼 클릭 시, 팝업창 띄우기 */
+		const openPopUp = document.querySelector('#chat')
+		
+		openPopUp.onclick = function(){
+			let option = "width=500px, height=400px, toolbars=no, scrollbars=no";
+			let openUrl = '/user/chat'
+			window.open(openUrl, 'Chat with To-Gather!', option);
+		}
+    </script>
+</body>
+</html>

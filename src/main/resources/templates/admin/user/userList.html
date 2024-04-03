@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/admin/user/CSS/userList.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>회원관리</title>                    
+</head>
+<body>
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div> 
+
+    <div class="content">
+	
+	  <div class="content1">
+            <div class="menu-title">회원 관리</div> 
+                    
+            <div class="searchbar">
+                <form id="searchForm" action="/admin/user/list" method="get">
+                    <select id="searchCondition" name="searchCondition" class="sort">
+                        <option value="userNo"
+								th:selected="${ paging.searchCondition eq 'userNo'}">회원번호</option>
+                        <option value="email"
+                        		th:selected="${ paging.searchCondition eq 'email'}">아이디</option>
+                        <option value="userNm"
+                        		th:selected="${ paging.searchCondition eq 'userNm'}">이름</option>
+                        <option value="quitYn"
+                        		th:selected="${ paging.searchCondition eq 'quitYn'}">탈퇴여부</option>
+                    </select>                  
+                    <input type="search" id="searchValue" class="searchContent" name="searchValue"
+                    	   th:value="${ paging.searchValue }">
+                    <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                </form>                  
+            </div>
+        </div>
+      
+
+        <div class="content2">
+            <table>
+                <tr>
+                    <th class="table-header"><input type="checkbox" id="checkAll"/></th>
+                    <th class="table-header">회원번호</th>
+                    <th class="table-header">아이디</th>
+                    <th class="table-header">회원이름</th>
+                    <th class="table-header">가입일</th>
+                    <th class="table-header">탈퇴일</th>
+                    <th class="table-header">탈퇴여부</th>
+                    <th class="table-header">상세정보</th>
+                </tr>
+                <tr th:each="user : ${ userList }" class="table-content">
+                    <td><input type="checkbox" class="checkBox" th:data-userNo="${ user.userNo }"/></td>
+                    <td th:text="${ user.userNo }"></td>
+                    <td th:text="${ user.email }"></td>
+                    <td th:text="${ user.userNm }"></td>
+                    <td th:text="${ #dates.format(user.joinDate, 'yyyy-MM-dd') }"></td>
+                    <td th:text="${ #dates.format(user.quitDate, 'yyyy-MM-dd') }"></td>
+                    <td th:text="${ user.quitYn }"></td>
+                    <td><button class="user-detail" type="button" 
+                                th:onclick="|location.href='@{'/admin/user/detail/' + ${user.userNo}}'|">조회</button></td>
+                </tr>                                 
+                        
+            </table>
+        </div>
+
+        <div class="content3">
+            <button type="button" class="user-delete">삭제</button>
+        </div>
+
+
+        <div class="content4" id="paging">
+        	<!-- 페이징 바 -->
+				<!--  검색어가 있을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition != null and paging.searchValue!= null and !paging.searchValue.isEmpty() }">
+					<!-- 맨 앞으로 이동 -->
+					<button class="paging prev2"
+						th:onclick="'location.href=\'/admin/user/list?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button class="paging prev1"
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block 
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button class="paging numbers"
+							th:onclick="'location.href=\'/admin/user/list?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button class="paging next1"
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button class="paging next2"
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>
+				
+				<!--  검색어가 없을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+					<!-- 맨 앞으로 이동 -->
+					<button class="paging prev2" 
+					  	th:onclick="'location.href=\'/admin/user/list?page=1\''"
+					    th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button class="paging prev1"
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page - 1}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block 
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button class="paging numbers"
+							th:onclick="'location.href=\'/admin/user/list?page=' + @{${page}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button class="paging next1"
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page + 1}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button class="paging next2"
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.maxPage}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>			     
+		</div>
+
+
+
+		<script>	
+		
+			/* 체크박스 */
+			$("#checkAll").click(function(){
+				const check = $("#checkAll").prop("checked");
+				if(check) {
+					$(".checkBox").prop("checked", true);	
+				} else {
+					$(".checkBox").prop("checked", false);
+				}
+			});
+			
+			
+			$(".checkBox").click(function(){
+				$("#checkAll").prop("checked", false);
+			});		
+					
+			/* 삭제 버튼 */	
+		   $(".user-delete").click(function(){
+		    const confirmMessage = confirm("정말 삭제하시겠습니까?");
+		    
+		    if(confirmMessage) {
+		     var checkList = new Array();
+		     
+		     $("input[class='checkBox']:checked").each(function(){
+		      checkList.push($(this).attr("data-userNo"));
+		     });
+		     
+		      console.log(checkList);
+		      
+		     $.ajax({
+		      url : "/admin/user/delete",
+		      type : "post",
+		      data : { checkBox : checkList },
+		      success : function(){
+		       location.href = "/admin/user/list";
+		      }     
+		     });		     
+		    }  		    
+		   });
+			
+		</script>
+		
+
+
+    </div>
+</body>
+</html>

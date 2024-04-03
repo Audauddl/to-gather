@@ -1,0 +1,96 @@
+
+.wrapper { 
+    padding-top: 120px; 
+    max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+
+}
+
+body {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+}
+
+
+h1 {
+    font-size: 40px;
+    margin-top: 2px;
+}
+
+.aside ul li {
+
+    list-style-type: none;
+    font-size:25px;
+    font-weight:normal;
+    
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #535353;
+}
+
+.menu-link:hover {
+    color: #81AE64;
+ }
+
+ .aside {
+ 
+    width: 250px;
+    float: right;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    
+}
+
+.item {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    padding: 15px 25px 15px;
+    border-radius: 30px;
+    border: 3px solid #709053;
+    box-shadow: 5px 5px 5px #eee;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 20px 20px #FFF4C9;
+    
+}
+
+
+.item img {
+    margin-top: 15px;
+    height: 130px;
+    width: 130px;
+    
+}
+
+.mypage {
+    width:250px;
+    height: 200px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+}
+
+.mypage:hover {
+    background-color: #C7E78B;
+}

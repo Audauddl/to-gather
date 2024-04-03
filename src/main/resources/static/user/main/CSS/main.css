@@ -1,0 +1,282 @@
+@charset "UTF-8";
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353;
+    font-size: 100%;
+}
+
+.fake-header {
+	height: 90px;
+}
+
+/* 메인 배너 */
+
+.main-banner {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background-color: #F8F8F8;
+}
+
+.banner-leftside {
+    position: absolute;
+    left: 15%;
+}
+
+.main-text {
+    font-size: 70px;
+}
+
+#start-project,
+#start-funding {
+    border: 5px solid #81AE64;
+    padding: 10px 25px;
+    margin-right: 30px;
+    border-radius: 20px;
+    font-size: 30px;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #81AE64;
+    background: white;
+    text-decoration-line: none;
+}
+
+#start-project:hover,
+#start-funding:hover {
+    cursor: pointer;
+    color: white;
+    background: #81AE64;
+}
+
+.slider {
+    position: relative;
+    position: absolute;
+    width: 600px;
+    height: 450px;
+    right: 15%;
+    bottom: 12%;
+    overflow: hidden; /* 튀어나오는 이미지 가리기 */
+    
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    cursor: pointer;
+}
+  
+.slide:first-child {
+    position: relative;
+    display: block;
+}
+  
+.btn {
+    padding: 10px;
+    color: #DEDCDC;
+    cursor: pointer;
+    border: none;
+    margin: 50px;
+    font-size: 35px;
+    background-color: #F8F8F8;
+}
+
+.btn:hover {
+    color:#979797;
+}
+
+.for-button-location {
+    position: absolute;
+    top: 480px;
+    right: 430px;
+}
+
+  
+.slide-right {
+    transform: translateX(100%);
+}
+  
+.slide-left {
+    transform: translateX(-100%);
+}
+  
+.current-slide {
+    transform: translateX(0);
+}
+
+/* 배너를 제외한 컨텐츠들 */
+
+.wrapper { /* wrapper는 해당 width를 가지고, 화면을 줄여도 위치를 가운데로 유지 */
+    padding-top: 50px;
+    max-width: 1180px;
+    margin: 0 auto; 
+    display: flex;
+    justify-content: left; /* 모든 요소 왼쪽 정렬 */
+    flex-wrap: wrap;
+}
+
+#today {
+    margin-top: -100px;
+    padding-bottom: 80px;
+    border-bottom: 2px solid #DEDCDC;
+}
+
+#popular {
+	margin-top: -100px;
+    padding-bottom: 80px;
+}
+
+.title {
+    font-size: 40px;
+}
+
+flex {
+    display: flex;
+}
+
+/* 프로젝트 블럭 */
+.project-block {
+    position: relative;
+    border: 2px solid #DEDCDC;
+    width: 250px;
+    height: 350px;
+    margin: 0px 20px;
+    transition: all 0.2s ease-in-out;
+    box-shadow:3px 3px 2px 1px rgb(238, 238, 238);
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.project-block:hover {
+    transform: scale(1.04);
+}
+
+#popular .project-block {
+    margin-bottom: 50px;
+}
+
+.project-image {
+    position: absolute;
+    align-items: center;
+    width: 220px;
+    height: 165px;
+    top: 15px;
+    left: 15px;
+}
+
+.like-box {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 21px;
+    right: 26px;
+    cursor: pointer;
+}
+
+.display-box {
+    position: absolute;
+    top:103px;
+    left: 15px;
+    width: 200px;
+    padding: 0px 10px;
+    background-color: white;
+    opacity: 50%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.display-box:hover {
+    opacity: 0.7;
+}
+
+.project-info {
+    position: absolute;
+    /* border: 1px solid #DEDCDC; */
+    bottom: 60px;
+    left: 15px;
+    width: 195px;
+    border-left: 5px solid #709053;
+    padding : 0px 10px;
+}
+
+.project-info p {
+    margin: 3px;
+}
+
+.funding-date {
+    position: absolute;
+    color: #709053;
+    background-color: #FFF4C9;
+    padding: 3px 10px;
+    border-radius: 10px;
+    top: 190px;
+    right: 18px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.maker-name {
+    color: #979797;
+}
+
+.project-name {
+    font-size: 24px;
+}
+
+.project-summary {
+    color: #000000;
+}
+
+.current-funding {
+    position: absolute;
+    bottom: -8px;
+    left: 15px;
+    font-size: 20px;
+}
+
+.percent {
+    position: absolute;
+    top: 255px;
+    right: 15px;
+    font-size: 40px;
+    text-align: right;
+    color: #709053;
+}
+
+/* 게시판 */
+.board-box {
+    margin: 50px 30px 100px 50px;
+}
+
+.board-type {
+    text-align: center;
+    font-size: 40px;
+    border-bottom: 5px solid #709053;
+}
+
+.board-block {
+    border: 2px solid #DEDCDC;
+    padding: 20px 0px;
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 500px;
+}
+
+.board-title {
+    font-size: 20px;
+    background-color: #F4F4F4;
+    border: 3px solid #F4F4F4;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.board-title:hover {
+    background-color: white;
+    border: 3px solid #DEDCDC;
+    cursor: pointer;
+}

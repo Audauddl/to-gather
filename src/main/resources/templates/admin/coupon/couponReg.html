@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 등록</title>
+    <link rel="stylesheet" href="/src/main/resources/static/admin/coupon/couponReg.css" type="text/css">
+    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+</head>
+<body>
+
+    <!--<div th:replace="src/main/resources/templates/common/header/adminHeader.html">
+    </div>
+    <div th:replace="src/main/resources/templates/common/sidebar/adminSidebar.html">
+    </div>-->
+
+    
+    <div class="body-content wrapper">
+        <div class="content-table">
+            <table id="table-wrapper">
+                <thead>
+                    <th class="head-title" colspan="2">항목</th>
+                    <th class="content-text1">내용</th>
+                    <th class="content-text2">비고</th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="text-title" colspan="2">쿠폰 번호</td>
+                        <td class="content-text1">
+                            <form>
+                                
+                                    <input type="text" class="field-box" placeholder="쿠폰번호를 입력하세요">
+                                 
+                            </form>
+                        </td>
+                        <td class="content-text2">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">발급일</td>
+                        <td class="content-text1">
+                            <input type="date" name="startDate">
+                        </td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">만료일</td>
+                        <td class="content-text1">
+                            <input type="date" name="endDate">
+                        </td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-title" colspan="2">할인금액</td>
+                        <td class="content-text1">
+                            
+                                <input type="text" class="dc-box" placeholder="할인 금액을 입력하세요">
+                             
+                        </td>
+                        <td class="content-text2"></td>
+                    </tr>
+
+                    
+                    
+                </tbody>
+  
+            </table>
+
+            <div class="button-wrapper">
+                
+                    <a class="button-confirm" href=""><p class="button-confirm-text">확인</p></a>
+                    <a class="button-box" href=""><p class="button-text">삭제</p></a>
+                    <a class="button-box" href=""><p class="button-text">취소</p></a>
+                  
+            </div>
+
+
+        </div>
+        
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+    
+</body>
+</html>

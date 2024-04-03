@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/myPage/CSS/invoice.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>invoice</title>
+</head>
+<body>
+
+    <!-- 팝업창 띄우기 
+    <a href="/src/main/resources/templates/user/myPage/invoice.html" 
+    onclick="window.open(this.href, '_blank', 'width=400, height=330, toolbars=no, scrollbars=yes'); return false;"> -->
+    <br>
+        <div class="delivery-select">
+        <label for="delivery-select">택배사 : </label>
+        <select id="choice">
+            <option>택배사를 선택해주세요.</option>
+            <option>CJ대한통운</option>
+            <option>우체국택배</option>
+            <option>한진택배</option>
+            <option>로젠택배</option>
+            <option>경동택배</option>
+            <option>일양로지스</option>
+            <option>CU 편의점택배</option>
+            <option>GS 편의점택배</option>
+        </select>
+    </div>
+   <br>
+    <div class="invocie">
+        <tr>
+            <td>이름 : </td>
+            <td><input class="userName" type="name" name="username" required placeholder="이름을 입력해주세요."></td>
+        </tr>
+        <br>
+        <br>
+        <tr>
+            <td>송장번호 : </td>
+            <td><input class="deliveryNo" type="text" name="deliveryNo" required placeholder="송장번호를 입력해주세요."></td>
+        </tr>
+    </div>
+
+    <br>
+    <div class="btn-invoice">
+        <input class="success" type="submit" name="success" id="success" value="완료">
+        <input class="cancel" type="button" name="cancel" id="cancel" value="취소">
+    </div>
+
+
+
+
+
+
+    
+</body>
+</html>

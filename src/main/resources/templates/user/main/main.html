@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/user/main/CSS/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>main</title>
+</head>
+<body>
+	<div th:replace="common/header/userHeader.html"></div>
+	<!-- userHeader의 js과 충돌 방지를 위해 script를 head가 아닌 th:replace의 하단에 선언 -->
+	<script type="text/javascript" src="/user/main/js/main.js"></script> 
+	
+	<div class="fake-header"></div>
+
+    <div class="main-banner">
+        <div class="banner-leftside">
+            <p class="main-text">가치를 나누는 일,<br>함께 한다면<br>어렵지 않아요</p>
+            <div class="main-buttons">
+            	<th:block sec:authorize="isAnonymous()">
+	                <button id="start-project" onclick="location.href='/user/login'">프로젝트 시작하기</button>
+				</th:block>
+				<th:block sec:authorize="isAuthenticated()">
+	                <button id="start-project" onclick="location.href='/project/create'">프로젝트 시작하기</button>
+				</th:block>
+                <a href="#here"><button id="start-funding">펀딩 시작하기</button></a>
+            </div>
+        </div>
+        	<th:block th:each="mainProj : ${ mainProjects }">
+	            <div class="slider" th:data-proj-no="${ mainProj.projNo }">
+	            	<th:block th:each=" file : ${ mainProj.fileList }" >
+		                <img th:src="${ file.filePath + file.savedFileName }" class="slide" th:onclick="|location.href='@{project/detail(projNo=${ mainProj.projNo })}'|"> <!-- th:data-proj-no="${ mainProj.projNo }" -->
+		            </th:block>   
+	            </div>
+	            </th:block>
+            </th:block>
+            <div class="for-button-location">
+                <button class="btn prev">◀</button>
+                <button class="btn next">▶</button>
+            </div>
+    </div>
+    <div id="here"></div>
+    <div class="wrapper">
+        <p class="title">오늘의 프로젝트</p>
+    </div>
+    <div class="wrapper" id="today">
+        <th:block th:each="todayProj : ${ todayProjects }">
+	        <div th:data-proj-no="${ todayProj.projNo }" class="project-block">
+	            <th:block th:each=" file : ${ todayProj.fileList }" >
+	            	<img th:if="${ file.thumPath != null }" th:src="${ file.thumPath }" class="project-image">
+	            </th:block>
+	            <div class="display-box">
+	                <p th:text="${ todayProj.projSummary }" class="project-summary"></p>
+	            </div>
+	            <div class="project-info">
+	                <p th:text="${ todayProj.maker.makerName }" class="maker-name"></p>
+	                <p th:text="${ todayProj.projName }" class="project-name"></p>
+	            </div>
+	            <div class="funding-date"><span th:text="${ todayProj.leftDays }"></span>일 남음</div>
+	            <flex>
+	                <p class="current-funding"><span th:text="${ todayProj.fundingAchive == 0 ? '0' : #numbers.formatInteger(todayProj.fundingAchive, 3, 'COMMA') }" ></span>원</p>
+	                <p class="percent"><span th:text="${ todayProj.percent }"></span>%</p>
+	            </flex>
+	        </div>
+		</th:block>
+		
+        
+    </div>
+
+    <!----------------------------------------------------------------------------------------------------------->
+    <div class="wrapper">
+        <p class="title">인기 프로젝트</p>
+    </div>
+    <div class="wrapper" id="popular">
+        <th:block th:each="popularProj : ${ popularProjects }">
+	        <div th:data-proj-no="${ popularProj.projNo }" class="project-block">
+	            <th:block th:each=" file : ${ popularProj.fileList }" >
+	            	<img th:if="${ file.thumPath != null }" th:src="${ file.thumPath }" class="project-image">
+	            </th:block>
+	            <div class="display-box">
+	                <p th:text="${ popularProj.projSummary }" class="project-summary"></p>
+	            </div>
+	            <div class="project-info">
+	                <p th:text="${ popularProj.maker.makerName }" class="maker-name"></p>
+	                <p th:text="${ popularProj.projName }" class="project-name"></p>
+	            </div>
+	            <div class="funding-date"><span th:text="${ popularProj.leftDays }"></span>일 남음</div>
+	            <flex>
+	                <p class="current-funding"><span th:text="${ popularProj.fundingAchive == 0 ? '0' : #numbers.formatInteger(popularProj.fundingAchive, 3, 'COMMA') }" ></span>원</p>
+	                <p class="percent"><span th:text="${ popularProj.percent }"></span>%</p>
+	            </flex>
+	        </div>
+		</th:block>
+    </div>
+
+    <!--------------------------------------------------------------------------->
+	
+<!--     <div class="wrapper">
+        <flex>
+            <div class="board-box">
+                <div class="board-type">Notice</div>
+                <div class="board-block">
+                    <div class="board-title">[안내] To-Gather 서비스 개선 사항 안내</div>
+                    <div class="board-title">[모집] 스타트업 펀딩 지원 프로그램 참여 Maker 모집</div>
+                    <div class="board-title">[안내] To-Gather SNS 광고 수수료 변경 및 정책 안내</div>
+                    <div class="board-title">[안내] 배송 제한 지역 안내</div>
+                    <div class="board-title">[약관/정책] 개인정보처리방침 개정</div>
+                    <div class="board-title">[안내] To-Gather 서비스 개선 사항 안내</div>
+                </div>
+            </div>
+            <div class="board-box">
+                <div class="board-type">FAQ</div>
+                <div class="board-block">
+                    <div class="board-title">To-Gather는 어떤 역할을 담당하나요?</div>
+                    <div class="board-title">회원가입을 해야만 펀딩에 참여할 수 있나요?</div>
+                    <div class="board-title">후원 및 결제 취소는 어떻게 하나요?</div>
+                    <div class="board-title">연말정산을 위해 기부금 영수증이 필요합니다.</div>
+                    <div class="board-title">후원 및 결제한 영수증이 필요합니다.</div>
+                    <div class="board-title">결제가 완료되었음을 어떻게 확인할 수 있나요?</div>
+                </div>
+            </div>
+        </flex>
+    </div> -->
+    
+    <div th:replace="common/footer/userFooter.html"></div>
+    
+    <script>
+	    /* 프로젝트 블럭 클릭 시 해당 프로젝트 페이지로 이동 */
+	    const projectBlock = document.querySelectorAll(".project-block");
+	
+			projectBlock.forEach(block => {
+			  block.addEventListener("click", (e) => {
+			    const projNo = e.currentTarget.dataset.projNo;
+			    console.log(projNo);
+			    window.location.href = '/project/detail?projNo=' + projNo;
+			  });
+			});
+			
+			/* 메인 배너 슬라이드 */
+		    const slides = document.querySelectorAll('.slide');
+		    const slider = document.querySelector('.slider');
+		    const prevBtn = document.querySelector('.prev');
+		    const nextBtn = document.querySelector('.next');
+		      
+		    let currentSlide = 0;
+		    let slideInterval;
+		      
+		    function showSlide(n) {
+		        if (n < 0) {
+		            currentSlide = slides.length - 1;
+		        } else if (n >= slides.length) {
+		            currentSlide = 0;
+		        }
+		        for (let i = 0; i < slides.length; i++) {
+		            if (i < currentSlide) {
+		                slides[i].classList.add('slide-left');
+		                slides[i].classList.remove('slide-right', 'current-slide');
+		            } else if (i === currentSlide) {
+		                slides[i].classList.add('current-slide');
+		                slides[i].classList.remove('slide-right', 'slide-left');
+		            } else {
+		                slides[i].classList.add('slide-right');
+		                slides[i].classList.remove('slide-left', 'current-slide');
+		            }
+		        }
+		    }
+		      
+		    function prevSlide() {
+		        currentSlide--;
+		        showSlide(currentSlide);
+		    }
+		      
+		    function nextSlide() {
+		        currentSlide++;
+		        showSlide(currentSlide);
+		    }
+		
+		    prevBtn.addEventListener('click', () => {
+		        clearInterval(slideInterval);
+		        prevSlide();
+		    });
+		      
+		    nextBtn.addEventListener('click', () => {
+		        clearInterval(slideInterval);
+		        nextSlide();
+		    });
+		      
+		    slider.addEventListener('mouseover', () => {
+		        clearInterval(slideInterval);
+		    });
+		      
+		    slider.addEventListener('mouseout', () => {
+		        slideInterval = setInterval(() => {
+		          nextSlide();
+		        }, 2500);
+		    });
+		      
+		    slideInterval = setInterval(() => {
+		        nextSlide();
+		    }, 2500);
+    </script>
+</body>
+</html>

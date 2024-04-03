@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/main/resources/static/user/pay/CSS/payCoupon.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <title>payCoupon</title>
+</head>
+<body>
+    <!-- header -->
+    <div id="header">
+        <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
+        <p style="text-align: center;">쿠폰 목록</p>
+    </div>
+    <div class="listbox">
+        <div class="list">
+            <div class="imgbox">
+                <button type="button" class="btn">
+                <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
+                <h3>회원 가입 축하 쿠폰</h3>
+                <h4>10,000원</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
+            </div>
+        </div>
+        <div class="list">
+            <div class="imgbox">
+                <button type="button" class="btn" value="free">
+                <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
+                <h3>무료 배송</h3>
+                <h4>배송비 무료</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
+            </div>
+        </div>
+        <div class="list">
+            <div class="imgbox" >
+                <button type="button" class="btn">
+                <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
+                <h3>첫 구매 확정 쿠폰</h3>
+                <h4>10,000원</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
+            </div>
+        </div>
+        <div class="list">
+            <div class="imgbox">
+                <button type="button" class="btn">
+                <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
+                <h3>회원 가입 축하 쿠폰</h3>
+                <h4>10,000원</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const $change = document.getElementsByClassName('imgbox');
+        console.log($change);
+        $change[0].addEventListener("mouseover", function (event) {
+            console.log($change)
+            event.target.style.color = "black";
+        }, false)
+    </script>
+</body>
+</html>

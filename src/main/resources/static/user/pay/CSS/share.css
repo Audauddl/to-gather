@@ -1,0 +1,42 @@
+.container {
+    width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    /* flex-direction: column; */
+}
+
+h1 {
+    text-align: center;
+}
+
+.imgBox {
+    width: 150px;
+    height: 150px;
+    margin-left: 15%;
+    /* float: left; */
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    padding-right: 50px;
+}
+
+.first {
+    float: left;
+}
+
+.second {
+    float: left;
+}
+
+.h3 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

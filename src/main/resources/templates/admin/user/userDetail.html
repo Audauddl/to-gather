@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/admin/user/CSS/userDetail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>userDetail</title>
+</head>
+<body>
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+   
+    <div class="content">
+
+        <div class="content1">
+            <div class="menu-title">회원 관리 > 조회</div>
+        </div>
+
+        <div class="content2">
+           <p>회원 정보 조회</p>
+            <form action="/user/detail/update" method="post">
+            <table>
+                <tr>
+                    <th class="table-header">아이디</th>
+                    <td colspan="3" class="table-body" th:text="${ user.email }"></td>
+
+                </tr>
+                <tr>
+                    <th class="table-header" >이름</th>
+                    <td colspan="3" class="table-body" th:text="${ user.userNm }"></td>
+                </tr>
+                <tr>
+                    <th class="table-header">휴대폰번호</th>
+                    <td colspan="3" class="table-body">
+                        <input type="text" class="inputbox box1" th:value="${ user.phone }">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="table-header">주소</th>
+                    <td colspan="3" class="table-body">
+                        <input type="text" class="inputbox box2" name="address1" id="address1" th:placeholder="${ user.address }">
+                               
+                        <input type="button" value="검색" id="addressBtn"><br>
+                        
+                        <input type="text" class="inputbox box3"  name="address2" id="address2">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="table-header">가입일</th>
+                    <td class="table-body" th:text="${ #dates.format(user.joinDate, 'yyyy-MM-dd') }"></td>
+                    <th class="table-header">탈퇴일</th>
+                    <td class="table-body" th:text="${ #dates.format(user.quitDate, 'yyyy-MM-dd') }"></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+
+        <div class="content3">
+            <p>펀딩 내역 조회</p>
+            <table>
+                <tr class="table-header" >
+                    <th>결제번호</th>
+                    <th>프로젝트명</th>
+                    <th>리워드명</th>
+                    <th>결제일자</th>
+                    <th>결제금액</th>
+                    <th>환불일자</th>
+                    <th>환불금액</th>
+                    <th>환불사유</th>
+                </tr>
+                <tr class="table-content" th:each="funding : ${fundingList}">
+                    <td th:text="${ funding.pay.payNo }"></td>
+                    <td th:text="${ funding.proj.projNm }"></td>
+                    <td th:text="${ funding.reward.rewardNm }"></td>
+                    <td th:text="${ #dates.format(funding.pay.payDate, 'yyyy-MM-dd') }"></td>
+                    <td>
+                    	<span th:if="${funding.pay.payPrice != 0 }" th:text="${ #numbers.formatInteger(funding.pay.payPrice, 0, 'COMMA') }"></span>
+                    </td>
+                    <td th:text="${ #dates.format(funding.pay.refund.refundDate, 'yyyy-MM-dd') }"></td>
+                    <td>
+                    	<span th:if="${funding.pay.refund.refundPrice != 0 }" th:text="${ #numbers.formatInteger(funding.pay.refund.refundPrice, 0, 'COMMA') }"></span>
+                    </td>
+                    <td th:text="${ funding.pay.refund.refundReason }"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content4">
+            <p>합계</p>
+            <table>
+                <tr>
+                    <th class="table-header">&nbsp;</th>
+                    <th class="table-header">결제 건수</th>
+                    <th class="table-header">결제 금액</th>
+                    <th class="table-header">환불 금액</th>
+                    <th class="table-header">총 펀딩 금액</th>
+                </tr>
+                <tr class="table-cont ent">
+                    <th class="total">합계</th>
+                    <td th:text="${ #lists.size(fundingList) }"></td>
+                    <td>
+                    	<span th:if="${totalPay != 0 }" th:text="${ #numbers.formatInteger(totalPay, 0, 'COMMA') }"></span>
+                    </td>
+                    <td>
+                    	<span th:if="${totalRefund != 0 }" th:text="${ #numbers.formatInteger(totalRefund, 0, 'COMMA') }"></span>
+                    </td>
+                    <td>
+                    	<span th:if="${(totalPay - totalRefund) != 0 }" th:text="${ #numbers.formatInteger((totalPay - totalRefund), 0, 'COMMA') }"></span>
+                    </td>
+                </tr> 
+            </table>
+        </div>
+
+        <div class="content5">
+            <button type="button" class="user-cancel" id="cancelBtn">취소</button>
+            <button type="button" class="user-update" id="updateBtn">수정</button>
+        </div>
+
+
+
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	
+	    const $searchZipCode = document.getElementById("addressBtn");
+	
+	    $searchZipCode.onclick = function() {
+	
+	        new daum.Postcode({
+	            oncomplete: function(data){
+	                document.getElementById("address1").value = data.address;
+	                document.getElementById("address2").focus();
+	            }
+	       
+	        }).open();
+	    }
+	    
+		/* 취소 버튼 */ 
+	    if(document.getElementById("cancelBtn")) {
+	        const $cancelBtn = document.getElementById("cancelBtn");
+	        $cancelBtn.onclick = function() {
+	            location.href = "/admin/user/list";
+	        }
+	    }
+		
+		/* 수정 버튼 */
+	    $("#updateBtn").click(function(){
+		    const confirmMessage = confirm("수정하시겠습니까?");
+		    
+		    if(confirmMessage) {    
+		    		   
+		    const userNo = '[[${ user.userNo }]]';
+		    
+		    console.log(userNo);
+		    
+		     $.ajax({
+		      url : "/admin/user/update",
+		      type : 'post',
+			  data : { userNo : userNo },			  
+		      success : function(data){
+		    	  if(data === 'success')
+		       location.href = "/admin/user/list";
+		      }     
+		     });		     
+		    }  		    
+		   });
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>

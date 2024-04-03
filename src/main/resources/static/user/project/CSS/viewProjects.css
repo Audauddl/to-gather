@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Do Hyeon', sans-serif;
+    color: #535353;
+    font-size: 100%;
+}
+
+.wrapper { /* wrapper는 해당 width를 가지고, 화면을 줄여도 위치를 가운데로 유지 */
+    max-width: 1180px; /* 요소들을 다 넣기 위해 80px 늘림 */
+    margin: 0 auto; 
+    display: flex;
+    justify-content: left; /* 모든 요소 왼쪽 정렬(새로운 아이템 추가 시, 순서대로 추가될 수 있도록) */
+    flex-wrap: wrap; /* wrapper안에서 공간이 없을 시, 아이템 자동 줄바꿈 */
+}
+
+flex {
+    display: flex;
+    align-items: center;
+}
+
+.justify-between {
+    padding-top: 120px; /* header와의 gap */
+    max-width: 1100px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 40px;
+}
+
+.title-box img {
+    margin-left: -20px;
+    margin-right: 25px;
+    width: 50px;
+    height: 50px;
+}
+
+.input { /* 모든 input 클래스의 속성 */
+    padding: 13px 30px;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 20px;
+    width: 170px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+select { /* select 화살표 커스텀 */
+    background: url('../images/polygon2.png') no-repeat 92% 55%; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 프로젝트 블럭 */
+.project-block {
+    position: relative;
+    border: 2px solid #DEDCDC;
+    width: 250px;
+    height: 350px;
+    margin: 0px 20px;
+    margin-bottom: 50px;
+    transition: all 0.2s ease-in-out;
+    box-shadow:3px 3px 2px 1px rgb(238, 238, 238);
+    cursor: pointer;
+}
+
+.project-block:hover {
+    transform: scale(1.04);
+}
+
+.project-image {
+    position: absolute;
+    align-items: center;
+    width: 220px;
+    height: 165px;
+    top: 15px;
+    left: 15px;
+}
+
+#like-box {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 21px;
+    right: 26px;
+    cursor: pointer;
+}
+
+.display-box {
+    position: absolute;
+    top:103px;
+    left: 15px;
+    width: 200px;
+    padding: 0px 10px;
+    background-color: white;
+    opacity: 50%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.display-box:hover {
+    opacity: 0.7;
+}
+
+.project-info {
+    position: absolute;
+    bottom: 60px;
+    left: 15px;
+    width: 195px;
+    border-left: 5px solid #709053;
+    padding : 0px 10px;
+}
+
+.project-info p {
+    margin: 3px;
+}
+
+.funding-date {
+    position: absolute;
+    color: #709053;
+    background-color: #FFF4C9;
+    padding: 3px 10px;
+    border-radius: 10px;
+    top: 190px;
+    right: 18px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.maker-name {
+    color: #979797;
+}
+
+.project-name {
+    font-size: 24px;
+}
+
+.project-summary {
+    color: #000000;
+}
+
+.current-funding {
+    position: absolute;
+    bottom: -8px;
+    left: 15px;
+    font-size: 20px;
+}
+
+.percent {
+    position: absolute;
+    top: 255px;
+    right: 15px;
+    font-size: 40px;
+    text-align: right;
+    color: #709053;
+}
+
+/* 더보기 기능을 위한 css */
+.more-button {
+    width: 100%;
+    background-color: #f3f3f3;
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.more-button:hover {
+    background-color: white;
+}
+
+ .loading { /* active가 아닌 프로젝트들은 노출X */
+    display: none;
+}
+
+.loading.active { /* active인 프로젝트들만 노출 */
+    display: block;
+}
+

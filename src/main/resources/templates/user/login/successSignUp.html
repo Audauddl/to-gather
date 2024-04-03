@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/login/CSS/successSignUp.css" type="text/css">
+    <title>successSignUp</title>
+</head>
+<body>
+<div th:replace="common/header/userHeader.html"></div>
+    <div class="wrapper">
+        <div class="text">
+            <h1>회원가입이<br> 완료 되었습니다 :)</h1>
+            <h3>To-Gather와 함께 동행해주셔서 감사해요!</h3>
+            
+        <div class="login">
+            <button class="btn-login" type="button" id="btn-login" onclick="location.href='/user/login'">로그인 하기</button>
+        </div>
+    </div>
+        <img class="logo" src="/user/login/images/logo.png">
+
+    </div>
+    <div th:replace="common/footer/userFooter.html"></div>
+</body>
+</html>
